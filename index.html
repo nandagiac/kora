@@ -71,7 +71,7 @@
             padding: 24px;
         }
 
-        /* Tela Inicial / Boas-vindas */
+        /* Tela Inicial */
         .welcome-screen {
             position: fixed;
             top: 0;
@@ -484,7 +484,7 @@
             text-align: center;
         }
 
-        /* Sub-abas do Cora Home */
+        /* Sub-abas do Kora Home */
         .home-subtabs {
             display: flex;
             gap: 8px;
@@ -548,7 +548,7 @@
                 <button class="nav-tab" onclick="switchTab('links', event)" data-tab="links">links</button>
 
                 <div class="nav-section-title" style="margin-top: 14px;">gestão do lar</div>
-                <button class="nav-tab home-special" onclick="switchTab('corahome', event)" data-tab="corahome">cora home</button>
+                <button class="nav-tab home-special" onclick="switchTab('korahome', event)" data-tab="korahome">kora home</button>
 
                 <div class="nav-section-title" style="margin-top: 14px;">sistema</div>
                 <button class="nav-tab" onclick="switchTab('settings', event)" data-tab="settings">configurações</button>
@@ -677,50 +677,19 @@
                 </div>
             </div>
 
-            <!-- CORA HOME (Com Setup Dinâmico e Inteligente) -->
-            <div id="corahome" class="tab-content" data-tab="corahome">
+            <!-- KORA HOME -->
+            <div id="korahome" class="tab-content" data-tab="korahome">
                 <div class="card full">
-                    <h3>cora home — gestão inteligente do lar</h3>
+                    <h3>kora home — gestão inteligente do lar</h3>
                     <div class="section-subtitle">copiloto doméstico adaptado à dinâmica real da sua casa.</div>
 
-                    <!-- Bloco de Perfil / Configuração da Casa -->
-                    <div id="homeSetupCard" style="background: rgba(184, 151, 153, 0.08); border: 1px solid var(--border-color); padding: 20px; border-radius: 20px; display: flex; flex-direction: column; gap: 14px; margin-bottom: 10px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="font-weight: 600; color: var(--text-main);">diagnóstico e perfil da casa</span>
-                            <button class="action-btn" onclick="salvarPerfilCasa()" style="height: 38px; font-size: 0.82rem;">atualizar perfil</button>
-                        </div>
-                        <p style="font-size: 0.85rem; color: var(--text-muted);">informe os dados abaixo para o cora calibrar automaticamente a frequência de banheiros, lixos, faxinas e compras.</p>
-                        
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
-                            <div>
-                                <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">moradores na casa</label>
-                                <input type="number" id="setupMoradores" value="2" min="1" style="margin-top: 4px;">
-                            </div>
-                            <div>
-                                <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">quantidade de banheiros</label>
-                                <input type="number" id="setupBanheiros" value="2" min="1" style="margin-top: 4px;">
-                            </div>
-                            <div>
-                                <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">quantidade de quartos</label>
-                                <input type="number" id="setupQuartos" value="3" min="1" style="margin-top: 4px;">
-                            </div>
-                            <div>
-                                <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">possui pets?</label>
-                                <select id="setupPets" style="margin-top: 4px;">
-                                    <option value="sim">sim (exigem atenção)</option>
-                                    <option value="nao">não</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div id="perfilResumo" style="font-size: 0.85rem; font-weight: 500; color: var(--text-main); background: rgba(255,255,255,0.6); padding: 10px 14px; border-radius: 12px; border: 1px solid var(--border-color);"></div>
-                    </div>
-
-                    <!-- Sub-abas Internas do Cora Home -->
+                    <!-- Sub-abas Internas do Kora Home -->
                     <div class="home-subtabs">
                         <button class="home-subtab-btn active" onclick="switchHomeSub('foco', this)">foco do dia</button>
                         <button class="home-subtab-btn" onclick="switchHomeSub('rotina', this)">rotina & limpeza</button>
                         <button class="home-subtab-btn" onclick="switchHomeSub('despensa', this)">despensa & mercado</button>
                         <button class="home-subtab-btn" onclick="switchHomeSub('logistica', this)">logística & contas</button>
+                        <button class="home-subtab-btn" onclick="switchHomeSub('ajustes', this)">ajustes domésticos</button>
                     </div>
 
                     <!-- 1. Foco do Dia & Modo Pouca Energia -->
@@ -734,9 +703,9 @@
                         </div>
 
                         <div style="margin-top: 10px;">
-                            <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 8px;">prioridades essenciais geradas para hoje:</div>
+                            <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 8px;">prioridades essenciais de hoje:</div>
                             <div class="task-input-wrapper">
-                                <input type="text" id="homeTaskInput" placeholder="adicionar micro-tarefa da casa..." style="flex: 1;">
+                                <input type="text" id="homeTaskInput" placeholder="ex: tirar lixo principal, lavar louça..." style="flex: 1;">
                                 <button class="action-btn" onclick="addHomeTask()">adicionar</button>
                             </div>
                             <ul id="homeTaskList" style="margin-top: 10px;"></ul>
@@ -745,9 +714,9 @@
 
                     <!-- 2. Rotina & Limpeza -->
                     <div class="home-subcontent" id="home-sub-rotina">
-                        <div class="section-subtitle">cronograma inteligente baseado nos banheiros e cômodos da sua casa.</div>
+                        <div class="section-subtitle">cronograma inteligente calibrado conforme o perfil e banheiros da casa.</div>
                         <div class="task-input-wrapper">
-                            <input type="text" id="homeRoutineInput" placeholder="ex: higienizar os 2 banheiros e trocar toalhas..." style="flex: 1;">
+                            <input type="text" id="homeRoutineInput" placeholder="ex: higienizar banheiro social (rodízio)..." style="flex: 1;">
                             <button class="action-btn" onclick="addHomeRoutine()">adicionar rotina</button>
                         </div>
                         <ul id="homeRoutineList" style="margin-top: 10px;"></ul>
@@ -755,9 +724,9 @@
 
                     <!-- 3. Despensa & Mercado -->
                     <div class="home-subcontent" id="home-sub-despensa">
-                        <div class="section-subtitle">lista de reposição inteligente baseada no número de moradores.</div>
+                        <div class="section-subtitle">lista de reposição inteligente baseada no volume de moradores.</div>
                         <div class="task-input-wrapper">
-                            <input type="text" id="homeMarketInput" placeholder="ex: café, produtos de limpeza, papel higiênico..." style="flex: 1;">
+                            <input type="text" id="homeMarketInput" placeholder="ex: café, papel higiênico, produtos de limpeza..." style="flex: 1;">
                             <button class="action-btn" onclick="addHomeMarket()">adicionar item</button>
                         </div>
                         <ul id="homeMarketList" style="margin-top: 10px;"></ul>
@@ -767,15 +736,48 @@
                     <div class="home-subcontent" id="home-sub-logistica">
                         <div class="section-subtitle">manutenções sazonais, contas da casa e lembretes gentis.</div>
                         <div class="task-input-wrapper">
-                            <input type="text" id="homeLogisticsInput" placeholder="ex: tirar lixos dos quartos e banheiros (terça/sexta)..." style="flex: 1;">
+                            <input type="text" id="homeLogisticsInput" placeholder="ex: limpar filtro do ar-condicionado (mensal)..." style="flex: 1;">
                             <button class="action-btn" onclick="addHomeLogistics()">adicionar lembrete</button>
                         </div>
                         <ul id="homeLogisticsList" style="margin-top: 10px;"></ul>
                     </div>
+
+                    <!-- 5. Ajustes Domésticos (Em aba separada dentro do Kora Home) -->
+                    <div class="home-subcontent" id="home-sub-ajustes">
+                        <div class="section-subtitle">informe os dados da sua casa para recalibrar as frequências automaticamente.</div>
+                        
+                        <div style="background: rgba(184, 151, 153, 0.08); border: 1px solid var(--border-color); padding: 20px; border-radius: 20px; display: flex; flex-direction: column; gap: 14px;">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                                <div>
+                                    <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">moradores na casa</label>
+                                    <input type="number" id="setupMoradores" value="2" min="1" style="margin-top: 4px;">
+                                </div>
+                                <div>
+                                    <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">quantidade de banheiros</label>
+                                    <input type="number" id="setupBanheiros" value="2" min="1" style="margin-top: 4px;">
+                                </div>
+                                <div>
+                                    <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">quantidade de quartos</label>
+                                    <input type="number" id="setupQuartos" value="3" min="1" style="margin-top: 4px;">
+                                </div>
+                                <div>
+                                    <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">possui pets?</label>
+                                    <select id="setupPets" style="margin-top: 4px;">
+                                        <option value="sim">sim (exigem atenção)</option>
+                                        <option value="nao">não</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: flex-end; margin-top: 6px;">
+                                <button class="action-btn" onclick="salvarPerfilCasa()">recalibrar rotinas da casa</button>
+                            </div>
+                            <div id="perfilResumo" style="font-size: 0.85rem; font-weight: 500; color: var(--text-main); background: rgba(255,255,255,0.6); padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border-color); margin-top: 6px;"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- CONFIGURAÇÕES -->
+            <!-- CONFIGURAÇÕES DO SISTEMA -->
             <div id="settings" class="tab-content" data-tab="settings">
                 <div class="card full">
                     <h3>configurações do workspace</h3>
@@ -804,7 +806,7 @@
                                 <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9rem;"><input type="checkbox" id="toggle_notes" checked onchange="saveTabVisibility()"> notas</label>
                                 <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9rem;"><input type="checkbox" id="toggle_focus" checked onchange="saveTabVisibility()"> foco</label>
                                 <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9rem;"><input type="checkbox" id="toggle_links" checked onchange="saveTabVisibility()"> links</label>
-                                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9rem;"><input type="checkbox" id="toggle_corahome" checked onchange="saveTabVisibility()"> cora home</label>
+                                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9rem;"><input type="checkbox" id="toggle_korahome" checked onchange="saveTabVisibility()"> kora home</label>
                             </div>
                         </div>
                     </div>
@@ -861,7 +863,7 @@
         loadFontSize();
 
         function saveTabVisibility() {
-            const tabs = ['tasks', 'reading', 'notes', 'focus', 'links', 'corahome'];
+            const tabs = ['tasks', 'reading', 'notes', 'focus', 'links', 'korahome'];
             const visibility = {};
             tabs.forEach(tab => {
                 const checkbox = document.getElementById(`toggle_${tab}`);
@@ -907,54 +909,7 @@
 
         loadTabVisibility();
 
-        // Configuração e Diagnóstico da Casa (Setup Inteligente)
-        function salvarPerfilCasa() {
-            const moradores = document.getElementById('setupMoradores').value;
-            const banheiros = document.getElementById('setupBanheiros').value;
-            const quartos = document.getElementById('setupQuartos').value;
-            const pets = document.getElementById('setupPets').value;
-
-            const perfil = { moradores, banheiros, quartos, pets };
-            localStorage.setItem('kora_home_profile', JSON.stringify(perfil));
-            
-            aplicarPerfilInteligente(perfil);
-            alert('perfil da casa atualizado! o cora ajustou as matrizes da rotina.');
-        }
-
-        function carregarPerfilCasa() {
-            const saved = localStorage.getItem('kora_home_profile');
-            if (saved) {
-                const perfil = JSON.parse(saved);
-                document.getElementById('setupMoradores').value = perfil.moradores;
-                document.getElementById('setupBanheiros').value = perfil.banheiros;
-                document.getElementById('setupQuartos').value = perfil.quartos;
-                document.getElementById('setupPets').value = perfil.pets;
-                aplicarPerfilInteligente(perfil);
-            } else {
-                // Perfil padrão inicial
-                const padrao = { moradores: 2, banheiros: 2, quartos: 3, pets: 'sim' };
-                aplicarPerfilInteligente(padrao);
-            }
-        }
-
-        function aplicarPerfilInteligente(p) {
-            const resumo = document.getElementById('perfilResumo');
-            resumo.innerHTML = `🏠 casa configurada: <strong>${p.moradores} moradores</strong>, <strong>${p.banheiros} banheiros</strong>, <strong>${p.quartos} quartos</strong> e <strong>pets: ${p.pets}</strong>. (frequência de limpeza e reposição calibrada automaticamente).`;
-            
-            // Se for a primeira vez, gera sugestões automáticas baseadas no perfil
-            if (!localStorage.getItem('kora_home_initialized')) {
-                const rotinasIniciais = [
-                    { text: `higienizar os ${p.banheiros} banheiros (2x por semana)`, done: false },
-                    { text: `recolher lixos dos ${p.quartos} quartos e banheiros`, done: false },
-                    { text: `trocar roupa de cama (${p.quartos} quartos)`, done: false }
-                ];
-                localStorage.setItem('kora_home_routine', JSON.stringify(rotinasIniciais));
-                localStorage.setItem('kora_home_initialized', 'true');
-                renderHomeRoutine();
-            }
-        }
-
-        // Sub-abas do Cora Home
+        // Sub-abas do Kora Home
         function switchHomeSub(subId, btn) {
             document.querySelectorAll('.home-subcontent').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.home-subtab-btn').forEach(el => el.classList.remove('active'));
@@ -970,14 +925,55 @@
             if (lowEnergyActive) {
                 btn.textContent = 'desativar modo leve';
                 btn.style.backgroundColor = '#606c38';
-                alert('modo pouca energia ativado: o cora home reteve apenas o essencial do dia para poupar você de esforço mental.');
+                alert('modo pouca energia ativado: o kora home reteve apenas o essencial do dia para poupar você de esforço mental.');
             } else {
                 btn.textContent = 'ativar modo leve';
                 btn.style.backgroundColor = 'var(--accent-dark)';
             }
         }
 
-        // Funções de Tarefas do Cora Home
+        // Perfil e Calibragem Automática do Kora Home
+        function salvarPerfilCasa() {
+            const moradores = document.getElementById('setupMoradores').value;
+            const banheiros = document.getElementById('setupBanheiros').value;
+            const quartos = document.getElementById('setupQuartos').value;
+            const pets = document.getElementById('setupPets').value;
+
+            const perfil = { moradores, banheiros, quartos, pets };
+            localStorage.setItem('kora_home_profile', JSON.stringify(perfil));
+            
+            aplicarPerfilInteligente(perfil);
+            alert('perfil da casa atualizado! as rotinas foram recalibradas.');
+        }
+
+        function carregarPerfilCasa() {
+            const saved = localStorage.getItem('kora_home_profile');
+            let perfil = saved ? JSON.parse(saved) : { moradores: 2, banheiros: 2, quartos: 3, pets: 'sim' };
+            
+            document.getElementById('setupMoradores').value = perfil.moradores;
+            document.getElementById('setupBanheiros').value = perfil.banheiros;
+            document.getElementById('setupQuartos').value = perfil.quartos;
+            document.getElementById('setupPets').value = perfil.pets;
+            aplicarPerfilInteligente(perfil);
+        }
+
+        function aplicarPerfilInteligente(p) {
+            const resumo = document.getElementById('perfilResumo');
+            resumo.innerHTML = `🏠 matriz ativa: <strong>${p.moradores} moradores</strong>, <strong>${p.banheiros} banheiros</strong> (limpeza alternada), <strong>${p.quartos} quartos</strong> e <strong>pets: ${p.pets}</strong>.`;
+
+            if (!localStorage.getItem('kora_home_initialized')) {
+                const rotinasIniciais = [
+                    { text: `higienizar os ${p.banheiros} banheiros (rodízio quinzenal / manutenção leve)`, done: false },
+                    { text: `recolher lixos dos ${p.quartos} quartos e banheiros`, done: false },
+                    { text: `trocar roupa de cama (${p.quartos} quartos)`, done: false }
+                ];
+                localStorage.setItem('kora_home_routine', JSON.stringify(rotinasIniciais));
+                localStorage.setItem('kora_home_initialized', 'true');
+                renderHomeRoutine();
+            }
+        }
+
+        // Dados do Kora Home
         function getHomeData(key) { return JSON.parse(localStorage.getItem(`kora_home_${key}`)) || []; }
         function saveHomeData(key, data) { localStorage.setItem(`kora_home_${key}`, JSON.stringify(data)); }
 
