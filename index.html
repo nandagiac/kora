@@ -3,76 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>kora — workspace</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>kora — central pessoal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        body.theme-cozy {
-            --bg-color: #f7f3f2;
-            --card-bg: rgba(255, 255, 255, 0.92);
-            --text-main: #4a3b3c;
-            --text-muted: #8c7678;
-            --accent-soft: #e8d3d5;
-            --accent-dark: #b89799;
-            --border-color: rgba(232, 211, 213, 0.6);
-            --shadow: 0 8px 32px 0 rgba(184, 151, 153, 0.08);
-            --pattern-bg: radial-gradient(#e8d3d5 0.75px, transparent 0.75px);
-            --font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-
-        body.theme-focus {
-            --bg-color: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.85);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-soft: #334155;
-            --accent-dark: #38bdf8;
-            --border-color: rgba(51, 65, 85, 0.8);
-            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            --pattern-bg: radial-gradient(#334155 0.75px, transparent 0.75px);
-            --font-family: 'Inter', sans-serif;
-        }
-
-        body.theme-classic {
-            --bg-color: #fcfbf9;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --text-main: #2c2c2c;
-            --text-muted: #767676;
-            --accent-soft: #eae5df;
-            --accent-dark: #5c554e;
-            --border-color: rgba(220, 215, 208, 0.8);
-            --shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.04);
-            --pattern-bg: none;
-            --font-family: 'Lora', serif;
+        :root {
+            --bg-color: #fbfbfa;
+            --card-bg: #ffffff;
+            --text-main: #2b2b2b;
+            --text-muted: #737373;
+            --accent-blue: #e0f2fe;
+            --accent-blue-border: #7dd3fc;
+            --border-color: #e5e5e5;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: var(--font-family);
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
             text-transform: lowercase;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
             background-color: var(--bg-color);
-            background-image: var(--pattern-bg);
-            background-size: 24px 24px;
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            flex-direction: column;
+            align-items: center;
             padding: 24px;
         }
 
-        @media (max-width: 850px) {
-            body {
-                padding: 12px;
-            }
-        }
-
-        /* Tela Inicial / Configurações (Sempre Acessível) */
+        /* Tela Inicial / Setup */
         .welcome-screen {
             position: fixed;
             top: 0;
@@ -80,15 +44,12 @@
             width: 100%;
             height: 100%;
             background-color: var(--bg-color);
-            background-image: var(--pattern-bg);
-            background-size: 24px 24px;
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            padding: 16px;
-            overflow-y: auto;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: 20px;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
 
         .welcome-screen.hidden {
@@ -99,1053 +60,466 @@
 
         .welcome-card {
             background: var(--card-bg);
-            backdrop-filter: blur(16px);
             border: 1px solid var(--border-color);
-            border-radius: 28px;
-            padding: 24px;
+            border-radius: 24px;
+            padding: 40px 32px;
             width: 100%;
-            max-width: 440px;
+            max-width: 420px;
             box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            max-height: 90vh;
-            overflow-y: auto;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
         }
 
         .welcome-title {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 600;
-            color: var(--text-main);
-            text-align: center;
+            letter-spacing: -0.5px;
         }
 
-        .welcome-subtitle {
-            font-size: 0.85rem;
+        .welcome-desc {
+            font-size: 0.9rem;
             color: var(--text-muted);
-            text-align: center;
-            margin-top: -12px;
+            line-height: 1.5;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .form-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-main);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .theme-options-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .theme-option-card {
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 10px 12px;
-            cursor: pointer;
-            background: rgba(255, 255, 255, 0.4);
-            transition: all 0.2s;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .theme-option-card.selected {
-            border-color: var(--accent-dark);
-            background-color: var(--accent-soft);
-        }
-
-        .theme-option-name {
-            font-weight: 600;
-            font-size: 0.88rem;
-            color: var(--text-main);
-        }
-
-        .theme-option-desc {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            line-height: 1.35;
-        }
-
-        .tabs-check-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-
-        .tabs-check-grid label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            cursor: pointer;
-            background: rgba(255,255,255,0.3);
-            padding: 8px 10px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-        }
-
-        /* Layout Principal */
-        .app-container {
+        .welcome-input {
             width: 100%;
-            max-width: 1200px;
-            display: grid;
-            grid-template-columns: 260px 1fr;
-            gap: 24px;
-            align-items: start;
-            padding-bottom: 40px;
-        }
-
-        @media (max-width: 850px) {
-            .app-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .sidebar {
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
+            padding: 14px 16px;
             border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 24px 20px;
-            box-shadow: var(--shadow);
+            border-radius: 12px;
+            font-size: 1rem;
+            outline: none;
+            background-color: #fafafa;
+            color: var(--text-main);
+            text-transform: none;
+        }
+
+        .welcome-btn {
+            width: 100%;
+            background-color: var(--text-main);
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            position: relative;
+            gap: 24px;
         }
 
-        .sidebar-header {
+        header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
         }
 
-        .app-title {
+        .greeting {
             font-size: 1.25rem;
             font-weight: 600;
-            color: var(--text-main);
-            letter-spacing: 0.5px;
-        }
-
-        .user-greeting {
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            margin-top: -14px;
-        }
-
-        .open-setup-btn {
-            background: none;
-            border: none;
-            color: var(--accent-dark);
-            font-size: 0.78rem;
-            cursor: pointer;
-            text-decoration: underline;
-            padding: 0;
-            text-align: left;
+            letter-spacing: -0.5px;
         }
 
         .nav-tabs {
             display: flex;
-            flex-direction: column;
-            gap: 6px;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
         }
 
-        @media (max-width: 850px) {
-            .nav-tabs {
-                flex-direction: row;
-                overflow-x: auto;
-                padding-bottom: 4px;
-                -webkit-overflow-scrolling: touch;
-            }
-            .nav-tabs::-webkit-scrollbar {
-                display: none;
-            }
-        }
-
-        .nav-tab {
+        .tab-btn {
             background: none;
             border: none;
-            text-align: left;
-            padding: 11px 16px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
             color: var(--text-muted);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
             transition: all 0.2s;
             white-space: nowrap;
         }
 
-        .nav-tab:hover {
-            background-color: var(--accent-soft);
-            color: var(--text-main);
+        .tab-btn.active {
+            background-color: var(--text-main);
+            color: #ffffff;
         }
 
-        .nav-tab.active {
-            background-color: var(--accent-soft);
-            color: var(--text-main);
-            font-weight: 600;
-        }
-
-        .datetime-widget {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border-color);
-            padding-top: 16px;
-        }
-
-        .datetime-widget .time {
-            font-weight: 600;
-            color: var(--text-main);
-            font-size: 0.95rem;
-            margin-bottom: 2px;
-        }
-
-        @media (max-width: 850px) {
-            .datetime-widget {
-                display: none;
-            }
-        }
-
-        /* Conteúdo Principal */
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            width: 100%;
-            min-width: 0;
-        }
-
-        .tab-content {
+        .section {
             display: none;
             flex-direction: column;
-            gap: 20px;
-            width: 100%;
-            min-width: 0;
+            gap: 16px;
         }
 
-        .tab-content.active {
+        .section.active {
             display: flex;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 750px) {
-            .grid {
-                grid-template-columns: 1fr;
-            }
         }
 
         .card {
             background-color: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
             padding: 24px;
             box-shadow: var(--shadow);
-            border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
             gap: 16px;
+        }
+
+        .section-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="text"], textarea {
             width: 100%;
-            max-width: 100%;
-            overflow: hidden;
-        }
-
-        .card.full {
-            grid-column: span 2;
-        }
-
-        @media (max-width: 750px) {
-            .card.full {
-                grid-column: span 1;
-            }
-        }
-
-        .card h3 {
-            font-size: 1.05rem;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-
-        input[type="text"], input[type="number"], select, textarea {
-            width: 100%;
-            max-width: 100%;
             padding: 12px 16px;
             border: 1px solid var(--border-color);
-            border-radius: 14px;
+            border-radius: 12px;
+            font-size: 0.9rem;
             outline: none;
-            font-size: 0.92rem;
-            background-color: var(--card-bg);
+            background-color: #fafafa;
             color: var(--text-main);
-            text-transform: lowercase;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--accent-dark);
+            text-transform: none;
         }
 
         textarea {
-            resize: none;
-            flex: 1;
-            min-height: 320px;
-            line-height: 1.5;
+            resize: vertical;
+            min-height: 100px;
+            text-transform: none;
         }
 
         button.action-btn {
             background-color: var(--text-main);
-            color: var(--bg-color);
+            color: #ffffff;
             border: none;
             padding: 0 20px;
-            border-radius: 14px;
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 0.85rem;
             cursor: pointer;
-            font-weight: 600;
-            font-size: 0.9rem;
-            height: 45px;
             white-space: nowrap;
-            text-transform: lowercase;
         }
 
-        /* Central de Tarefas Ajustada Perfeitamente ao iPhone */
-        .task-creator-box {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            background: rgba(255, 255, 255, 0.4);
-            border: 1px solid var(--border-color);
-            padding: 16px;
-            border-radius: 16px;
-            width: 100%;
-        }
-
-        .task-input-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            width: 100%;
-        }
-
-        @media (min-width: 500px) {
-            .task-input-wrapper {
-                flex-direction: row;
-            }
-        }
-
-        ul {
+        .list-items {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            max-height: 380px;
-            overflow-y: auto;
-            padding-right: 4px;
-            width: 100%;
+            gap: 8px;
         }
 
-        li {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 16px;
-            background-color: var(--card-bg);
-            border-radius: 16px;
+        .list-item {
+            background-color: #fafafa;
             border: 1px solid var(--border-color);
-            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            text-transform: none;
         }
 
-        li.completed span {
+        .list-item.completed span {
             text-decoration: line-through;
             color: var(--text-muted);
-            opacity: 0.6;
         }
 
-        .item-content {
+        .item-actions {
             display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            flex: 1;
-            word-break: break-word;
-            font-size: 0.92rem;
-            min-width: 0;
+            gap: 8px;
         }
 
-        input[type="checkbox"] {
-            accent-color: var(--text-main);
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-
-        .delete-btn {
+        .icon-btn {
             background: none;
             border: none;
             color: var(--text-muted);
             cursor: pointer;
-            font-size: 1.1rem;
-            padding: 2px 8px;
-            flex-shrink: 0;
-        }
-
-        .badge {
-            font-size: 0.7rem;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-weight: 500;
-            margin-right: 6px;
-            color: #fff;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        .project-filters {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 4px;
-            -webkit-overflow-scrolling: touch;
-            width: 100%;
-        }
-
-        .project-filters::-webkit-scrollbar {
-            display: none;
-        }
-
-        .project-chip {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 8px 16px;
-            border-radius: 14px;
             font-size: 0.85rem;
-            cursor: pointer;
-            color: var(--text-muted);
-            white-space: nowrap;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
+            padding: 4px;
         }
 
-        .project-chip.active {
-            background: var(--text-main);
-            color: var(--bg-color);
-            border-color: var(--text-main);
-            font-weight: 600;
-        }
-
-        /* Pomodoro */
-        .pomodoro-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        .timer-display {
-            font-size: 4rem;
-            font-weight: 300;
-            letter-spacing: -2px;
+        .icon-btn:hover {
             color: var(--text-main);
         }
 
-        .timer-controls {
-            display: flex;
-            gap: 12px;
+        /* Player Container */
+        .media-container {
+            width: 100%;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            background: #000;
+            margin-top: 8px;
         }
 
-        .timer-settings {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            font-size: 0.9rem;
-            color: var(--text-muted);
+        iframe {
+            width: 100%;
+            height: 152px;
+            border: none;
         }
 
-        .timer-settings input {
-            width: 65px;
-            text-align: center;
+        @media (max-width: 600px) {
+            body { padding: 12px; }
+            .input-group { flex-direction: column; }
         }
     </style>
 </head>
-<body class="theme-cozy">
+<body>
 
-    <!-- Tela Inicial / Configurações (Sempre Acessível) -->
+    <!-- Tela Inicial / Setup -->
     <div class="welcome-screen" id="welcomeScreen">
         <div class="welcome-card">
             <div class="welcome-title">kora</div>
-            <div class="welcome-subtitle">configure seu espaço</div>
-
-            <div class="form-group">
-                <label class="form-label">seu nome</label>
-                <input type="text" id="setupName" placeholder="como devemos te chamar?">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">escolha a estética</label>
-                <div class="theme-options-grid">
-                    <div class="theme-option-card selected" onclick="selectSetupTheme('cozy', this)">
-                        <div class="theme-option-name">cozy & soft</div>
-                        <div class="theme-option-desc">tons pastéis aconchegantes, fundo pontilhado e estética acolhedora.</div>
-                    </div>
-                    <div class="theme-option-card" onclick="selectSetupTheme('focus', this)">
-                        <div class="theme-option-name">focus & flow</div>
-                        <div class="theme-option-desc">estética sóbria, limpa e moderna em tons escuros para alta performance.</div>
-                    </div>
-                    <div class="theme-option-card" onclick="selectSetupTheme('classic', this)">
-                        <div class="theme-option-name">classic clean</div>
-                        <div class="theme-option-desc">visual minimalista tradicional, direto ao ponto e de alta legibilidade.</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">abas ativas</label>
-                <div class="tabs-check-grid">
-                    <label><input type="checkbox" id="setup_tasks" checked> tarefas</label>
-                    <label><input type="checkbox" id="setup_reading" checked> leitura</label>
-                    <label><input type="checkbox" id="setup_notes" checked> notas</label>
-                    <label><input type="checkbox" id="setup_focus" checked> foco</label>
-                    <label><input type="checkbox" id="setup_links" checked> links</label>
-                </div>
-            </div>
-
-            <button class="action-btn" onclick="completeSetup()" style="width: 100%; margin-top: 4px;">salvar e entrar</button>
+            <div class="welcome-desc">sua central pessoal de organização, notas e foco. insira seu nome para começar.</div>
+            <input type="text5" id="userNameInput" class="welcome-input" placeholder="digite seu nome...">
+            <button class="welcome-btn" onclick="salvarNomeEEntrar()">salvar e entrar</button>
         </div>
     </div>
 
-    <!-- Container Principal do App -->
-    <div class="app-container">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <div class="app-title">kora</div>
-            </div>
-            <div class="user-greeting" id="userGreetingDisplay">olá!</div>
-            <button class="open-setup-btn" onclick="reopenSetup()">configurações & perfil</button>
-
-            <nav class="nav-tabs" id="navTabsContainer">
-                <button class="nav-tab active" onclick="switchTab('tasks', event)" data-tab="tasks">tarefas</button>
-                <button class="nav-tab" onclick="switchTab('reading', event)" data-tab="reading">leitura</button>
-                <button class="nav-tab" onclick="switchTab('notes', event)" data-tab="notes">notas</button>
-                <button class="nav-tab" onclick="switchTab('focus', event)" data-tab="focus">foco</button>
-                <button class="nav-tab" onclick="switchTab('links', event)" data-tab="links">links</button>
+    <div class="container">
+        <header>
+            <div class="greeting" id="UserGreeting">olá, kora</div>
+            <nav class="nav-tabs">
+                <button class="tab-btn active" onclick="mudarAba('tarefas', this)">tarefas</button>
+                <button class="tab-btn" onclick="mudarAba('estudos', this)">estudos</button>
+                <button class="tab-btn" onclick="mudarAba('notas', this)">notas</button>
+                <button class="tab-btn" onclick="mudarAba('musica', this)">música</button>
             </nav>
+        </header>
 
-            <div class="datetime-widget">
-                <div class="time" id="clockDisplay">00:00:00</div>
-                <div id="dateDisplay">carregando...</div>
-            </div>
-        </aside>
-
-        <main class="main-content">
-            <!-- TAREFAS -->
-            <div id="tasks" class="tab-content active" data-tab="tasks">
-                <div class="card full">
-                    <h3>central de tarefas</h3>
-                    
-                    <div class="task-creator-box">
-                        <input type="text" id="newProjectName" placeholder="nome da nova pasta (ex: monografia)...">
-                        <div style="display: flex; gap: 10px;">
-                            <select id="newProjectColor" style="flex: 1;">
-                                <option value="#d4a373">bege aconchegante</option>
-                                <option value="#b89799" selected>rosa antigo</option>
-                                <option value="#9381ff">lavanda suave</option>
-                                <option value="#606c38">verde oliva</option>
-                            </select>
-                            <button class="action-btn" onclick="addProject()">criar pasta</button>
-                        </div>
-                    </div>
-
-                    <div class="project-filters" id="projectFilters">
-                        <div class="project-chip active" onclick="filterProject('all')">todas</div>
-                    </div>
-
-                    <div class="task-input-wrapper">
-                        <select id="taskProjectSelect" style="flex: 1; min-width: 130px;"></select>
-                        <input type="text" id="taskInput" placeholder="o que precisa ser feito..." style="flex: 2;">
-                        <button class="action-btn" onclick="addTask()">adicionar</button>
-                    </div>
-
-                    <ul id="taskList"></ul>
+        <!-- Seção Tarefas -->
+        <div class="section active" id="sec-tarefas">
+            <div class="card">
+                <p class="section-desc">gerencie suas pendências diárias e mantenha o foco no que importa.</p>
+                <div class="input-group">
+                    <input type="text" id="taskInput" placeholder="adicionar nova tarefa..." onkeypress="if(event.key === 'Enter') adicionarTarefa()">
+                    <button class="action-btn" onclick="adicionarTarefa()">adicionar</button>
                 </div>
+                <ul class="list-items" id="taskList"></ul>
             </div>
+        </div>
 
-            <!-- LEITURA -->
-            <div id="reading" class="tab-content" data-tab="reading">
-                <div class="card full">
-                    <h3>reading tracker</h3>
-                    <div style="display: flex; flex-direction: column; gap: 12px;">
-                        <input type="text" id="bookTitle" placeholder="título do livro / leitura atual...">
-                        <div style="display: flex; gap: 10px;">
-                            <input type="number" id="bookCurrent" placeholder="página atual" style="flex: 1;">
-                            <input type="number" id="bookTotal" placeholder="total de páginas" style="flex: 1;">
-                            <button class="action-btn" onclick="saveBook()">salvar</button>
-                        </div>
-                    </div>
-                    <div id="bookProgressDisplay" style="margin-top: 10px; font-size: 0.9rem; color: var(--text-muted); background: rgba(255,255,255,0.4); border: 1px solid var(--border-color); padding: 18px; border-radius: 16px;">
-                        nenhuma leitura cadastrada.
-                    </div>
+        <!-- Seção Estudos -->
+        <div class="section" id="sec-estudos">
+            <div class="card">
+                <p class="section-desc">acompanhe suas leituras e metas acadêmicas.</p>
+                <div class="input-group">
+                    <input type="text" id="studyInput" placeholder="novo livro ou matéria para estudar..." onkeypress="if(event.key === 'Enter') adicionarEstudo()">
+                    <button class="action-btn" onclick="adicionarEstudo()">adicionar</button>
                 </div>
+                <ul class="list-items" id="studyList"></ul>
             </div>
+        </div>
 
-            <!-- NOTAS -->
-            <div id="notes" class="tab-content" data-tab="notes">
-                <div class="card full" style="min-height: 500px;">
-                    <h3>notas & brain dump</h3>
-                    <textarea id="notesArea" placeholder="escreva seus pensamentos, ideias ou rascunhos aqui..."></textarea>
+        <!-- Seção Notas -->
+        <div class="section" id="sec-notas">
+            <div class="card">
+                <p class="section-desc">espaço livre para anotações rápidas e pensamentos.</p>
+                <textarea id="noteInput" placeholder="digite suas anotações aqui..."></textarea>
+                <button class="action-btn" style="align-self: flex-end;" onclick="salvarNota()">salvar nota</button>
+                <div id="notesSavedList" class="list-items" style="margin-top: 10px;"></div>
+            </div>
+        </div>
+
+        <!-- Seção Música / Player -->
+        <div class="section" id="sec-musica">
+            <div class="card">
+                <p class="section-desc">cole o link de uma música ou playlist do spotify ou youtube para tocar enquanto você trabalha.</p>
+                <div class="input-group">
+                    <input type="text" id="mediaInput" placeholder="cole o link do spotify ou youtube aqui..." onkeypress="if(event.key === 'Enter') carregarMidia()">
+                    <button class="action-btn" onclick="carregarMidia()">tocar</button>
                 </div>
+                <div id="mediaPlayerContainer"></div>
             </div>
-
-            <!-- FOCO -->
-            <div id="focus" class="tab-content" data-tab="focus">
-                <div class="grid">
-                    <div class="card">
-                        <h3>pomodoro customizável</h3>
-                        <div class="pomodoro-container">
-                            <div class="timer-display" id="timerDisplay">25:00</div>
-                            <div class="timer-controls">
-                                <button class="action-btn" id="startBtn" onclick="togglePomodoro()">iniciar</button>
-                                <button class="action-btn" onclick="resetPomodoro()" style="background-color: var(--accent-dark);">zerar</button>
-                            </div>
-                            <div class="timer-settings">
-                                foco: <input type="number" id="workTime" value="25" min="1" max="60" onchange="updateTimerSetting()"> min
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <h3>soundtrack</h3>
-                        <div style="display: flex; flex-direction: column; gap: 12px; flex: 1; justify-content: center;">
-                            <p style="font-size: 0.85rem; color: var(--text-muted);">cole o link de incorporação (embed) do spotify ou youtube:</p>
-                            <div style="display: flex; gap: 10px;">
-                                <input type="text" id="playlistInput" placeholder="https://..." style="flex: 1;">
-                                <button class="action-btn" onclick="savePlaylist()">salvar</button>
-                            </div>
-                            <div class="player-embed" id="playerContainer">
-                                <p style="font-size: 0.85rem; color: var(--text-muted); text-align: center; padding: 20px;">nenhuma playlist conectada</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- LINKS -->
-            <div id="links" class="tab-content" data-tab="links">
-                <div class="card full" style="min-height: 450px;">
-                    <h3>links úteis & atalhos</h3>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <input type="text" id="linkTitleInput" placeholder="nome do site...">
-                        <div style="display: flex; gap: 10px;">
-                            <input type="text" id="linkUrlInput" placeholder="url (https://...)" style="flex: 1;">
-                            <button class="action-btn" onclick="addBookmark()">adicionar</button>
-                        </div>
-                    </div>
-                    <div id="bookmarksContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-top: 15px;"></div>
-                </div>
-            </div>
-        </main>
+        </div>
     </div>
 
-    <audio id="alarmAudio" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto"></audio>
-
     <script>
-        let selectedSetupTheme = localStorage.getItem('kora_theme') || 'cozy';
-
-        function selectSetupTheme(theme, element) {
-            document.querySelectorAll('.theme-option-card').forEach(c => c.classList.remove('selected'));
-            element.classList.add('selected');
-            selectedSetupTheme = theme;
-        }
-
-        function completeSetup() {
-            const name = document.getElementById('setupName').value.trim().toLowerCase();
-            if (name) {
-                localStorage.setItem('kora_user_name', name);
-            }
-            localStorage.setItem('kora_theme', selectedSetupTheme);
-            document.body.className = `theme-${selectedSetupTheme}`;
-
-            const tabs = ['tasks', 'reading', 'notes', 'focus', 'links'];
-            const visibility = {};
-            tabs.forEach(tab => {
-                const isChecked = document.getElementById(`setup_${tab}`).checked;
-                visibility[tab] = isChecked;
-            });
-            localStorage.setItem('kora_tabs_visibility', JSON.stringify(visibility));
-
+        // Carregamento de Dados e Estado Inicial
+        let userName = localStorage.getItem('kora_user_name') || '';
+        if (userName) {
             document.getElementById('welcomeScreen').classList.add('hidden');
-            localStorage.setItem('kora_entered', 'true');
-            loadUserData();
-            loadTabVisibility();
+            document.getElementById('UserGreeting').textContent = `olá, ${userName}`;
         }
 
-        function reopenSetup() {
-            document.getElementById('setupName').value = localStorage.getItem('kora_user_name') || '';
-            const savedTheme = localStorage.getItem('kora_theme') || 'cozy';
-            document.querySelectorAll('.theme-option-card').forEach(card => {
-                card.classList.remove('selected');
-                if (card.getAttribute('onclick').includes(savedTheme)) {
-                    card.classList.add('selected');
-                }
-            });
-            selectedSetupTheme = savedTheme;
-
-            const savedVis = JSON.parse(localStorage.getItem('kora_tabs_visibility'));
-            const tabs = ['tasks', 'reading', 'notes', 'focus', 'links'];
-            tabs.forEach(tab => {
-                const chk = document.getElementById(`setup_${tab}`);
-                if (chk) chk.checked = savedVis ? savedVis[tab] !== false : true;
-            });
-
-            document.getElementById('welcomeScreen').classList.remove('hidden');
-        }
-
-        function loadUserData() {
-            const name = localStorage.getItem('kora_user_name');
-            const greeting = document.getElementById('userGreetingDisplay');
-            if (name) {
-                greeting.textContent = `olá, ${name}! ✨`;
-            } else {
-                greeting.textContent = `olá!`;
-            }
-        }
-
-        if (localStorage.getItem('kora_entered') === 'true') {
+        function salvarNomeEEntrar() {
+            const input = document.getElementById('userNameInput').value.trim();
+            if (!input) return;
+            userName = input.toLowerCase();
+            localStorage.setItem('kora_user_name', userName);
+            document.getElementById('UserGreeting').textContent = `olá, ${userName}`;
             document.getElementById('welcomeScreen').classList.add('hidden');
-            loadUserData();
-        } else {
-            reopenSetup();
         }
 
-        function updateDateTime() {
-            const now = new Date();
-            document.getElementById('clockDisplay').textContent = now.toLocaleTimeString('pt-BR');
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('dateDisplay').textContent = now.toLocaleDateString('pt-BR', options);
-        }
-        setInterval(updateDateTime, 1000);
-        updateDateTime();
-
-        function loadTheme() {
-            const savedTheme = localStorage.getItem('kora_theme') || 'cozy';
-            document.body.className = `theme-${savedTheme}`;
-        }
-        loadTheme();
-
-        function loadTabVisibility() {
-            const saved = JSON.parse(localStorage.getItem('kora_tabs_visibility'));
-            const tabs = ['tasks', 'reading', 'notes', 'focus', 'links'];
-            
-            let firstVisible = null;
-            tabs.forEach(tab => {
-                const isChecked = saved ? saved[tab] !== false : true;
-                const navBtn = document.querySelector(`.nav-tab[data-tab="${tab}"]`);
-                if (navBtn) navBtn.style.display = isChecked ? 'block' : 'none';
-                if (isChecked && !firstVisible) firstVisible = tab;
-            });
-
-            const currentActive = document.querySelector('.tab-content.active');
-            if (!currentActive || currentActive.style.display === 'none') {
-                if (firstVisible) switchTab(firstVisible);
-            }
-        }
-        loadTabVisibility();
-
-        function switchTab(tabId, event) {
-            if (event) event.preventDefault();
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
-            
-            const targetContent = document.getElementById(tabId);
-            const targetTab = document.querySelector(`.nav-tab[data-tab="${tabId}"]`);
-            
-            if (targetContent) targetContent.classList.add('active');
-            if (targetTab) targetTab.classList.add('active');
+        function mudarAba(abaId, btn) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`sec-${abaId}`).classList.add('active');
+            btn.classList.add('active');
         }
 
-        let currentFilter = 'all';
-
-        function getProjects() {
-            return JSON.parse(localStorage.getItem('kora_projects')) || [
-                { id: 'p1', name: 'faculdade', color: '#b89799' },
-                { id: 'p2', name: 'monografia', color: '#9381ff' },
-                { id: 'p3', name: 'vida pessoal', color: '#d4a373' }
-            ];
-        }
-
-        function renderProjects() {
-            const projects = getProjects();
-            const filtersContainer = document.getElementById('projectFilters');
-            const select = document.getElementById('taskProjectSelect');
-            
-            filtersContainer.innerHTML = `<div class="project-chip ${currentFilter === 'all' ? 'active' : ''}" onclick="filterProject('all')">todas</div>`;
-            select.innerHTML = '';
-
-            projects.forEach(p => {
-                filtersContainer.innerHTML += `
-                    <div class="project-chip ${currentFilter === p.id ? 'active' : ''}" onclick="filterProject('${p.id}')">
-                        <span style="width: 8px; height: 8px; border-radius: 50%; background: ${p.color}; display: inline-block;"></span>
-                        ${p.name}
-                        <span class="del-chip" onclick="event.stopPropagation(); removeProject('${p.id}')" title="apagar">×</span>
-                    </div>`;
-                select.innerHTML += `<option value="${p.id}">${p.name}</option>`;
-            });
-            renderTasks();
-        }
-
-        function addProject() {
-            const name = document.getElementById('newProjectName').value.trim().toLowerCase();
-            const color = document.getElementById('newProjectColor').value;
-            if (!name) return;
-            const projects = getProjects();
-            projects.push({ id: 'p_' + Date.now(), name, color });
-            localStorage.setItem('kora_projects', JSON.stringify(projects));
-            document.getElementById('newProjectName').value = '';
-            renderProjects();
-        }
-
-        function removeProject(id) {
-            if (!confirm('deseja apagar esta pasta?')) return;
-            let projects = getProjects();
-            projects = projects.filter(p => p.id !== id);
-            localStorage.setItem('kora_projects', JSON.stringify(projects));
-            
-            let tasks = getTasks();
-            tasks = tasks.filter(t => t.projectId !== id);
-            localStorage.setItem('kora_tasks', JSON.stringify(tasks));
-
-            if (currentFilter === id) currentFilter = 'all';
-            renderProjects();
-        }
-
-        function filterProject(id) {
-            currentFilter = id;
-            renderProjects();
-        }
-
-        function getTasks() {
-            return JSON.parse(localStorage.getItem('kora_tasks')) || [];
-        }
-
+        // Tarefas
+        let tasks = JSON.parse(localStorage.getItem('kora_tasks') || '[]');
         function renderTasks() {
-            const tasks = getTasks();
-            const projects = getProjects();
             const list = document.getElementById('taskList');
             list.innerHTML = '';
-
-            const filtered = currentFilter === 'all' ? tasks : tasks.filter(t => t.projectId === currentFilter);
-
-            filtered.forEach((item, index) => {
-                const project = projects.find(p => p.id === item.projectId) || { name: 'geral', color: '#b89799' };
-                const originalIndex = tasks.indexOf(item);
+            tasks.forEach((t, index) => {
                 const li = document.createElement('li');
-                if (item.completed) li.classList.add('completed');
+                li.className = `list-item ${t.done ? 'completed' : ''}`;
                 li.innerHTML = `
-                    <div class="item-content" onclick="toggleTask(${originalIndex})">
-                        <input type="checkbox" ${item.completed ? 'checked' : ''}>
-                        <span class="badge" style="background-color: ${project.color}">${project.name}</span>
-                        <span>${item.text}</span>
+                    <span>${t.text}</span>
+                    <div class="item-actions">
+                        <button class="icon-btn" onclick="toggleTask(${index})">${t.done ? 'desfazer' : 'concluir'}</button>
+                        <button class="icon-btn" onclick="deleteTask(${index})">remover</button>
                     </div>
-                    <button class="delete-btn" onclick="removeTask(${originalIndex})">×</button>
                 `;
                 list.appendChild(li);
             });
-        }
-
-        function addTask() {
-            const input = document.getElementById('taskInput');
-            const select = document.getElementById('taskProjectSelect');
-            const text = input.value.trim().toLowerCase();
-            if (!text) return;
-            const tasks = getTasks();
-            tasks.push({ text, completed: false, projectId: select.value });
             localStorage.setItem('kora_tasks', JSON.stringify(tasks));
+        }
+        function adicionarTarefa() {
+            const input = document.getElementById('taskInput');
+            if (!input.value.trim()) return;
+            tasks.push({ text: input.value, done: false });
             input.value = '';
             renderTasks();
         }
-
-        function toggleTask(index) {
-            const tasks = getTasks();
-            tasks[index].completed = !tasks[index].completed;
-            localStorage.setItem('kora_tasks', JSON.stringify(tasks));
+        function toggleTask(i) {
+            tasks[i].done = !tasks[i].done;
             renderTasks();
         }
-
-        function removeTask(index) {
-            const tasks = getTasks();
-            tasks.splice(index, 1);
-            localStorage.setItem('kora_tasks', JSON.stringify(tasks));
+        function deleteTask(i) {
+            tasks.splice(i, 1);
             renderTasks();
         }
+        renderTasks();
 
-        renderProjects();
-
-        function saveBook() {
-            const title = document.getElementById('bookTitle').value.trim().toLowerCase();
-            const current = parseInt(document.getElementById('bookCurrent').value) || 0;
-            const total = parseInt(document.getElementById('bookTotal').value) || 100;
-            if (!title) return;
-            const book = { title, current, total };
-            localStorage.setItem('kora_book', JSON.stringify(book));
-            renderBook();
-        }
-
-        function renderBook() {
-            const book = JSON.parse(localStorage.getItem('kora_book'));
-            const display = document.getElementById('bookProgressDisplay');
-            if (!book) return;
-            const percent = Math.min(100, Math.round((book.current / book.total) * 100));
-            document.getElementById('bookTitle').value = book.title;
-            document.getElementById('bookCurrent').value = book.current;
-            document.getElementById('bookTotal').value = book.total;
-
-            display.innerHTML = `
-                <div style="font-weight: 600; color: var(--text-main); margin-bottom: 6px;">📖 ${book.title}</div>
-                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 6px;">
-                    <span>progresso: ${book.current} / ${book.total} pág.</span>
-                    <span>${percent}%</span>
-                </div>
-                <div style="background: var(--accent-soft); border-radius: 10px; height: 8px; width: 100%; overflow: hidden;">
-                    <div style="background: var(--text-main); width: ${percent}%; height: 100%; transition: width 0.3s;"></div>
-                </div>
-            `;
-        }
-        renderBook();
-
-        const notesArea = document.getElementById('notesArea');
-        notesArea.value = localStorage.getItem('kora_notes') || '';
-        notesArea.addEventListener('input', () => {
-            localStorage.setItem('kora_notes', notesArea.value);
-        });
-
-        let timerInterval = null;
-        let totalSeconds = 25 * 60;
-        let isRunning = false;
-
-        function updateTimerDisplay() {
-            const mins = Math.floor(totalSeconds / 60);
-            const secs = totalSeconds % 60;
-            document.getElementById('timerDisplay').textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-        }
-
-        function togglePomodoro() {
-            const btn = document.getElementById('startBtn');
-            if (isRunning) {
-                clearInterval(timerInterval);
-                isRunning = false;
-                btn.textContent = 'iniciar';
-            } else {
-                isRunning = true;
-                btn.textContent = 'pausar';
-                timerInterval = setInterval(() => {
-                    if (totalSeconds > 0) {
-                        totalSeconds--;
-                        updateTimerDisplay();
-                    } else {
-                        clearInterval(timerInterval);
-                        isRunning = false;
-                        btn.textContent = 'iniciar';
-                        document.getElementById('alarmAudio').play();
-                        alert('ciclo concluído!');
-                    }
-                }, 1000);
-            }
-        }
-
-        function resetPomodoro() {
-            clearInterval(timerInterval);
-            isRunning = false;
-            document.getElementById('startBtn').textContent = 'iniciar';
-            const workMins = parseInt(document.getElementById('workTime').value) || 25;
-            totalSeconds = workMins * 60;
-            updateTimerDisplay();
-        }
-
-        function updateTimerSetting() {
-            if (!isRunning) resetPomodoro();
-        }
-
-        function savePlaylist() {
-            let url = document.getElementById('playlistInput').value.trim();
-            if (!url) return;
-            if (url.includes('spotify.com') && !url.includes('/embed/')) {
-                url = url.replace('spotify.com/', 'spotify.com/embed/');
-            } else if (url.includes('youtube.com/watch?v=')) {
-                const videoId = url.split('v=')[1]?.split('&')[0];
-                url = `https://www.youtube.com/embed/${videoId}`;
-            }
-            localStorage.setItem('kora_playlist', url);
-            renderPlaylist(url);
-        }
-
-        function renderPlaylist(url) {
-            document.getElementById('playerContainer').innerHTML = `<iframe src="${url}" width="100%" height="152" frameborder="0" allow="encrypted-media"></iframe>`;
-        }
-
-        const savedPlaylist = localStorage.getItem('kora_playlist');
-        if (savedPlaylist) {
-            document.getElementById('playlistInput').value = savedPlaylist;
-            renderPlaylist(savedPlaylist);
-        }
-
-        function getBookmarks() {
-            return JSON.parse(localStorage.getItem('kora_bookmarks')) || [];
-        }
-
-        function renderBookmarks() {
-            const bookmarks = getBookmarks();
-            const container = document.getElementById('bookmarksContainer');
-            container.innerHTML = '';
-            bookmarks.forEach((b, index) => {
-                container.innerHTML += `
-                    <div style="position: relative; background: var(--card-bg); border: 1px solid var(--border-color); padding: 14px; border-radius: 14px; display: flex; flex-direction: column; gap: 6px;">
-                        <a href="${b.url}" target="_blank" style="text-decoration: none; color: var(--text-main); display: flex; flex-direction: column; gap: 4px;">
-                            <span style="font-weight: 600; font-size: 0.9rem;">${b.title}</span>
-                            <span style="font-size: 0.75rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${b.url}</span>
-                        </a>
-                        <button onclick="removeBookmark(${index})" style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.8rem;" title="apagar">×</button>
+        // Estudos
+        let studies = JSON.parse(localStorage.getItem('kora_studies') || '[]');
+        function renderStudies() {
+            const list = document.getElementById('studyList');
+            list.innerHTML = '';
+            studies.forEach((s, index) => {
+                const li = document.createElement('li');
+                li.className = `list-item ${s.done ? 'completed' : ''}`;
+                li.innerHTML = `
+                    <span>${s.text}</span>
+                    <div class="item-actions">
+                        <button class="icon-btn" onclick="toggleStudy(${index})">${s.done ? 'lido' : 'ler'}</button>
+                        <button class="icon-btn" onclick="deleteStudy(${index})">remover</button>
                     </div>
                 `;
+                list.appendChild(li);
             });
+            localStorage.setItem('kora_studies', JSON.stringify(studies));
+        }
+        function adicionarEstudo() {
+            const input = document.getElementById('studyInput');
+            if (!input.value.trim()) return;
+            studies.push({ text: input.value, done: false });
+            input.value = '';
+            renderStudies();
+        }
+        function toggleStudy(i) {
+            studies[i].done = !studies[i].done;
+            renderStudies();
+        }
+        function deleteStudy(i) {
+            studies.splice(i, 1);
+            renderStudies();
+        }
+        renderStudies();
+
+        // Notas
+        let notes = JSON.parse(localStorage.getItem('kora_notes') || '[]');
+        function renderNotes() {
+            const list = document.getElementById('notesSavedList');
+            list.innerHTML = '';
+            notes.forEach((n, index) => {
+                const li = document.createElement('li');
+                li.className = 'list-item';
+                li.innerHTML = `
+                    <span style="white-space: pre-wrap;">${n}</span>
+                    <button class="icon-btn" onclick="deleteNote(${index})">excluir</button>
+                `;
+                list.appendChild(li);
+            });
+            localStorage.setItem('kora_notes', JSON.stringify(notes));
+        }
+        function salvarNota() {
+            const input = document.getElementById('noteInput');
+            if (!input.value.trim()) return;
+            notes.unshift(input.value);
+            input.value = '';
+            renderNotes();
+        }
+        function deleteNote(i) {
+            notes.splice(i, 1);
+            renderNotes();
+        }
+        renderNotes();
+
+        // Conversor Inteligente de Mídia (Spotify / YouTube)
+        function carregarMidia() {
+            const url = document.getElementById('mediaInput').value.trim();
+            const container = document.getElementById('mediaPlayerContainer');
+            container.innerHTML = '';
+
+            if (!url) return;
+
+            let embedHtml = '';
+
+            // Conversor Spotify
+            if (url.includes('spotify.com')) {
+                let spotifyEmbedUrl = url.replace('spotify.com/', 'spotify.com/embed/');
+                embedHtml = `<div class="media-container"><iframe src="${spotifyEmbedUrl}" allow="encrypted-media"></iframe></div>`;
+            } 
+            // Conversor YouTube
+            else if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                let videoId = '';
+                if (url.includes('youtu.be/')) {
+                    videoId = url.split('youtu.be/')[1].split('?')[0];
+                } else if (url.includes('watch?v=')) {
+                    videoId = url.split('watch?v=')[1].split('&')[0];
+                }
+                if (videoId) {
+                    embedHtml = `<div class="media-container"><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe></div>`;
+                }
+            }
+
+            if (embedHtml) {
+                container.innerHTML = embedHtml;
+                localStorage.setItem('kora_last_media', url);
+            } else {
+                alert('link não reconhecido. cole um link válido do spotify ou youtube.');
+            }
         }
 
-        function addBookmark() {
-            const title = document.getElementById('linkTitleInput').value.trim().toLowerCase();
-            let url = document.getElementById('linkUrlInput').value.trim();
-            if (!title || !url) return;
-            if (!url.startsWith('http')) url = 'https://' + url;
-            const bookmarks = getBookmarks();
-            bookmarks.push({ title, url });
-            localStorage.setItem('kora_bookmarks', JSON.stringify(bookmarks));
-            document.getElementById('linkTitleInput').value = '';
-            document.getElementById('linkUrlInput').value = '';
-            renderBookmarks();
+        // Recuperar player salvo se houver
+        const savedMedia = localStorage.getItem('kora_last_media');
+        if (savedMedia) {
+            document.getElementById('mediaInput').value = savedMedia;
+            carregarMidia();
         }
-
-        function removeBookmark(index) {
-            const bookmarks = getBookmarks();
-            bookmarks.splice(index, 1);
-            localStorage.setItem('kora_bookmarks', JSON.stringify(bookmarks));
-            renderBookmarks();
-        }
-        renderBookmarks();
     </script>
 </body>
 </html>
