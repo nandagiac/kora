@@ -694,22 +694,22 @@
             <div id="korahome" class="tab-content" data-tab="korahome">
                 <div class="card full">
                     <h3>kora home — gestão inteligente do lar</h3>
-                    <div class="section-subtitle">cronograma automático inteligente baseado na sua rotina e tempo disponível.</div>
+                    <div class="section-subtitle">cronograma perpétuo, cíclico e adaptado à sua disponibilidade de tempo.</div>
 
                     <!-- Sub-abas Internas do Kora Home -->
                     <div class="home-subtabs">
-                        <button class="home-subtab-btn active" onclick="switchHomeSub('cronograma', this)">cronograma (hoje / próximos dias)</button>
+                        <button class="home-subtab-btn active" onclick="switchHomeSub('cronograma', this)">cronograma (ciclos perpétuos)</button>
                         <button class="home-subtab-btn" onclick="switchHomeSub('despensa', this)">despensa & mercado</button>
                         <button class="home-subtab-btn" onclick="switchHomeSub('ajustes', this)">ajustes domésticos</button>
                     </div>
 
-                    <!-- 1. CRONOGRAMA AUTOMÁTICO & MODOS DE TEMPO -->
+                    <!-- 1. CRONOGRAMA CÍCLICO E PERPÉTUO -->
                     <div class="home-subcontent active" id="home-sub-cronograma">
                         <div style="background: rgba(184, 151, 153, 0.1); border: 1px solid var(--border-color); padding: 18px; border-radius: 16px; display: flex; flex-direction: column; gap: 14px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                                 <div>
                                     <span style="font-weight: 600; color: var(--text-main); display: block;">quanto tempo você tem hoje para a casa?</span>
-                                    <span style="font-size: 0.8rem; color: var(--text-muted);">o cora ajusta o ritmo das tarefas conforme sua disponibilidade.</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);">o cora filtra as tarefas do dia conforme sua janela.</span>
                                 </div>
                                 <select id="modoRitmo" onchange="atualizarRitmoTempo()" style="max-width: 250px; font-weight: 500;">
                                     <option value="todos">cronograma completo (tudo)</option>
@@ -721,7 +721,7 @@
                             </div>
                         </div>
 
-                        <!-- Visão de Cronograma Organizada -->
+                        <!-- Visão de Cronograma Perpétuo -->
                         <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 16px;">
                             <div>
                                 <div style="font-size: 0.82rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;">para hoje</div>
@@ -740,14 +740,27 @@
                         </div>
                     </div>
 
-                    <!-- 2. DESPENSA & MERCADO -->
+                    <!-- 2. DESPENSA & MERCADO INTELIGENTE COM WHATSAPP -->
                     <div class="home-subcontent" id="home-sub-despensa">
-                        <div class="section-subtitle">lista de reposição sugerida com base no volume de moradores e consumo.</div>
-                        <div class="task-input-wrapper">
-                            <input type="text" id="homeMarketInput" placeholder="ex: café, papel higiênico, leite..." style="flex: 1;">
-                            <button class="action-btn" onclick="addHomeMarket()">adicionar item</button>
+                        <div class="section-subtitle">marque o que está em falta na casa e exporte direto para o WhatsApp.</div>
+                        
+                        <div style="background: rgba(184, 151, 153, 0.08); border: 1px solid var(--border-color); padding: 20px; border-radius: 20px; display: flex; flex-direction: column; gap: 14px;">
+                            <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-main);">itens essenciais da casa (toque para marcar falta):</div>
+                            <div id="smartMarketChecklist" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px;"></div>
+
+                            <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+                                <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-main);">adicionar item extra:</label>
+                                <div class="task-input-wrapper">
+                                    <input type="text" id="homeMarketInput" placeholder="ex: azeite, queijo, lâmpada..." style="flex: 1;">
+                                    <button class="action-btn" onclick="addHomeMarketCustom()">adicionar</button>
+                                </div>
+                            </div>
+                            <ul id="homeMarketCustomList" style="margin-top: 6px;"></ul>
+
+                            <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+                                <button class="action-btn" onclick="exportarParaWhatsapp()" style="background-color: #25d366; color: #ffffff;">enviar lista para o whatsapp</button>
+                            </div>
                         </div>
-                        <ul id="homeMarketList" style="margin-top: 10px;"></ul>
                     </div>
 
                     <!-- 3. AJUSTES DOMÉSTICOS -->
@@ -925,25 +938,25 @@
             btn.classList.add('active');
         }
 
-        // Motor de Cronograma Automático Baseado em Pesquisa Doméstica
+        // Motor de Cronograma Cíclico Perpétuo
         function getCronograma() {
-            return JSON.parse(localStorage.getItem('kora_cronograma')) || gerarCronogramaInteligente();
+            return JSON.parse(localStorage.getItem('kora_cronograma')) || gerarCronogramaPerpetuo();
         }
 
-        function gerarCronogramaInteligente() {
+        function gerarCronogramaPerpetuo() {
             const p = JSON.parse(localStorage.getItem('kora_home_profile')) || { moradores: 2, banheiros: 2, quartos: 3, pets: 'sim' };
             
             return [
-                { id: 'c1', text: 'retirar lixo da cozinha e lixeiras principais', dia: 'hoje', duracao: 15, done: false, essencial: true },
-                { id: 'c2', text: 'lavar louça do dia e limpar bancada da pia', dia: 'hoje', duracao: 25, done: false, essencial: true },
-                { id: 'c3', text: 'recolher e organizar itens fora do lugar (reset de 10 min)', dia: 'hoje', duracao: 15, done: false, essencial: true },
-                { id: 'c4', text: `higienizar um dos ${p.banheiros} banheiros (rodízio)`, dia: 'hoje', duracao: 25, done: false, essencial: false },
-                { id: 'c5', text: 'passar pano rápido nas superfícies de uso comum', dia: 'amanha', duracao: 20, done: false, essencial: true },
-                { id: 'c6', text: `recolher lixos dos ${p.quartos} quartos e banheiros`, dia: 'amanha', duracao: 15, done: false, essencial: true },
-                { id: 'c7', text: p.pets === 'sim' ? 'aspirar pisos e tapetes (foco em pelos de pets)' : 'aspirar pisos das áreas de circulação', dia: 'amanha', duracao: 30, done: false, essencial: false },
-                { id: 'c8', text: `trocar roupa de cama (${p.quartos} quartos)`, dia: 'semana', duracao: 35, done: false, essencial: false },
-                { id: 'c9', text: 'limpeza interna de geladeira e conferência de despensa', dia: 'semana', duracao: 45, done: false, essencial: false },
-                { id: 'c10', text: 'lavar roupas acumuladas, estender e recolher', dia: 'semana', duracao: 60, done: false, essencial: false }
+                { id: 'c1', text: 'retirar lixo da cozinha e lixeiras principais', dia: 'hoje', duracao: 15, done: false, cicloDias: 1 },
+                { id: 'c2', text: 'lavar louça do dia e limpar bancada da pia', dia: 'hoje', duracao: 25, done: false, cicloDias: 1 },
+                { id: 'c3', text: 'recolher e organizar itens fora do lugar (reset 10 min)', dia: 'hoje', duracao: 15, done: false, cicloDias: 1 },
+                { id: 'c4', text: `higienizar um dos ${p.banheiros} banheiros (rodízio)`, dia: 'hoje', duracao: 25, done: false, cicloDias: 3 },
+                { id: 'c5', text: 'passar pano rápido nas superfícies de uso comum', dia: 'amanha', duracao: 20, done: false, cicloDias: 2 },
+                { id: 'c6', text: `recolher lixos dos ${p.quartos} quartos e banheiros`, dia: 'amanha', duracao: 15, done: false, cicloDias: 2 },
+                { id: 'c7', text: p.pets === 'sim' ? 'aspirar pisos e tapetes (foco em pelos de pets)' : 'aspirar pisos das áreas de circulação', dia: 'amanha', duracao: 30, done: false, cicloDias: 3 },
+                { id: 'c8', text: `trocar roupa de cama (${p.quartos} quartos)`, dia: 'semana', duracao: 35, done: false, cicloDias: 7 },
+                { id: 'c9', text: 'limpeza interna de geladeira e conferência de despensa', dia: 'semana', duracao: 45, done: false, cicloDias: 15 },
+                { id: 'c10', text: 'lavar roupas acumuladas, estender e recolher', dia: 'semana', duracao: 60, done: false, cicloDias: 4 }
             ];
         }
 
@@ -968,6 +981,22 @@
             const item = cron.find(c => c.id === id);
             if (item) {
                 item.done = !item.done;
+                
+                // Se concluiu, cicla a tarefa automaticamente para o futuro dependendo do seu ciclo!
+                if (item.done) {
+                    setTimeout(() => {
+                        item.done = false;
+                        if (item.cicloDias === 1) {
+                            item.dia = 'amanha'; // Se é diária, amanhã ela volta para o hoje automaticamente
+                        } else if (item.cicloDias <= 3) {
+                            item.dia = 'amanha';
+                        } else {
+                            item.dia = 'semana';
+                        }
+                        salvarCronograma(cron);
+                    }, 400); // Pequeno atraso visual suave para registrar a conclusão
+                }
+
                 salvarCronograma(cron);
             }
         }
@@ -997,11 +1026,8 @@
             let acumuladoHoje = 0;
 
             cron.forEach(item => {
-                // Se o modo selecionado for restrito, filtra pelo tempo máximo acumulado ou tarefas essenciais
-                if (limiteMinutos !== 'todos') {
-                    if (item.dia === 'hoje' && acumuladoHoje + item.duracao > parseInt(limiteMinutos) && !item.essencial) {
-                        return; // Omitido por falta de tempo no modo escolhido
-                    }
+                if (limiteMinutos !== 'todos' && item.dia === 'hoje' && acumuladoHoje + item.duracao > parseInt(limiteMinutos)) {
+                    return;
                 }
 
                 if (item.dia === 'hoje' && !item.done) {
@@ -1031,7 +1057,7 @@
             if (listSemana.innerHTML === '') listSemana.innerHTML = `<div style="font-size:0.85rem; color:var(--text-muted); padding:4px 0;">nenhuma manutenção programada para a semana.</div>`;
         }
 
-        // Perfil e Calibragem
+        // Perfil da Casa
         function salvarPerfilCasa() {
             const moradores = document.getElementById('setupMoradores').value;
             const banheiros = document.getElementById('setupBanheiros').value;
@@ -1043,7 +1069,7 @@
             
             localStorage.removeItem('kora_cronograma');
             aplicarPerfilInteligente(perfil);
-            alert('perfil atualizado e cronograma inteligente recalculado!');
+            alert('perfil atualizado e cronograma perpétuo recalculado!');
         }
 
         function carregarPerfilCasa() {
@@ -1063,47 +1089,91 @@
             renderCronograma();
         }
 
-        // Despensa & Mercado
-        function getHomeData(key) { return JSON.parse(localStorage.getItem(`kora_home_${key}`)) || []; }
-        function saveHomeData(key, data) { localStorage.setItem(`kora_home_${key}`, JSON.stringify(data)); }
+        // Lista de Mercado Inteligente com WhatsApp
+        const itensPrincipaisMercado = [
+            'café', 'leite', 'açúcar', 'arroz', 'feijão', 'papel higiênico', 
+            'detergente', 'esponja', 'sabão em pó', 'amaciante', 'desinfetante', 
+            'sacos de lixo', 'azeite', 'sal', 'ovos', 'pão'
+        ];
 
-        function addHomeMarket() {
+        function renderSmartMarket() {
+            const container = document.getElementById('smartMarketChecklist');
+            const faltaSalvo = JSON.parse(localStorage.getItem('kora_market_falta')) || [];
+            container.innerHTML = '';
+
+            itensPrincipaisMercado.forEach(item => {
+                const isChecked = faltaSalvo.includes(item);
+                container.innerHTML += `
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9rem; background: rgba(255,255,255,0.5); padding: 10px 14px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleMarketItem('${item}')">
+                        <span>${item}</span>
+                    </label>`;
+            });
+            renderMarketCustomList();
+        }
+
+        function toggleMarketItem(item) {
+            let falta = JSON.parse(localStorage.getItem('kora_market_falta')) || [];
+            if (falta.includes(item)) {
+                falta = falta.filter(i => i !== item);
+            } else {
+                falta.push(item);
+            }
+            localStorage.setItem('kora_market_falta', JSON.stringify(falta));
+        }
+
+        function addHomeMarketCustom() {
             const input = document.getElementById('homeMarketInput');
-            if (!input.value.trim()) return;
-            const items = getHomeData('market');
-            items.push({ text: input.value.trim(), done: false });
-            saveHomeData('market', items);
+            const val = input.value.trim().toLowerCase();
+            if (!val) return;
+            let custom = JSON.parse(localStorage.getItem('kora_market_custom')) || [];
+            custom.push(val);
+            localStorage.setItem('kora_market_custom', JSON.stringify(custom));
             input.value = '';
-            renderHomeMarket();
+            renderMarketCustomList();
         }
-        function toggleHomeMarket(i) {
-            const items = getHomeData('market');
-            items[i].done = !items[i].done;
-            saveHomeData('market', items);
-            renderHomeMarket();
+
+        function removeMarketCustom(index) {
+            let custom = JSON.parse(localStorage.getItem('kora_market_custom')) || [];
+            custom.splice(index, 1);
+            localStorage.setItem('kora_market_custom', JSON.stringify(custom));
+            renderMarketCustomList();
         }
-        function removeHomeMarket(i) {
-            const items = getHomeData('market');
-            items.splice(i, 1);
-            saveHomeData('market', items);
-            renderHomeMarket();
-        }
-        function renderHomeMarket() {
-            const items = getHomeData('market');
-            const list = document.getElementById('homeMarketList');
+
+        function renderMarketCustomList() {
+            const custom = JSON.parse(localStorage.getItem('kora_market_custom')) || [];
+            const list = document.getElementById('homeMarketCustomList');
             list.innerHTML = '';
-            items.forEach((item, i) => {
+            custom.forEach((item, index) => {
                 list.innerHTML += `
-                    <li class="${item.done ? 'completed' : ''}">
-                        <div class="item-content" onclick="toggleHomeMarket(${i})">
-                            <input type="checkbox" ${item.done ? 'checked' : ''}>
-                            <span>${item.text}</span>
+                    <li>
+                        <div class="item-content">
+                            <span>• ${item} (extra)</span>
                         </div>
-                        <button class="delete-btn" onclick="removeHomeMarket(${i})">×</button>
+                        <button class="delete-btn" onclick="removeMarketCustom(${index})">×</button>
                     </li>`;
             });
         }
-        renderHomeMarket();
+
+        function exportarParaWhatsapp() {
+            const falta = JSON.parse(localStorage.getItem('kora_market_falta')) || [];
+            const custom = JSON.parse(localStorage.getItem('kora_market_custom')) || [];
+            const todos = [...falta, ...custom];
+
+            if (todos.length === 0) {
+                alert('sua lista de compras está vazia! marque os itens em falta primeiro.');
+                return;
+            }
+
+            let texto = '🛒 *lista de compras do kora home*\n\n';
+            todos.forEach(i => { texto += `• ${i}\n`; });
+            texto += '\n_gerado pelo kora workspace_';
+
+            const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`;
+            window.open(url, '_blank');
+        }
+
+        renderSmartMarket();
         carregarPerfilCasa();
 
         // Tarefas normais do Kora
