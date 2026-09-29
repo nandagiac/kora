@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kora — Workspace</title>
+    <title>kora — workspace</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         body.theme-cozy {
@@ -50,6 +50,7 @@
             margin: 0;
             padding: 0;
             font-family: var(--font-family);
+            text-transform: lowercase;
         }
 
         body {
@@ -71,6 +72,11 @@
             grid-template-columns: 240px 1fr;
             gap: 20px;
             align-items: start;
+        }
+
+        body.force-mobile .app-container {
+            max-width: 420px;
+            grid-template-columns: 1fr;
         }
 
         @media (max-width: 850px) {
@@ -175,23 +181,6 @@
             margin-bottom: 2px;
         }
 
-        @media (max-width: 850px) {
-            .sidebar {
-                padding: 16px;
-                gap: 16px;
-            }
-            .nav-tabs {
-                flex-direction: row;
-                overflow-x: auto;
-                padding-bottom: 4px;
-            }
-            .nav-tab {
-                white-space: nowrap;
-                padding: 8px 12px;
-                font-size: 0.85rem;
-            }
-        }
-
         .settings-dropdown {
             position: absolute;
             top: 65px;
@@ -206,7 +195,7 @@
             gap: 14px;
             box-shadow: var(--shadow);
             z-index: 100;
-            min-width: 210px;
+            min-width: 220px;
         }
 
         .settings-dropdown.open {
@@ -334,6 +323,7 @@
             background-color: var(--card-bg);
             color: var(--text-main);
             transition: all 0.2s ease;
+            text-transform: lowercase;
         }
 
         input:focus, select:focus, textarea:focus {
@@ -360,6 +350,7 @@
             transition: opacity 0.2s;
             height: 45px;
             white-space: nowrap;
+            text-transform: lowercase;
         }
 
         button.action-btn:hover {
@@ -567,66 +558,72 @@
         <aside class="sidebar">
             <div class="sidebar-header">
                 <div class="app-title">✨ kora</div>
-                <button class="settings-btn" onclick="toggleSettings()" title="Ajustes e Temas">
+                <button class="settings-btn" onclick="toggleSettings()" title="ajustes e temas">
                     <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c-.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
                 </button>
             </div>
 
             <nav class="nav-tabs" id="navTabsContainer">
-                <button class="nav-tab active" onclick="switchTab('tasks')" data-tab="tasks">Tarefas & Pastas</button>
-                <button class="nav-tab" onclick="switchTab('habits')" data-tab="habits">Hábitos & Leitura</button>
-                <button class="nav-tab" onclick="switchTab('notes')" data-tab="notes">Notas</button>
-                <button class="nav-tab" onclick="switchTab('focus')" data-tab="focus">Foco & Música</button>
-                <button class="nav-tab" onclick="switchTab('links')" data-tab="links">Links Úteis</button>
+                <button class="nav-tab active" onclick="switchTab('tasks')" data-tab="tasks">tarefas & pastas</button>
+                <button class="nav-tab" onclick="switchTab('habits')" data-tab="habits">hábitos & leitura</button>
+                <button class="nav-tab" onclick="switchTab('notes')" data-tab="notes">notas</button>
+                <button class="nav-tab" onclick="switchTab('focus')" data-tab="focus">foco & música</button>
+                <button class="nav-tab" onclick="switchTab('links')" data-tab="links">links úteis</button>
             </nav>
 
             <div class="datetime-widget">
                 <div class="time" id="clockDisplay">00:00:00</div>
-                <div id="dateDisplay">Carregando...</div>
+                <div id="dateDisplay">carregando...</div>
             </div>
 
             <div class="settings-dropdown" id="settingsDropdown">
-                <div class="section-title">Escolher Estética</div>
+                <div class="section-title">escolher estética</div>
                 <div class="theme-buttons">
-                    <button class="theme-btn" onclick="setTheme('cozy')">🌸 Cozy & Soft</button>
-                    <button class="theme-btn" onclick="setTheme('focus')">⚡ Focus & Flow</button>
-                    <button class="theme-btn" onclick="setTheme('classic')">☕ Classic Clean</button>
+                    <button class="theme-btn" onclick="setTheme('cozy')">cozy & soft</button>
+                    <button class="theme-btn" onclick="setTheme('focus')">focus & flow</button>
+                    <button class="theme-btn" onclick="setTheme('classic')">classic clean</button>
                 </div>
 
-                <div class="section-title" style="margin-top: 6px;">Visibilidade das Abas</div>
-                <label><input type="checkbox" id="toggle_tasks" checked onchange="saveTabVisibility()"> Tarefas</label>
-                <label><input type="checkbox" id="toggle_habits" checked onchange="saveTabVisibility()"> Hábitos & Leitura</label>
-                <label><input type="checkbox" id="toggle_notes" checked onchange="saveTabVisibility()"> Notas</label>
-                <label><input type="checkbox" id="toggle_focus" checked onchange="saveTabVisibility()"> Foco & Música</label>
-                <label><input type="checkbox" id="toggle_links" checked onchange="saveTabVisibility()"> Links Úteis</label>
+                <div class="section-title" style="margin-top: 10px;">modo de visualização</div>
+                <div class="theme-buttons">
+                    <button class="theme-btn" onclick="setDeviceMode('desktop')">💻 formato desktop</button>
+                    <button class="theme-btn" onclick="setDeviceMode('mobile')">📱 formato telefone</button>
+                </div>
+
+                <div class="section-title" style="margin-top: 10px;">visibilidade das abas</div>
+                <label><input type="checkbox" id="toggle_tasks" checked onchange="saveTabVisibility()"> tarefas</label>
+                <label><input type="checkbox" id="toggle_habits" checked onchange="saveTabVisibility()"> hábitos & leitura</label>
+                <label><input type="checkbox" id="toggle_notes" checked onchange="saveTabVisibility()"> notas</label>
+                <label><input type="checkbox" id="toggle_focus" checked onchange="saveTabVisibility()"> foco & música</label>
+                <label><input type="checkbox" id="toggle_links" checked onchange="saveTabVisibility()"> links úteis</label>
             </div>
         </aside>
 
         <main class="main-content">
             <div id="tasks" class="tab-content active" data-tab="tasks">
                 <div class="card full">
-                    <h3>Central de Tarefas</h3>
+                    <h3>central de tarefas</h3>
                     
                     <div style="background: var(--card-bg); border: 1px solid var(--border-color); padding: 14px; border-radius: 16px; margin-bottom: 15px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                        <input type="text" id="newProjectName" placeholder="Nome da pasta (ex: Monografia)..." style="flex:2; min-width: 150px;">
+                        <input type="text" id="newProjectName" placeholder="nome da pasta (ex: monografia)..." style="flex:2; min-width: 150px;">
                         <select id="newProjectColor" style="flex:1; min-width: 140px;">
-                            <option value="#d4a373">Bege Aconchegante</option>
-                            <option value="#b89799" selected>Rosa Antigo</option>
-                            <option value="#9381ff">Lavanda Suave</option>
-                            <option value="#606c38">Verde Oliva</option>
+                            <option value="#d4a373">bege aconchegante</option>
+                            <option value="#b89799" selected>rosa antigo</option>
+                            <option value="#9381ff">lavanda suave</option>
+                            <option value="#606c38">verde oliva</option>
                         </select>
-                        <button class="action-btn" onclick="addProject()">Criar Pasta</button>
+                        <button class="action-btn" onclick="addProject()">criar pasta</button>
                     </div>
 
                     <div class="project-filters" id="projectFilters">
-                        <div class="project-chip active" onclick="filterProject('all')">Todas</div>
+                        <div class="project-chip active" onclick="filterProject('all')">todas</div>
                     </div>
 
                     <div class="task-input-wrapper">
                         <select id="taskProjectSelect"></select>
                         <div class="task-row">
-                            <input type="text" id="taskInput" placeholder="O que precisa ser feito...">
-                            <button class="action-btn" onclick="addTask()">Adicionar</button>
+                            <input type="text" id="taskInput" placeholder="o que precisa ser feito...">
+                            <button class="action-btn" onclick="addTask()">adicionar</button>
                         </div>
                     </div>
 
@@ -637,36 +634,36 @@
             <div id="habits" class="tab-content" data-tab="habits">
                 <div class="grid">
                     <div class="card">
-                        <h3>Reading Tracker</h3>
+                        <h3>reading tracker</h3>
                         <div class="input-group" style="flex-direction: column; gap: 8px;">
-                            <input type="text" id="bookTitle" placeholder="Título do livro / leitura atual...">
+                            <input type="text" id="bookTitle" placeholder="título do livro / leitura atual...">
                             <div style="display: flex; gap: 8px;">
-                                <input type="number" id="bookCurrent" placeholder="Pág. atual" style="width: 50%;">
-                                <input type="number" id="bookTotal" placeholder="Total de pág." style="width: 50%;">
-                                <button class="action-btn" onclick="saveBook()">Salvar</button>
+                                <input type="number" id="bookCurrent" placeholder="pág. atual" style="width: 50%;">
+                                <input type="number" id="bookTotal" placeholder="total de pág." style="width: 50%;">
+                                <button class="action-btn" onclick="saveBook()">salvar</button>
                             </div>
                         </div>
                         <div id="bookProgressDisplay" style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted); background: var(--card-bg); border: 1px solid var(--border-color); padding: 16px; border-radius: 14px;">
-                            Nenhuma leitura cadastrada.
+                            nenhuma leitura cadastrada.
                         </div>
                     </div>
 
                     <div class="card">
-                        <h3>Hábitos da Semana</h3>
+                        <h3>hábitos da semana</h3>
                         <div class="input-group">
-                            <input type="text" id="habitNameInput" placeholder="Novo hábito...">
+                            <input type="text" id="habitNameInput" placeholder="novo hábito...">
                             <button class="action-btn" onclick="addHabitRow()">+</button>
                         </div>
                         <div id="habitsContainer" style="overflow-x: auto;">
                             <div class="habit-grid" style="margin-bottom: 8px;">
-                                <div class="habit-header" style="text-align: left;">Hábito</div>
-                                <div class="habit-header">Seg</div>
-                                <div class="habit-header">Ter</div>
-                                <div class="habit-header">Qua</div>
-                                <div class="habit-header">Qui</div>
-                                <div class="habit-header">Sex</div>
-                                <div class="habit-header">Sáb</div>
-                                <div class="habit-header">Dom</div>
+                                <div class="habit-header" style="text-align: left;">hábito</div>
+                                <div class="habit-header">seg</div>
+                                <div class="habit-header">ter</div>
+                                <div class="habit-header">qua</div>
+                                <div class="habit-header">qui</div>
+                                <div class="habit-header">sex</div>
+                                <div class="habit-header">sáb</div>
+                                <div class="habit-header">dom</div>
                             </div>
                             <div id="habitsListRows"></div>
                         </div>
@@ -676,37 +673,37 @@
 
             <div id="notes" class="tab-content" data-tab="notes">
                 <div class="card full" style="min-height: 480px;">
-                    <h3>Notas & Brain Dump</h3>
-                    <textarea id="notesArea" placeholder="Escreva seus pensamentos, ideias ou rascunhos aqui..."></textarea>
+                    <h3>notas & brain dump</h3>
+                    <textarea id="notesArea" placeholder="escreva seus pensamentos, ideias ou rascunhos aqui..."></textarea>
                 </div>
             </div>
 
             <div id="focus" class="tab-content" data-tab="focus">
                 <div class="grid">
                     <div class="card">
-                        <h3>Pomodoro Customizável</h3>
+                        <h3>pomodoro customizável</h3>
                         <div class="pomodoro-container">
                             <div class="timer-display" id="timerDisplay">25:00</div>
                             <div class="timer-controls">
-                                <button class="action-btn" id="startBtn" onclick="togglePomodoro()">Iniciar</button>
-                                <button class="action-btn" onclick="resetPomodoro()" style="background-color: var(--accent-dark);">Zerar</button>
+                                <button class="action-btn" id="startBtn" onclick="togglePomodoro()">iniciar</button>
+                                <button class="action-btn" onclick="resetPomodoro()" style="background-color: var(--accent-dark);">zerar</button>
                             </div>
                             <div class="timer-settings">
-                                Foco: <input type="number" id="workTime" value="25" min="1" max="60" onchange="updateTimerSetting()"> min
+                                foco: <input type="number" id="workTime" value="25" min="1" max="60" onchange="updateTimerSetting()"> min
                             </div>
                         </div>
                     </div>
 
                     <div class="card">
-                        <h3>Soundtrack</h3>
+                        <h3>soundtrack</h3>
                         <div style="display: flex; flex-direction: column; gap: 12px; flex: 1; justify-content: center;">
-                            <p style="font-size: 0.85rem; color: var(--text-muted);">Cole o link de incorporação (Embed) do Spotify ou YouTube:</p>
+                            <p style="font-size: 0.85rem; color: var(--text-muted);">cole o link de incorporação (embed) do spotify ou youtube:</p>
                             <div class="input-group">
-                                <input type="text" id="playlistInput" placeholder="Ex: https://open.spotify.com/embed/...">
-                                <button class="action-btn" onclick="savePlaylist()">Salvar</button>
+                                <input type="text" id="playlistInput" placeholder="ex: https://open.spotify.com/embed/...">
+                                <button class="action-btn" onclick="savePlaylist()">salvar</button>
                             </div>
                             <div class="player-embed" id="playerContainer">
-                                <p style="font-size: 0.85rem; color: var(--text-muted); text-align: center; padding: 20px;">Nenhuma playlist conectada</p>
+                                <p style="font-size: 0.85rem; color: var(--text-muted); text-align: center; padding: 20px;">nenhuma playlist conectada</p>
                             </div>
                         </div>
                     </div>
@@ -715,11 +712,11 @@
 
             <div id="links" class="tab-content" data-tab="links">
                 <div class="card full" style="min-height: 400px;">
-                    <h3>Atalhos & Links Úteis</h3>
+                    <h3>atalhos & links úteis</h3>
                     <div class="input-group">
-                        <input type="text" id="linkTitleInput" placeholder="Nome do site..." style="flex:1;">
-                        <input type="text" id="linkUrlInput" placeholder="URL (https://...)" style="flex:2;">
-                        <button class="action-btn" onclick="addBookmark()">Adicionar</button>
+                        <input type="text" id="linkTitleInput" placeholder="nome do site..." style="flex:1;">
+                        <input type="text" id="linkUrlInput" placeholder="url (https://...)" style="flex:2;">
+                        <button class="action-btn" onclick="addBookmark()">adicionar</button>
                     </div>
                     <div id="bookmarksContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 15px;"></div>
                 </div>
@@ -750,17 +747,28 @@
         });
 
         function setTheme(themeName) {
-            document.body.className = `theme-${themeName}`;
+            const currentMode = document.body.classList.contains('force-mobile') ? 'force-mobile' : '';
+            document.body.className = `theme-${themeName} ${currentMode}`;
             localStorage.setItem('kora_theme', themeName);
-            document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
         }
 
-        function loadTheme() {
-            const savedTheme = localStorage.getItem('kora_theme') || 'cozy';
-            document.body.className = `theme-${savedTheme}`;
+        function setDeviceMode(mode) {
+            if (mode === 'mobile') {
+                document.body.classList.add('force-mobile');
+                localStorage.setItem('kora_device_mode', 'mobile');
+            } else {
+                document.body.classList.remove('force-mobile');
+                localStorage.setItem('kora_device_mode', 'desktop');
+            }
         }
-        loadTheme();
+
+        function loadPreferences() {
+            const savedTheme = localStorage.getItem('kora_theme') || 'cozy';
+            const savedMode = localStorage.getItem('kora_device_mode') || 'desktop';
+            const modeClass = savedMode === 'mobile' ? 'force-mobile' : '';
+            document.body.className = `theme-${savedTheme} ${modeClass}`;
+        }
+        loadPreferences();
 
         function saveTabVisibility() {
             const tabs = ['tasks', 'habits', 'notes', 'focus', 'links'];
@@ -810,9 +818,9 @@
 
         function getProjects() {
             return JSON.parse(localStorage.getItem('kora_projects')) || [
-                { id: 'p1', name: 'Faculdade', color: '#b89799' },
-                { id: 'p2', name: 'Monografia', color: '#9381ff' },
-                { id: 'p3', name: 'Vida Pessoal', color: '#d4a373' }
+                { id: 'p1', name: 'faculdade', color: '#b89799' },
+                { id: 'p2', name: 'monografia', color: '#9381ff' },
+                { id: 'p3', name: 'vida pessoal', color: '#d4a373' }
             ];
         }
 
@@ -821,7 +829,7 @@
             const filtersContainer = document.getElementById('projectFilters');
             const select = document.getElementById('taskProjectSelect');
             
-            filtersContainer.innerHTML = `<div class="project-chip ${currentFilter === 'all' ? 'active' : ''}" onclick="filterProject('all')">Todas</div>`;
+            filtersContainer.innerHTML = `<div class="project-chip ${currentFilter === 'all' ? 'active' : ''}" onclick="filterProject('all')">todas</div>`;
             select.innerHTML = '';
 
             projects.forEach(p => {
@@ -829,7 +837,7 @@
                     <div class="project-chip ${currentFilter === p.id ? 'active' : ''}" onclick="filterProject('${p.id}')">
                         <span style="width: 8px; height: 8px; border-radius: 50%; background: ${p.color}; display: inline-block;"></span>
                         ${p.name}
-                        <span class="del-chip" onclick="event.stopPropagation(); removeProject('${p.id}')" title="Apagar pasta">×</span>
+                        <span class="del-chip" onclick="event.stopPropagation(); removeProject('${p.id}')" title="apagar pasta">×</span>
                     </div>`;
                 select.innerHTML += `<option value="${p.id}">${p.name}</option>`;
             });
@@ -837,7 +845,7 @@
         }
 
         function addProject() {
-            const name = document.getElementById('newProjectName').value.trim();
+            const name = document.getElementById('newProjectName').value.trim().toLowerCase();
             const color = document.getElementById('newProjectColor').value;
             if (!name) return;
             const projects = getProjects();
@@ -848,7 +856,7 @@
         }
 
         function removeProject(id) {
-            if (!confirm('Deseja realmente apagar esta pasta e todas as tarefas dela?')) return;
+            if (!confirm('deseja realmente apagar esta pasta e todas as tarefas dela?')) return;
             let projects = getProjects();
             projects = projects.filter(p => p.id !== id);
             localStorage.setItem('kora_projects', JSON.stringify(projects));
@@ -879,7 +887,7 @@
             const filtered = currentFilter === 'all' ? tasks : tasks.filter(t => t.projectId === currentFilter);
 
             filtered.forEach((item, index) => {
-                const project = projects.find(p => p.id === item.projectId) || { name: 'Geral', color: '#b89799' };
+                const project = projects.find(p => p.id === item.projectId) || { name: 'geral', color: '#b89799' };
                 const originalIndex = tasks.indexOf(item);
                 const li = document.createElement('li');
                 if (item.completed) li.classList.add('completed');
@@ -898,7 +906,7 @@
         function addTask() {
             const input = document.getElementById('taskInput');
             const select = document.getElementById('taskProjectSelect');
-            const text = input.value.trim();
+            const text = input.value.trim().toLowerCase();
             if (!text) return;
             const tasks = getTasks();
             tasks.push({ text, completed: false, projectId: select.value });
@@ -924,7 +932,7 @@
         renderProjects();
 
         function saveBook() {
-            const title = document.getElementById('bookTitle').value.trim();
+            const title = document.getElementById('bookTitle').value.trim().toLowerCase();
             const current = parseInt(document.getElementById('bookCurrent').value) || 0;
             const total = parseInt(document.getElementById('bookTotal').value) || 100;
             if (!title) return;
@@ -945,7 +953,7 @@
             display.innerHTML = `
                 <div style="font-weight: 600; color: var(--text-main); margin-bottom: 6px;">📖 ${book.title}</div>
                 <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 6px;">
-                    <span>Progresso: ${book.current} / ${book.total} pág.</span>
+                    <span>progresso: ${book.current} / ${book.total} pág.</span>
                     <span>${percent}%</span>
                 </div>
                 <div style="background: var(--accent-soft); border-radius: 10px; height: 8px; width: 100%; overflow: hidden;">
@@ -979,7 +987,7 @@
 
         function addHabitRow() {
             const input = document.getElementById('habitNameInput');
-            const name = input.value.trim();
+            const name = input.value.trim().toLowerCase();
             if (!name) return;
             const habits = getHabits();
             habits.push({ name, days: [false, false, false, false, false, false, false] });
@@ -1016,10 +1024,10 @@
             if (isRunning) {
                 clearInterval(timerInterval);
                 isRunning = false;
-                btn.textContent = 'Iniciar';
+                btn.textContent = 'iniciar';
             } else {
                 isRunning = true;
-                btn.textContent = 'Pausar';
+                btn.textContent = 'pausar';
                 timerInterval = setInterval(() => {
                     if (totalSeconds > 0) {
                         totalSeconds--;
@@ -1027,9 +1035,9 @@
                     } else {
                         clearInterval(timerInterval);
                         isRunning = false;
-                        btn.textContent = 'Iniciar';
+                        btn.textContent = 'iniciar';
                         document.getElementById('alarmAudio').play();
-                        alert('Ciclo de foco concluído!');
+                        alert('ciclo de foco concluído!');
                     }
                 }, 1000);
             }
@@ -1038,7 +1046,7 @@
         function resetPomodoro() {
             clearInterval(timerInterval);
             isRunning = false;
-            document.getElementById('startBtn').textContent = 'Iniciar';
+            document.getElementById('startBtn').textContent = 'iniciar';
             const workMins = parseInt(document.getElementById('workTime').value) || 25;
             totalSeconds = workMins * 60;
             updateTimerDisplay();
@@ -1086,14 +1094,14 @@
                             <span style="font-weight: 600; font-size: 0.9rem;">${b.title}</span>
                             <span style="font-size: 0.75rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${b.url}</span>
                         </a>
-                        <button onclick="removeBookmark(${index})" style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.8rem;" title="Apagar link">×</button>
+                        <button onclick="removeBookmark(${index})" style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.8rem;" title="apagar link">×</button>
                     </div>
                 `;
             });
         }
 
         function addBookmark() {
-            const title = document.getElementById('linkTitleInput').value.trim();
+            const title = document.getElementById('linkTitleInput').value.trim().toLowerCase();
             let url = document.getElementById('linkUrlInput').value.trim();
             if (!title || !url) return;
             if (!url.startsWith('http')) url = 'https://' + url;
