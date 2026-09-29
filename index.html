@@ -360,7 +360,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            max-height: 380px;
+            max-height: 400px;
             overflow-y: auto;
             padding-right: 4px;
         }
@@ -399,13 +399,26 @@
             cursor: pointer;
         }
 
-        .delete-btn {
+        .item-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .snooze-btn, .delete-btn {
             background: none;
             border: none;
             color: var(--text-muted);
             cursor: pointer;
-            font-size: 1.1rem;
-            padding: 2px 8px;
+            font-size: 0.82rem;
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .snooze-btn:hover, .delete-btn:hover {
+            background: rgba(0,0,0,0.05);
+            color: var(--text-main);
         }
 
         .badge {
@@ -681,70 +694,65 @@
             <div id="korahome" class="tab-content" data-tab="korahome">
                 <div class="card full">
                     <h3>kora home — gestão inteligente do lar</h3>
-                    <div class="section-subtitle">copiloto doméstico adaptado à dinâmica real da sua casa.</div>
+                    <div class="section-subtitle">cronograma automático inteligente baseado na sua rotina e tempo disponível.</div>
 
                     <!-- Sub-abas Internas do Kora Home -->
                     <div class="home-subtabs">
-                        <button class="home-subtab-btn active" onclick="switchHomeSub('foco', this)">foco do dia</button>
-                        <button class="home-subtab-btn" onclick="switchHomeSub('rotina', this)">rotina & limpeza</button>
+                        <button class="home-subtab-btn active" onclick="switchHomeSub('cronograma', this)">cronograma (hoje / próximos dias)</button>
                         <button class="home-subtab-btn" onclick="switchHomeSub('despensa', this)">despensa & mercado</button>
-                        <button class="home-subtab-btn" onclick="switchHomeSub('logistica', this)">logística & contas</button>
                         <button class="home-subtab-btn" onclick="switchHomeSub('ajustes', this)">ajustes domésticos</button>
                     </div>
 
-                    <!-- 1. Foco do Dia & Modo Pouca Energia -->
-                    <div class="home-subcontent active" id="home-sub-foco">
-                        <div style="background: rgba(184, 151, 153, 0.1); border: 1px solid var(--border-color); padding: 18px; border-radius: 16px; display: flex; flex-direction: column; gap: 12px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="font-weight: 600; color: var(--text-main);">modo pouca energia (dia leve)</span>
-                                <button class="action-btn" onclick="toggleLowEnergyMode()" id="lowEnergyBtn" style="background-color: var(--accent-dark); height: 36px; font-size: 0.8rem;">ativar modo leve</button>
+                    <!-- 1. CRONOGRAMA AUTOMÁTICO & MODOS DE TEMPO -->
+                    <div class="home-subcontent active" id="home-sub-cronograma">
+                        <div style="background: rgba(184, 151, 153, 0.1); border: 1px solid var(--border-color); padding: 18px; border-radius: 16px; display: flex; flex-direction: column; gap: 14px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                                <div>
+                                    <span style="font-weight: 600; color: var(--text-main); display: block;">quanto tempo você tem hoje para a casa?</span>
+                                    <span style="font-size: 0.8rem; color: var(--text-muted);">o cora ajusta o ritmo das tarefas conforme sua disponibilidade.</span>
+                                </div>
+                                <select id="modoRitmo" onchange="atualizarRitmoTempo()" style="max-width: 250px; font-weight: 500;">
+                                    <option value="todos">cronograma completo (tudo)</option>
+                                    <option value="30">modo rápido (30 minutos)</option>
+                                    <option value="60">modo equilibrado (1 hora)</option>
+                                    <option value="120">modo produtivo (2 horas)</option>
+                                    <option value="240">modo imersão / faxina (4 horas)</option>
+                                </select>
                             </div>
-                            <p style="font-size: 0.85rem; color: var(--text-muted);">dias difíceis pedem leveza. ative para focar apenas no estritamente indispensável e congelar o restante sem culpa.</p>
                         </div>
 
-                        <div style="margin-top: 10px;">
-                            <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 8px;">prioridades essenciais de hoje:</div>
-                            <div class="task-input-wrapper">
-                                <input type="text" id="homeTaskInput" placeholder="ex: tirar lixo principal, lavar louça..." style="flex: 1;">
-                                <button class="action-btn" onclick="addHomeTask()">adicionar</button>
+                        <!-- Visão de Cronograma Organizada -->
+                        <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 16px;">
+                            <div>
+                                <div style="font-size: 0.82rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;">para hoje</div>
+                                <ul id="listHoje"></ul>
                             </div>
-                            <ul id="homeTaskList" style="margin-top: 10px;"></ul>
+
+                            <div>
+                                <div style="font-size: 0.82rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;">para amanhã</div>
+                                <ul id="listAmanha"></ul>
+                            </div>
+
+                            <div>
+                                <div style="font-size: 0.82rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;">para a semana / próximos dias</div>
+                                <ul id="listSemana"></ul>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- 2. Rotina & Limpeza -->
-                    <div class="home-subcontent" id="home-sub-rotina">
-                        <div class="section-subtitle">cronograma inteligente calibrado conforme o perfil e banheiros da casa.</div>
-                        <div class="task-input-wrapper">
-                            <input type="text" id="homeRoutineInput" placeholder="ex: higienizar banheiro social (rodízio)..." style="flex: 1;">
-                            <button class="action-btn" onclick="addHomeRoutine()">adicionar rotina</button>
-                        </div>
-                        <ul id="homeRoutineList" style="margin-top: 10px;"></ul>
-                    </div>
-
-                    <!-- 3. Despensa & Mercado -->
+                    <!-- 2. DESPENSA & MERCADO -->
                     <div class="home-subcontent" id="home-sub-despensa">
-                        <div class="section-subtitle">lista de reposição inteligente baseada no volume de moradores.</div>
+                        <div class="section-subtitle">lista de reposição sugerida com base no volume de moradores e consumo.</div>
                         <div class="task-input-wrapper">
-                            <input type="text" id="homeMarketInput" placeholder="ex: café, papel higiênico, produtos de limpeza..." style="flex: 1;">
+                            <input type="text" id="homeMarketInput" placeholder="ex: café, papel higiênico, leite..." style="flex: 1;">
                             <button class="action-btn" onclick="addHomeMarket()">adicionar item</button>
                         </div>
                         <ul id="homeMarketList" style="margin-top: 10px;"></ul>
                     </div>
 
-                    <!-- 4. Logística & Contas -->
-                    <div class="home-subcontent" id="home-sub-logistica">
-                        <div class="section-subtitle">manutenções sazonais, contas da casa e lembretes gentis.</div>
-                        <div class="task-input-wrapper">
-                            <input type="text" id="homeLogisticsInput" placeholder="ex: limpar filtro do ar-condicionado (mensal)..." style="flex: 1;">
-                            <button class="action-btn" onclick="addHomeLogistics()">adicionar lembrete</button>
-                        </div>
-                        <ul id="homeLogisticsList" style="margin-top: 10px;"></ul>
-                    </div>
-
-                    <!-- 5. Ajustes Domésticos (Em aba separada dentro do Kora Home) -->
+                    <!-- 3. AJUSTES DOMÉSTICOS -->
                     <div class="home-subcontent" id="home-sub-ajustes">
-                        <div class="section-subtitle">informe os dados da sua casa para recalibrar as frequências automaticamente.</div>
+                        <div class="section-subtitle">informe os dados da sua casa para o kora calibrar o cronograma automático.</div>
                         
                         <div style="background: rgba(184, 151, 153, 0.08); border: 1px solid var(--border-color); padding: 20px; border-radius: 20px; display: flex; flex-direction: column; gap: 14px;">
                             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
@@ -769,7 +777,7 @@
                                 </div>
                             </div>
                             <div style="display: flex; justify-content: flex-end; margin-top: 6px;">
-                                <button class="action-btn" onclick="salvarPerfilCasa()">recalibrar rotinas da casa</button>
+                                <button class="action-btn" onclick="salvarPerfilCasa()">recalibrar cronograma automático</button>
                             </div>
                             <div id="perfilResumo" style="font-size: 0.85rem; font-weight: 500; color: var(--text-main); background: rgba(255,255,255,0.6); padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border-color); margin-top: 6px;"></div>
                         </div>
@@ -917,22 +925,113 @@
             btn.classList.add('active');
         }
 
-        // Modo Pouca Energia
-        let lowEnergyActive = false;
-        function toggleLowEnergyMode() {
-            lowEnergyActive = !lowEnergyActive;
-            const btn = document.getElementById('lowEnergyBtn');
-            if (lowEnergyActive) {
-                btn.textContent = 'desativar modo leve';
-                btn.style.backgroundColor = '#606c38';
-                alert('modo pouca energia ativado: o kora home reteve apenas o essencial do dia para poupar você de esforço mental.');
-            } else {
-                btn.textContent = 'ativar modo leve';
-                btn.style.backgroundColor = 'var(--accent-dark)';
+        // Motor de Cronograma Automático Baseado em Pesquisa Doméstica
+        function getCronograma() {
+            return JSON.parse(localStorage.getItem('kora_cronograma')) || gerarCronogramaInteligente();
+        }
+
+        function gerarCronogramaInteligente() {
+            const p = JSON.parse(localStorage.getItem('kora_home_profile')) || { moradores: 2, banheiros: 2, quartos: 3, pets: 'sim' };
+            
+            return [
+                { id: 'c1', text: 'retirar lixo da cozinha e lixeiras principais', dia: 'hoje', duracao: 15, done: false, essencial: true },
+                { id: 'c2', text: 'lavar louça do dia e limpar bancada da pia', dia: 'hoje', duracao: 25, done: false, essencial: true },
+                { id: 'c3', text: 'recolher e organizar itens fora do lugar (reset de 10 min)', dia: 'hoje', duracao: 15, done: false, essencial: true },
+                { id: 'c4', text: `higienizar um dos ${p.banheiros} banheiros (rodízio)`, dia: 'hoje', duracao: 25, done: false, essencial: false },
+                { id: 'c5', text: 'passar pano rápido nas superfícies de uso comum', dia: 'amanha', duracao: 20, done: false, essencial: true },
+                { id: 'c6', text: `recolher lixos dos ${p.quartos} quartos e banheiros`, dia: 'amanha', duracao: 15, done: false, essencial: true },
+                { id: 'c7', text: p.pets === 'sim' ? 'aspirar pisos e tapetes (foco em pelos de pets)' : 'aspirar pisos das áreas de circulação', dia: 'amanha', duracao: 30, done: false, essencial: false },
+                { id: 'c8', text: `trocar roupa de cama (${p.quartos} quartos)`, dia: 'semana', duracao: 35, done: false, essencial: false },
+                { id: 'c9', text: 'limpeza interna de geladeira e conferência de despensa', dia: 'semana', duracao: 45, done: false, essencial: false },
+                { id: 'c10', text: 'lavar roupas acumuladas, estender e recolher', dia: 'semana', duracao: 60, done: false, essencial: false }
+            ];
+        }
+
+        function salvarCronograma(cron) {
+            localStorage.setItem('kora_cronograma', JSON.stringify(cron));
+            renderCronograma();
+        }
+
+        function adiarTarefa(id) {
+            let cron = getCronograma();
+            const item = cron.find(c => c.id === id);
+            if (!item) return;
+
+            if (item.dia === 'hoje') item.dia = 'amanha';
+            else if (item.dia === 'amanha') item.dia = 'semana';
+            
+            salvarCronograma(cron);
+        }
+
+        function toggleCronogramaItem(id) {
+            let cron = getCronograma();
+            const item = cron.find(c => c.id === id);
+            if (item) {
+                item.done = !item.done;
+                salvarCronograma(cron);
             }
         }
 
-        // Perfil e Calibragem Automática do Kora Home
+        function removerItemCronograma(id) {
+            let cron = getCronograma();
+            cron = cron.filter(c => c.id !== id);
+            salvarCronograma(cron);
+        }
+
+        function atualizarRitmoTempo() {
+            renderCronograma();
+        }
+
+        function renderCronograma() {
+            const cron = getCronograma();
+            const limiteMinutos = document.getElementById('modoRitmo').value;
+
+            const listHoje = document.getElementById('listHoje');
+            const listAmanha = document.getElementById('listAmanha');
+            const listSemana = document.getElementById('listSemana');
+
+            listHoje.innerHTML = '';
+            listAmanha.innerHTML = '';
+            listSemana.innerHTML = '';
+
+            let acumuladoHoje = 0;
+
+            cron.forEach(item => {
+                // Se o modo selecionado for restrito, filtra pelo tempo máximo acumulado ou tarefas essenciais
+                if (limiteMinutos !== 'todos') {
+                    if (item.dia === 'hoje' && acumuladoHoje + item.duracao > parseInt(limiteMinutos) && !item.essencial) {
+                        return; // Omitido por falta de tempo no modo escolhido
+                    }
+                }
+
+                if (item.dia === 'hoje' && !item.done) {
+                    acumuladoHoje += item.duracao;
+                }
+
+                const li = document.createElement('li');
+                if (item.done) li.classList.add('completed');
+                li.innerHTML = `
+                    <div class="item-content" onclick="toggleCronogramaItem('${item.id}')">
+                        <input type="checkbox" ${item.done ? 'checked' : ''}>
+                        <span class="badge" style="background-color: var(--accent-dark);">${item.duracao} min</span>
+                        <span>${item.text}</span>
+                    </div>
+                    <div class="item-actions">
+                        ${item.dia !== 'semana' ? `<button class="snooze-btn" onclick="event.stopPropagation(); adiarTarefa('${item.id}')" title="adiar para amanhã">adiar ➔</button>` : ''}
+                        <button class="delete-btn" onclick="event.stopPropagation(); removerItemCronograma('${item.id}')" title="remover">×</button>
+                    </div>`;
+
+                if (item.dia === 'hoje') listHoje.appendChild(li);
+                else if (item.dia === 'amanha') listAmanha.appendChild(li);
+                else if (item.dia === 'semana') listSemana.appendChild(li);
+            });
+
+            if (listHoje.innerHTML === '') listHoje.innerHTML = `<div style="font-size:0.85rem; color:var(--text-muted); padding:4px 0;">nenhuma tarefa pendente para hoje neste ritmo.</div>`;
+            if (listAmanha.innerHTML === '') listAmanha.innerHTML = `<div style="font-size:0.85rem; color:var(--text-muted); padding:4px 0;">nenhuma tarefa para amanhã.</div>`;
+            if (listSemana.innerHTML === '') listSemana.innerHTML = `<div style="font-size:0.85rem; color:var(--text-muted); padding:4px 0;">nenhuma manutenção programada para a semana.</div>`;
+        }
+
+        // Perfil e Calibragem
         function salvarPerfilCasa() {
             const moradores = document.getElementById('setupMoradores').value;
             const banheiros = document.getElementById('setupBanheiros').value;
@@ -942,8 +1041,9 @@
             const perfil = { moradores, banheiros, quartos, pets };
             localStorage.setItem('kora_home_profile', JSON.stringify(perfil));
             
+            localStorage.removeItem('kora_cronograma');
             aplicarPerfilInteligente(perfil);
-            alert('perfil da casa atualizado! as rotinas foram recalibradas.');
+            alert('perfil atualizado e cronograma inteligente recalculado!');
         }
 
         function carregarPerfilCasa() {
@@ -959,103 +1059,14 @@
 
         function aplicarPerfilInteligente(p) {
             const resumo = document.getElementById('perfilResumo');
-            resumo.innerHTML = `🏠 matriz ativa: <strong>${p.moradores} moradores</strong>, <strong>${p.banheiros} banheiros</strong> (limpeza alternada), <strong>${p.quartos} quartos</strong> e <strong>pets: ${p.pets}</strong>.`;
-
-            if (!localStorage.getItem('kora_home_initialized')) {
-                const rotinasIniciais = [
-                    { text: `higienizar os ${p.banheiros} banheiros (rodízio quinzenal / manutenção leve)`, done: false },
-                    { text: `recolher lixos dos ${p.quartos} quartos e banheiros`, done: false },
-                    { text: `trocar roupa de cama (${p.quartos} quartos)`, done: false }
-                ];
-                localStorage.setItem('kora_home_routine', JSON.stringify(rotinasIniciais));
-                localStorage.setItem('kora_home_initialized', 'true');
-                renderHomeRoutine();
-            }
+            resumo.innerHTML = `🏠 matriz ativa: <strong>${p.moradores} moradores</strong>, <strong>${p.banheiros} banheiros</strong>, <strong>${p.quartos} quartos</strong> e <strong>pets: ${p.pets}</strong>.`;
+            renderCronograma();
         }
 
-        // Dados do Kora Home
+        // Despensa & Mercado
         function getHomeData(key) { return JSON.parse(localStorage.getItem(`kora_home_${key}`)) || []; }
         function saveHomeData(key, data) { localStorage.setItem(`kora_home_${key}`, JSON.stringify(data)); }
 
-        // Foco do Dia
-        function addHomeTask() {
-            const input = document.getElementById('homeTaskInput');
-            if (!input.value.trim()) return;
-            const tasks = getHomeData('tasks');
-            tasks.push({ text: input.value.trim(), done: false });
-            saveHomeData('tasks', tasks);
-            input.value = '';
-            renderHomeTasks();
-        }
-        function toggleHomeTask(i) {
-            const tasks = getHomeData('tasks');
-            tasks[i].done = !tasks[i].done;
-            saveHomeData('tasks', tasks);
-            renderHomeTasks();
-        }
-        function removeHomeTask(i) {
-            const tasks = getHomeData('tasks');
-            tasks.splice(i, 1);
-            saveHomeData('tasks', tasks);
-            renderHomeTasks();
-        }
-        function renderHomeTasks() {
-            const tasks = getHomeData('tasks');
-            const list = document.getElementById('homeTaskList');
-            list.innerHTML = '';
-            tasks.forEach((t, i) => {
-                list.innerHTML += `
-                    <li class="${t.done ? 'completed' : ''}">
-                        <div class="item-content" onclick="toggleHomeTask(${i})">
-                            <input type="checkbox" ${t.done ? 'checked' : ''}>
-                            <span>${t.text}</span>
-                        </div>
-                        <button class="delete-btn" onclick="removeHomeTask(${i})">×</button>
-                    </li>`;
-            });
-        }
-        renderHomeTasks();
-
-        // Rotina & Limpeza
-        function addHomeRoutine() {
-            const input = document.getElementById('homeRoutineInput');
-            if (!input.value.trim()) return;
-            const items = getHomeData('routine');
-            items.push({ text: input.value.trim(), done: false });
-            saveHomeData('routine', items);
-            input.value = '';
-            renderHomeRoutine();
-        }
-        function toggleHomeRoutine(i) {
-            const items = getHomeData('routine');
-            items[i].done = !items[i].done;
-            saveHomeData('routine', items);
-            renderHomeRoutine();
-        }
-        function removeHomeRoutine(i) {
-            const items = getHomeData('routine');
-            items.splice(i, 1);
-            saveHomeData('routine', items);
-            renderHomeRoutine();
-        }
-        function renderHomeRoutine() {
-            const items = getHomeData('routine');
-            const list = document.getElementById('homeRoutineList');
-            list.innerHTML = '';
-            items.forEach((item, i) => {
-                list.innerHTML += `
-                    <li class="${item.done ? 'completed' : ''}">
-                        <div class="item-content" onclick="toggleHomeRoutine(${i})">
-                            <input type="checkbox" ${item.done ? 'checked' : ''}>
-                            <span>${item.text}</span>
-                        </div>
-                        <button class="delete-btn" onclick="removeHomeRoutine(${i})">×</button>
-                    </li>`;
-            });
-        }
-        renderHomeRoutine();
-
-        // Despensa & Mercado
         function addHomeMarket() {
             const input = document.getElementById('homeMarketInput');
             if (!input.value.trim()) return;
@@ -1093,45 +1104,6 @@
             });
         }
         renderHomeMarket();
-
-        // Logística & Contas
-        function addHomeLogistics() {
-            const input = document.getElementById('homeLogisticsInput');
-            if (!input.value.trim()) return;
-            const items = getHomeData('logistics');
-            items.push({ text: input.value.trim(), done: false });
-            saveHomeData('logistics', items);
-            input.value = '';
-            renderHomeLogistics();
-        }
-        function toggleHomeLogistics(i) {
-            const items = getHomeData('logistics');
-            items[i].done = !items[i].done;
-            saveHomeData('logistics', items);
-            renderHomeLogistics();
-        }
-        function removeHomeLogistics(i) {
-            const items = getHomeData('logistics');
-            items.splice(i, 1);
-            saveHomeData('logistics', items);
-            renderHomeLogistics();
-        }
-        function renderHomeLogistics() {
-            const items = getHomeData('logistics');
-            const list = document.getElementById('homeLogisticsList');
-            list.innerHTML = '';
-            items.forEach((item, i) => {
-                list.innerHTML += `
-                    <li class="${item.done ? 'completed' : ''}">
-                        <div class="item-content" onclick="toggleHomeLogistics(${i})">
-                            <input type="checkbox" ${item.done ? 'checked' : ''}>
-                            <span>${item.text}</span>
-                        </div>
-                        <button class="delete-btn" onclick="removeHomeLogistics(${i})">×</button>
-                    </li>`;
-            });
-        }
-        renderHomeLogistics();
         carregarPerfilCasa();
 
         // Tarefas normais do Kora
