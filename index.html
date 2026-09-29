@@ -62,24 +62,78 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            padding: 12px;
+            align-items: stretch;
+            padding: 8px;
+        }
+
+        /* Tela de Entrada (Welcome Screen) */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            background-image: var(--pattern-bg);
+            background-size: 24px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            z-index: 9999;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .welcome-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--text-main);
+        }
+
+        .welcome-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .welcome-btn {
+            background-color: var(--text-main);
+            color: var(--bg-color);
+            border: none;
+            padding: 14px 32px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            box-shadow: var(--shadow);
+        }
+
+        .welcome-btn:hover {
+            opacity: 0.85;
         }
 
         .app-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 100%;
             display: grid;
             grid-template-columns: 220px 1fr;
-            gap: 16px;
+            gap: 12px;
             align-items: start;
-            padding-bottom: 30px;
+            padding-bottom: 20px;
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 4px;
-            }
             .app-container {
                 grid-template-columns: 1fr;
                 gap: 10px;
@@ -90,12 +144,12 @@
             background: var(--card-bg);
             backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 16px;
+            border-radius: 16px;
+            padding: 14px;
             box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             position: relative;
         }
 
@@ -157,7 +211,7 @@
             background: none;
             border: none;
             text-align: left;
-            padding: 9px 12px;
+            padding: 8px 12px;
             border-radius: 10px;
             cursor: pointer;
             font-size: 0.85rem;
@@ -182,7 +236,7 @@
             font-size: 0.75rem;
             color: var(--text-muted);
             border-top: 1px solid var(--border-color);
-            padding-top: 10px;
+            padding-top: 8px;
         }
 
         .datetime-widget .time {
@@ -200,8 +254,8 @@
 
         .settings-dropdown {
             position: absolute;
-            top: 55px;
-            right: 16px;
+            top: 50px;
+            right: 14px;
             background: var(--card-bg);
             backdrop-filter: blur(16px);
             border: 1px solid var(--border-color);
@@ -212,8 +266,8 @@
             gap: 10px;
             box-shadow: var(--shadow);
             z-index: 1000;
-            min-width: 190px;
-            max-height: 80vh;
+            width: 220px;
+            max-height: 75vh;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
         }
@@ -266,14 +320,14 @@
         .main-content {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
             width: 100%;
         }
 
         .tab-content {
             display: none;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
         }
 
         .tab-content.active {
@@ -283,7 +337,7 @@
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
+            gap: 12px;
         }
 
         @media (max-width: 768px) {
@@ -295,13 +349,13 @@
         .card {
             background-color: var(--card-bg);
             backdrop-filter: blur(12px);
-            border-radius: 18px;
-            padding: 16px;
+            border-radius: 16px;
+            padding: 14px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            min-height: 280px;
+            min-height: 260px;
         }
 
         .card.full {
@@ -318,13 +372,13 @@
             font-size: 0.9rem;
             font-weight: 600;
             color: var(--text-main);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .input-group {
             display: flex;
             gap: 8px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             flex-wrap: wrap;
         }
 
@@ -365,7 +419,7 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .task-row {
@@ -390,7 +444,7 @@
             list-style: none;
             flex: 1;
             overflow-y: auto;
-            max-height: 250px;
+            max-height: 240px;
             padding-right: 2px;
         }
 
@@ -450,7 +504,7 @@
         .project-filters {
             display: flex;
             gap: 6px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             overflow-x: auto;
             padding-bottom: 4px;
             -webkit-overflow-scrolling: touch;
@@ -488,7 +542,7 @@
             align-items: center;
             justify-content: center;
             flex: 1;
-            gap: 14px;
+            gap: 12px;
             text-align: center;
         }
 
@@ -520,10 +574,17 @@
 </head>
 <body class="theme-cozy">
 
+    <!-- Tela de Entrada / Boas-vindas -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-title">kora</div>
+        <div class="welcome-subtitle">seu espaço particular de produtividade</div>
+        <button class="welcome-btn" onclick="enterApp()">entrar</button>
+    </div>
+
     <div class="app-container">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <div class="app-title">✨ kora</div>
+                <div class="app-title">kora</div>
                 <button class="settings-btn" onclick="toggleSettings()" title="ajustes e temas">
                     <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c-.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
                 </button>
@@ -564,7 +625,7 @@
                 <div class="card full">
                     <h3>central de tarefas</h3>
                     
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); padding: 10px; border-radius: 12px; margin-bottom: 12px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); padding: 10px; border-radius: 12px; margin-bottom: 10px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
                         <input type="text" id="newProjectName" placeholder="nome da pasta..." style="flex:2; min-width: 130px;">
                         <select id="newProjectColor" style="flex:1; min-width: 120px;">
                             <option value="#d4a373">bege</option>
@@ -664,6 +725,15 @@
     <audio id="alarmAudio" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto"></audio>
 
     <script>
+        function enterApp() {
+            document.getElementById('welcomeScreen').classList.add('hidden');
+            localStorage.setItem('kora_entered', 'true');
+        }
+
+        if (localStorage.getItem('kora_entered') === 'true') {
+            document.getElementById('welcomeScreen').classList.add('hidden');
+        }
+
         function updateDateTime() {
             const now = new Date();
             document.getElementById('clockDisplay').textContent = now.toLocaleTimeString('pt-BR');
