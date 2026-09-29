@@ -13,8 +13,8 @@
             --text-muted: #8c7678;
             --accent-soft: #e8d3d5;
             --accent-dark: #b89799;
-            --border-color: rgba(232, 211, 213, 0.5);
-            --shadow: 0 4px 20px 0 rgba(184, 151, 153, 0.06);
+            --border-color: rgba(232, 211, 213, 0.6);
+            --shadow: 0 8px 32px 0 rgba(184, 151, 153, 0.08);
             --pattern-bg: radial-gradient(#e8d3d5 0.75px, transparent 0.75px);
             --font-family: 'Plus Jakarta Sans', sans-serif;
         }
@@ -27,7 +27,7 @@
             --accent-soft: #334155;
             --accent-dark: #38bdf8;
             --border-color: rgba(51, 65, 85, 0.8);
-            --shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2);
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
             --pattern-bg: radial-gradient(#334155 0.75px, transparent 0.75px);
             --font-family: 'Inter', sans-serif;
         }
@@ -40,7 +40,7 @@
             --accent-soft: #eae5df;
             --accent-dark: #5c554e;
             --border-color: rgba(220, 215, 208, 0.8);
-            --shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.03);
+            --shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.04);
             --pattern-bg: none;
             --font-family: 'Lora', serif;
         }
@@ -61,9 +61,9 @@
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 12px;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 24px;
         }
 
         /* Tela de Entrada */
@@ -94,74 +94,82 @@
         }
 
         .welcome-title {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: 600;
-            letter-spacing: 0.5px;
             color: var(--text-main);
         }
 
         .welcome-subtitle {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: var(--text-muted);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .welcome-btn {
             background-color: var(--text-main);
             color: var(--bg-color);
             border: none;
-            padding: 12px 28px;
+            padding: 14px 32px;
             border-radius: 14px;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 1rem;
             cursor: pointer;
             box-shadow: var(--shadow);
         }
 
-        /* Container Principal Vertical */
+        /* Layout Responsivo Amplo (Desktop e Mobile) */
         .app-container {
             width: 100%;
-            max-width: 600px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 24px;
+            align-items: start;
             padding-bottom: 40px;
         }
 
-        /* Topo Clean com Seletor Nativo */
+        @media (max-width: 850px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+            body {
+                padding: 12px;
+            }
+        }
+
+        /* Menu Lateral / Painel Superior */
         .sidebar {
             background: var(--card-bg);
             backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 16px;
+            border-radius: 24px;
+            padding: 24px 20px;
             box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 20px;
+            position: relative;
         }
 
         .sidebar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 10px;
         }
 
         .app-title {
-            font-size: 1.15rem;
+            font-size: 1.25rem;
             font-weight: 600;
             color: var(--text-main);
             letter-spacing: 0.5px;
         }
 
-        /* Seletor Nativo de Estética (Estilo iPhone) */
         .theme-selector {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 6px 10px;
-            font-size: 0.8rem;
+            padding: 8px 12px;
+            font-size: 0.85rem;
             color: var(--text-main);
             outline: none;
             cursor: pointer;
@@ -169,23 +177,30 @@
 
         .nav-tabs {
             display: flex;
+            flex-direction: column;
             gap: 6px;
-            overflow-x: auto;
-            padding-bottom: 2px;
-            -webkit-overflow-scrolling: touch;
         }
 
-        .nav-tabs::-webkit-scrollbar {
-            display: none;
+        @media (max-width: 850px) {
+            .nav-tabs {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 4px;
+                -webkit-overflow-scrolling: touch;
+            }
+            .nav-tabs::-webkit-scrollbar {
+                display: none;
+            }
         }
 
         .nav-tab {
             background: none;
             border: none;
-            padding: 8px 14px;
-            border-radius: 10px;
+            text-align: left;
+            padding: 11px 16px;
+            border-radius: 12px;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 500;
             color: var(--text-muted);
             transition: all 0.2s;
@@ -204,32 +219,72 @@
         }
 
         .datetime-widget {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             border-top: 1px solid var(--border-color);
-            padding-top: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding-top: 16px;
         }
 
         .datetime-widget .time {
             font-weight: 600;
             color: var(--text-main);
+            font-size: 0.95rem;
+            margin-bottom: 2px;
         }
 
-        /* Conteúdo Principal */
+        @media (max-width: 850px) {
+            .datetime-widget {
+                display: none;
+            }
+        }
+
+        /* Seletor de Abas nas Configurações (Ajustado) */
+        .settings-dropdown {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .settings-dropdown .section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 4px;
+        }
+
+        .settings-dropdown label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .settings-dropdown label:hover {
+            color: var(--text-main);
+        }
+
+        /* Conteúdo Principal Amplo */
         .main-content {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 20px;
             width: 100%;
         }
 
         .tab-content {
             display: none;
             flex-direction: column;
-            gap: 16px;
+            gap: 20px;
             width: 100%;
         }
 
@@ -237,32 +292,54 @@
             display: flex;
         }
 
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 750px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .card {
             background-color: var(--card-bg);
             backdrop-filter: blur(12px);
-            border-radius: 20px;
-            padding: 18px;
+            border-radius: 24px;
+            padding: 24px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 16px;
             width: 100%;
         }
 
+        .card.full {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 750px) {
+            .card.full {
+                grid-column: span 1;
+            }
+        }
+
         .card h3 {
-            font-size: 0.95rem;
+            font-size: 1.05rem;
             font-weight: 600;
             color: var(--text-main);
         }
 
         input[type="text"], input[type="number"], select, textarea {
             width: 100%;
-            padding: 11px 14px;
+            padding: 12px 16px;
             border: 1px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 14px;
             outline: none;
-            font-size: 0.88rem;
+            font-size: 0.92rem;
             background-color: var(--card-bg);
             color: var(--text-main);
             text-transform: lowercase;
@@ -275,7 +352,7 @@
         textarea {
             resize: none;
             flex: 1;
-            min-height: 250px;
+            min-height: 320px;
             line-height: 1.5;
         }
 
@@ -283,56 +360,50 @@
             background-color: var(--text-main);
             color: var(--bg-color);
             border: none;
-            padding: 0 16px;
-            border-radius: 12px;
+            padding: 0 20px;
+            border-radius: 14px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.85rem;
-            height: 42px;
+            font-size: 0.9rem;
+            height: 45px;
             white-space: nowrap;
             text-transform: lowercase;
         }
 
-        /* Central de Tarefas */
+        /* Central de Tarefas Ampla */
         .task-creator-box {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.4);
             border: 1px solid var(--border-color);
-            padding: 12px;
-            border-radius: 14px;
+            padding: 16px;
+            border-radius: 16px;
         }
 
         .task-input-wrapper {
             display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        @media (min-width: 450px) {
-            .task-input-wrapper {
-                flex-direction: row;
-            }
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         ul {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            max-height: 300px;
+            gap: 10px;
+            max-height: 380px;
             overflow-y: auto;
-            padding-right: 2px;
+            padding-right: 4px;
         }
 
         li {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 11px 14px;
+            padding: 14px 16px;
             background-color: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 16px;
             border: 1px solid var(--border-color);
         }
 
@@ -345,11 +416,11 @@
         .item-content {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             cursor: pointer;
             flex: 1;
             word-break: break-word;
-            font-size: 0.88rem;
+            font-size: 0.92rem;
         }
 
         input[type="checkbox"] {
@@ -364,23 +435,23 @@
             border: none;
             color: var(--text-muted);
             cursor: pointer;
-            font-size: 1rem;
-            padding: 2px 6px;
+            font-size: 1.1rem;
+            padding: 2px 8px;
         }
 
         .badge {
-            font-size: 0.65rem;
-            padding: 3px 6px;
+            font-size: 0.7rem;
+            padding: 3px 8px;
             border-radius: 6px;
             font-weight: 500;
-            margin-right: 4px;
+            margin-right: 6px;
             color: #fff;
             white-space: nowrap;
         }
 
         .project-filters {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             overflow-x: auto;
             padding-bottom: 4px;
             -webkit-overflow-scrolling: touch;
@@ -393,15 +464,15 @@
         .project-chip {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            padding: 6px 12px;
-            border-radius: 10px;
-            font-size: 0.8rem;
+            padding: 8px 16px;
+            border-radius: 14px;
+            font-size: 0.85rem;
             cursor: pointer;
             color: var(--text-muted);
             white-space: nowrap;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             flex-shrink: 0;
         }
 
@@ -418,13 +489,13 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 16px;
+            gap: 20px;
             text-align: center;
-            padding: 10px 0;
+            padding: 20px 0;
         }
 
         .timer-display {
-            font-size: 3.2rem;
+            font-size: 4rem;
             font-weight: 300;
             letter-spacing: -2px;
             color: var(--text-main);
@@ -432,19 +503,19 @@
 
         .timer-controls {
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
 
         .timer-settings {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             align-items: center;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
         }
 
         .timer-settings input {
-            width: 55px;
+            width: 65px;
             text-align: center;
         }
     </style>
@@ -458,8 +529,8 @@
     </div>
 
     <div class="app-container">
-        <!-- Topo Clean com Seletor Nativo de Estética -->
-        <header class="sidebar">
+        <!-- Menu Lateral Amplo -->
+        <aside class="sidebar">
             <div class="sidebar-header">
                 <div class="app-title">kora</div>
                 <select id="themeSelect" class="theme-selector" onchange="changeTheme(this.value)">
@@ -478,26 +549,36 @@
             </nav>
 
             <div class="datetime-widget">
-                <span id="dateDisplay">carregando...</span>
-                <span class="time" id="clockDisplay">00:00:00</span>
+                <div class="time" id="clockDisplay">00:00:00</div>
+                <div id="dateDisplay">carregando...</div>
             </div>
-        </header>
 
-        <!-- Conteúdo Principal -->
+            <!-- Seletor de Abas Visíveis integrado na lateral -->
+            <div class="settings-dropdown">
+                <div class="section-title">ativar/ocultar abas</div>
+                <label><input type="checkbox" id="toggle_tasks" checked onchange="saveTabVisibility()"> tarefas</label>
+                <label><input type="checkbox" id="toggle_reading" checked onchange="saveTabVisibility()"> leitura</label>
+                <label><input type="checkbox" id="toggle_notes" checked onchange="saveTabVisibility()"> notas</label>
+                <label><input type="checkbox" id="toggle_focus" checked onchange="saveTabVisibility()"> foco</label>
+                <label><input type="checkbox" id="toggle_links" checked onchange="saveTabVisibility()"> links</label>
+            </div>
+        </aside>
+
+        <!-- Conteúdo Principal Amplo -->
         <main class="main-content">
             <!-- TAREFAS -->
             <div id="tasks" class="tab-content active" data-tab="tasks">
-                <div class="card">
+                <div class="card full">
                     <h3>central de tarefas</h3>
                     
                     <div class="task-creator-box">
-                        <input type="text" id="newProjectName" placeholder="nome da nova pasta...">
-                        <div style="display: flex; gap: 8px;">
+                        <input type="text" id="newProjectName" placeholder="nome da nova pasta (ex: monografia)...">
+                        <div style="display: flex; gap: 10px;">
                             <select id="newProjectColor" style="flex: 1;">
-                                <option value="#d4a373">bege</option>
-                                <option value="#b89799" selected>rosa</option>
-                                <option value="#9381ff">lavanda</option>
-                                <option value="#606c38">verde</option>
+                                <option value="#d4a373">bege aconchegante</option>
+                                <option value="#b89799" selected>rosa antigo</option>
+                                <option value="#9381ff">lavanda suave</option>
+                                <option value="#606c38">verde oliva</option>
                             </select>
                             <button class="action-btn" onclick="addProject()">criar pasta</button>
                         </div>
@@ -508,11 +589,9 @@
                     </div>
 
                     <div class="task-input-wrapper">
-                        <select id="taskProjectSelect" style="flex: 1;"></select>
-                        <div style="display: flex; gap: 8px; flex: 2;">
-                            <input type="text" id="taskInput" placeholder="o que precisa ser feito..." style="flex: 1;">
-                            <button class="action-btn" onclick="addTask()">adicionar</button>
-                        </div>
+                        <select id="taskProjectSelect" style="flex: 1; min-width: 150px;"></select>
+                        <input type="text" id="taskInput" placeholder="o que precisa ser feito..." style="flex: 2;">
+                        <button class="action-btn" onclick="addTask()">adicionar</button>
                     </div>
 
                     <ul id="taskList"></ul>
@@ -521,17 +600,17 @@
 
             <!-- LEITURA -->
             <div id="reading" class="tab-content" data-tab="reading">
-                <div class="card">
+                <div class="card full">
                     <h3>reading tracker</h3>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <input type="text" id="bookTitle" placeholder="título do livro atual...">
-                        <div style="display: flex; gap: 8px;">
-                            <input type="number" id="bookCurrent" placeholder="pág. atual" style="flex: 1;">
-                            <input type="number" id="bookTotal" placeholder="total" style="flex: 1;">
-                            <button class="action-btn" onclick="saveBook()">salvar</button>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <input type="text" id="bookTitle" placeholder="título do livro / leitura atual...">
+                        <div style="display: flex; gap: 10px;">
+                            <input type="number" id="bookCurrent" placeholder="página atual" style="flex: 1;">
+                            <input type="number" id="bookTotal" placeholder="total de páginas" style="flex: 1;">
+                            <button class="action-btn" onclick="saveBook()">salvar progresso</button>
                         </div>
                     </div>
-                    <div id="bookProgressDisplay" style="margin-top: 4px; font-size: 0.85rem; color: var(--text-muted); background: rgba(255,255,255,0.4); border: 1px solid var(--border-color); padding: 14px; border-radius: 12px;">
+                    <div id="bookProgressDisplay" style="margin-top: 10px; font-size: 0.9rem; color: var(--text-muted); background: rgba(255,255,255,0.4); border: 1px solid var(--border-color); padding: 18px; border-radius: 16px;">
                         nenhuma leitura cadastrada.
                     </div>
                 </div>
@@ -539,38 +618,40 @@
 
             <!-- NOTAS -->
             <div id="notes" class="tab-content" data-tab="notes">
-                <div class="card">
+                <div class="card full" style="min-height: 500px;">
                     <h3>notas & brain dump</h3>
-                    <textarea id="notesArea" placeholder="escreva seus pensamentos..."></textarea>
+                    <textarea id="notesArea" placeholder="escreva seus pensamentos, ideias ou rascunhos aqui..."></textarea>
                 </div>
             </div>
 
             <!-- FOCO -->
             <div id="focus" class="tab-content" data-tab="focus">
-                <div class="card">
-                    <h3>pomodoro</h3>
-                    <div class="pomodoro-container">
-                        <div class="timer-display" id="timerDisplay">25:00</div>
-                        <div class="timer-controls">
-                            <button class="action-btn" id="startBtn" onclick="togglePomodoro()">iniciar</button>
-                            <button class="action-btn" onclick="resetPomodoro()" style="background-color: var(--accent-dark);">zerar</button>
-                        </div>
-                        <div class="timer-settings">
-                            min: <input type="number" id="workTime" value="25" min="1" max="60" onchange="updateTimerSetting()">
+                <div class="grid">
+                    <div class="card">
+                        <h3>pomodoro customizável</h3>
+                        <div class="pomodoro-container">
+                            <div class="timer-display" id="timerDisplay">25:00</div>
+                            <div class="timer-controls">
+                                <button class="action-btn" id="startBtn" onclick="togglePomodoro()">iniciar</button>
+                                <button class="action-btn" onclick="resetPomodoro()" style="background-color: var(--accent-dark);">zerar</button>
+                            </div>
+                            <div class="timer-settings">
+                                foco: <input type="number" id="workTime" value="25" min="1" max="60" onchange="updateTimerSetting()"> min
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="card">
-                    <h3>soundtrack</h3>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <p style="font-size: 0.8rem; color: var(--text-muted);">link embed spotify/youtube:</p>
-                        <div style="display: flex; gap: 8px;">
-                            <input type="text" id="playlistInput" placeholder="https://..." style="flex: 1;">
-                            <button class="action-btn" onclick="savePlaylist()">ok</button>
-                        </div>
-                        <div class="player-embed" id="playerContainer">
-                            <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center; padding: 10px;">sem playlist</p>
+                    <div class="card">
+                        <h3>soundtrack</h3>
+                        <div style="display: flex; flex-direction: column; gap: 12px; flex: 1; justify-content: center;">
+                            <p style="font-size: 0.85rem; color: var(--text-muted);">cole o link de incorporação (embed) do spotify ou youtube:</p>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" id="playlistInput" placeholder="https://..." style="flex: 1;">
+                                <button class="action-btn" onclick="savePlaylist()">salvar</button>
+                            </div>
+                            <div class="player-embed" id="playerContainer">
+                                <p style="font-size: 0.85rem; color: var(--text-muted); text-align: center; padding: 20px;">nenhuma playlist conectada</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -578,16 +659,16 @@
 
             <!-- LINKS -->
             <div id="links" class="tab-content" data-tab="links">
-                <div class="card">
-                    <h3>links úteis</h3>
-                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div class="card full" style="min-height: 450px;">
+                    <h3>links úteis & atalhos</h3>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
                         <input type="text" id="linkTitleInput" placeholder="nome do site...">
-                        <div style="display: flex; gap: 8px;">
+                        <div style="display: flex; gap: 10px;">
                             <input type="text" id="linkUrlInput" placeholder="url (https://...)" style="flex: 1;">
-                            <button class="action-btn" onclick="addBookmark()">adicionar</button>
+                            <button class="action-btn" onclick="addBookmark()">adicionar link</button>
                         </div>
                     </div>
-                    <div id="bookmarksContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; margin-top: 6px;"></div>
+                    <div id="bookmarksContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-top: 15px;"></div>
                 </div>
             </div>
         </main>
@@ -607,8 +688,8 @@
 
         function updateDateTime() {
             const now = new Date();
-            document.getElementById('clockDisplay').textContent = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-            const options = { weekday: 'short', month: 'short', day: 'numeric' };
+            document.getElementById('clockDisplay').textContent = now.toLocaleTimeString('pt-BR');
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('dateDisplay').textContent = now.toLocaleDateString('pt-BR', options);
         }
         setInterval(updateDateTime, 1000);
@@ -627,6 +708,39 @@
         }
         loadTheme();
 
+        function saveTabVisibility() {
+            const tabs = ['tasks', 'reading', 'notes', 'focus', 'links'];
+            const visibility = {};
+            tabs.forEach(tab => {
+                const checkbox = document.getElementById(`toggle_${tab}`);
+                const isChecked = checkbox ? checkbox.checked : true;
+                visibility[tab] = isChecked;
+                const navBtn = document.querySelector(`.nav-tab[data-tab="${tab}"]`);
+                const contentDiv = document.querySelector(`.tab-content[data-tab="${tab}"]`);
+                
+                if (navBtn) navBtn.style.display = isChecked ? 'block' : 'none';
+                if (!isChecked && contentDiv && contentDiv.classList.contains('active')) {
+                    for (let t of tabs) {
+                        if (visibility[t] !== false) {
+                            switchTab(t);
+                            break;
+                        }
+                    }
+                }
+            });
+            localStorage.setItem('kora_tabs_visibility', JSON.stringify(visibility));
+        }
+
+        function loadTabVisibility() {
+            const saved = JSON.parse(localStorage.getItem('kora_tabs_visibility'));
+            if (!saved) return;
+            Object.keys(saved).forEach(tab => {
+                const checkbox = document.getElementById(`toggle_${tab}`);
+                if (checkbox) checkbox.checked = saved[tab];
+            });
+            saveTabVisibility();
+        }
+
         function switchTab(tabId, event) {
             if (event) event.preventDefault();
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -638,6 +752,8 @@
             if (targetContent) targetContent.classList.add('active');
             if (targetTab) targetTab.classList.add('active');
         }
+
+        loadTabVisibility();
 
         let currentFilter = 'all';
 
@@ -776,12 +892,12 @@
             document.getElementById('bookTotal').value = book.total;
 
             display.innerHTML = `
-                <div style="font-weight: 600; color: var(--text-main); margin-bottom: 4px;">📖 ${book.title}</div>
-                <div style="display: flex; justify-content: space-between; font-size: 0.78rem; margin-bottom: 4px;">
+                <div style="font-weight: 600; color: var(--text-main); margin-bottom: 6px;">📖 ${book.title}</div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 6px;">
                     <span>progresso: ${book.current} / ${book.total} pág.</span>
                     <span>${percent}%</span>
                 </div>
-                <div style="background: var(--accent-soft); border-radius: 10px; height: 6px; width: 100%; overflow: hidden;">
+                <div style="background: var(--accent-soft); border-radius: 10px; height: 8px; width: 100%; overflow: hidden;">
                     <div style="background: var(--text-main); width: ${percent}%; height: 100%; transition: width 0.3s;"></div>
                 </div>
             `;
@@ -855,7 +971,7 @@
         }
 
         function renderPlaylist(url) {
-            document.getElementById('playerContainer').innerHTML = `<iframe src="${url}" width="100%" height="110" frameborder="0" allow="encrypted-media"></iframe>`;
+            document.getElementById('playerContainer').innerHTML = `<iframe src="${url}" width="100%" height="152" frameborder="0" allow="encrypted-media"></iframe>`;
         }
 
         const savedPlaylist = localStorage.getItem('kora_playlist');
@@ -874,12 +990,12 @@
             container.innerHTML = '';
             bookmarks.forEach((b, index) => {
                 container.innerHTML += `
-                    <div style="position: relative; background: var(--card-bg); border: 1px solid var(--border-color); padding: 10px; border-radius: 10px; display: flex; flex-direction: column; gap: 4px;">
+                    <div style="position: relative; background: var(--card-bg); border: 1px solid var(--border-color); padding: 14px; border-radius: 14px; display: flex; flex-direction: column; gap: 6px;">
                         <a href="${b.url}" target="_blank" style="text-decoration: none; color: var(--text-main); display: flex; flex-direction: column; gap: 4px;">
-                            <span style="font-weight: 600; font-size: 0.8rem;">${b.title}</span>
-                            <span style="font-size: 0.65rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${b.url}</span>
+                            <span style="font-weight: 600; font-size: 0.9rem;">${b.title}</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${b.url}</span>
                         </a>
-                        <button onclick="removeBookmark(${index})" style="position: absolute; top: 6px; right: 6px; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.7rem;" title="apagar">×</button>
+                        <button onclick="removeBookmark(${index})" style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.8rem;" title="apagar">×</button>
                     </div>
                 `;
             });
