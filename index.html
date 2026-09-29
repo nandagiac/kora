@@ -3,106 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ my workspace ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Kora — Workspace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        :root {
+        body.theme-cozy {
             --bg-color: #f7f3f2;
-            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-bg: rgba(255, 255, 255, 0.9);
             --text-main: #4a3b3c;
             --text-muted: #8c7678;
             --accent-soft: #e8d3d5;
             --accent-dark: #b89799;
             --border-color: rgba(232, 211, 213, 0.6);
-            --shadow: 0 8px 32px 0 rgba(184, 151, 153, 0.1);
+            --shadow: 0 8px 32px 0 rgba(184, 151, 153, 0.08);
+            --pattern-bg: radial-gradient(#e8d3d5 0.75px, transparent 0.75px);
+            --font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body.theme-focus {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.85);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-soft: #334155;
+            --accent-dark: #38bdf8;
+            --border-color: rgba(51, 65, 85, 0.8);
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            --pattern-bg: radial-gradient(#334155 0.75px, transparent 0.75px);
+            --font-family: 'Inter', sans-serif;
+        }
+
+        body.theme-classic {
+            --bg-color: #fcfbf9;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-main: #2c2c2c;
+            --text-muted: #767676;
+            --accent-soft: #eae5df;
+            --accent-dark: #5c554e;
+            --border-color: rgba(220, 215, 208, 0.8);
+            --shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.04);
+            --pattern-bg: none;
+            --font-family: 'Lora', serif;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: var(--font-family);
         }
 
         body {
             background-color: var(--bg-color);
-            background-image: radial-gradient(#e8d3d5 0.75px, transparent 0.75px);
+            background-image: var(--pattern-bg);
             background-size: 24px 24px;
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 16px;
         }
 
-        .wrapper {
+        .app-container {
             width: 100%;
-            max-width: 920px;
+            max-width: 1050px;
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        @media (max-width: 850px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sidebar {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 24px 20px;
+            box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
             position: relative;
         }
 
-        /* Barra de Navegação Superior Minimalista */
-        .top-bar {
+        .sidebar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 15px 25px;
-            box-shadow: var(--shadow);
         }
 
-        .nav-tabs {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-
-        .nav-tab {
-            background: none;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            transition: all 0.2s;
-        }
-
-        .nav-tab.active {
-            background-color: var(--accent-soft);
-            color: var(--text-main);
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .datetime-widget {
-            text-align: right;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .datetime-widget .time {
+        .app-title {
+            font-size: 1.2rem;
             font-weight: 600;
             color: var(--text-main);
-            font-size: 0.95rem;
+            letter-spacing: 0.5px;
         }
 
         .settings-btn {
             background: none;
             border: 1px solid var(--border-color);
-            background-color: rgba(255, 255, 255, 0.5);
+            background-color: var(--card-bg);
             width: 34px;
             height: 34px;
             border-radius: 50%;
@@ -110,43 +116,111 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
             transition: all 0.2s;
         }
 
-        .settings-btn:hover {
-            background-color: var(--accent-soft);
+        .settings-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--text-muted);
+            transition: transform 0.3s ease;
         }
 
-        /* Painel Flutuante de Configuração de Abas (Modo Elegante) */
+        .settings-btn:hover svg {
+            fill: var(--text-main);
+            transform: rotate(45deg);
+        }
+
+        .nav-tabs {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .nav-tab {
+            background: none;
+            border: none;
+            text-align: left;
+            padding: 10px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .nav-tab:hover {
+            background-color: var(--accent-soft);
+            color: var(--text-main);
+        }
+
+        .nav-tab.active {
+            background-color: var(--accent-soft);
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .datetime-widget {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            padding-top: 16px;
+        }
+
+        .datetime-widget .time {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            margin-bottom: 2px;
+        }
+
+        @media (max-width: 850px) {
+            .sidebar {
+                padding: 16px;
+                gap: 16px;
+            }
+            .nav-tabs {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 4px;
+            }
+            .nav-tab {
+                white-space: nowrap;
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+        }
+
         .settings-dropdown {
             position: absolute;
-            top: 75px;
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
+            top: 65px;
+            right: 20px;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
             border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 18px;
             display: none;
             flex-direction: column;
-            gap: 10px;
+            gap: 14px;
             box-shadow: var(--shadow);
             z-index: 100;
-            min-width: 200px;
+            min-width: 210px;
         }
 
         .settings-dropdown.open {
             display: flex;
         }
 
-        .settings-dropdown span {
-            font-size: 0.8rem;
+        .settings-dropdown .section-title {
+            font-size: 0.75rem;
             font-weight: 600;
             color: var(--text-main);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 2px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 6px;
         }
 
         .settings-dropdown label {
@@ -156,14 +230,42 @@
             cursor: pointer;
             font-size: 0.85rem;
             color: var(--text-muted);
-            transition: color 0.2s;
         }
 
         .settings-dropdown label:hover {
             color: var(--text-main);
         }
 
-        /* Abas de Conteúdo */
+        .theme-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .theme-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            transition: all 0.2s;
+        }
+
+        .theme-btn:hover, .theme-btn.active {
+            background-color: var(--accent-soft);
+            border-color: var(--accent-dark);
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+
         .tab-content {
             display: none;
             flex-direction: column;
@@ -180,7 +282,7 @@
             gap: 20px;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 600px) {
             .grid {
                 grid-template-columns: 1fr;
             }
@@ -188,9 +290,9 @@
 
         .card {
             background-color: var(--card-bg);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             border-radius: 24px;
-            padding: 25px;
+            padding: 24px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
             display: flex;
@@ -202,35 +304,40 @@
             grid-column: span 2;
         }
 
+        @media (max-width: 600px) {
+            .card.full {
+                grid-column: span 1;
+            }
+        }
+
         .card h3 {
             font-size: 1rem;
             font-weight: 600;
             color: var(--text-main);
-            margin-bottom: 15px;
-            letter-spacing: 0.3px;
+            margin-bottom: 16px;
         }
 
         .input-group {
             display: flex;
             gap: 8px;
             margin-bottom: 15px;
+            flex-wrap: wrap;
         }
 
         input[type="text"], input[type="number"], select, textarea {
             width: 100%;
-            padding: 10px 14px;
+            padding: 12px 14px;
             border: 1px solid var(--border-color);
             border-radius: 14px;
             outline: none;
             font-size: 0.9rem;
-            background-color: rgba(255, 255, 255, 0.6);
+            background-color: var(--card-bg);
             color: var(--text-main);
             transition: all 0.2s ease;
         }
 
         input:focus, select:focus, textarea:focus {
             border-color: var(--accent-dark);
-            background-color: #fff;
         }
 
         textarea {
@@ -238,19 +345,20 @@
             flex: 1;
             height: 100%;
             line-height: 1.5;
+            min-height: 250px;
         }
 
         button.action-btn {
             background-color: var(--text-main);
-            color: #fff;
+            color: var(--bg-color);
             border: none;
-            padding: 0 16px;
+            padding: 0 18px;
             border-radius: 14px;
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 0.9rem;
             transition: opacity 0.2s;
-            height: 41px;
+            height: 45px;
             white-space: nowrap;
         }
 
@@ -258,10 +366,36 @@
             opacity: 0.85;
         }
 
+        .task-input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .task-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        @media (min-width: 550px) {
+            .task-input-wrapper {
+                flex-direction: row;
+            }
+            .task-row {
+                flex: 1;
+            }
+            #taskProjectSelect {
+                width: 170px;
+                flex-shrink: 0;
+            }
+        }
+
         ul {
             list-style: none;
             flex: 1;
             overflow-y: auto;
+            max-height: 320px;
             padding-right: 4px;
         }
 
@@ -278,11 +412,11 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 12px;
-            background-color: rgba(255, 255, 255, 0.5);
-            border-radius: 12px;
+            padding: 12px 14px;
+            background-color: var(--card-bg);
+            border-radius: 14px;
             margin-bottom: 8px;
-            border: 1px solid rgba(232, 211, 213, 0.3);
+            border: 1px solid var(--border-color);
         }
 
         li.completed span {
@@ -303,8 +437,8 @@
 
         input[type="checkbox"] {
             accent-color: var(--text-main);
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             cursor: pointer;
         }
 
@@ -313,41 +447,41 @@
             border: none;
             color: var(--text-muted);
             cursor: pointer;
-            font-size: 1rem;
-            padding: 2px 6px;
+            font-size: 1.1rem;
+            padding: 2px 8px;
             opacity: 0.6;
             transition: opacity 0.2s;
         }
 
         .delete-btn:hover {
             opacity: 1;
-            color: #b91c1c;
+            color: #ef4444;
         }
 
         .badge {
             font-size: 0.7rem;
-            padding: 2px 8px;
+            padding: 3px 8px;
             border-radius: 6px;
             font-weight: 500;
-            margin-right: 8px;
+            margin-right: 6px;
             color: #fff;
+            white-space: nowrap;
         }
 
         .project-filters {
             display: flex;
             gap: 6px;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             overflow-x: auto;
             padding-bottom: 4px;
-            align-items: center;
         }
 
         .project-chip {
-            background: rgba(255, 255, 255, 0.6);
+            background: var(--card-bg);
             border: 1px solid var(--border-color);
-            padding: 4px 12px;
-            border-radius: 10px;
-            font-size: 0.8rem;
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 0.85rem;
             cursor: pointer;
             color: var(--text-muted);
             white-space: nowrap;
@@ -358,17 +492,18 @@
 
         .project-chip.active {
             background: var(--text-main);
-            color: #fff;
+            color: var(--bg-color);
             border-color: var(--text-main);
+            font-weight: 600;
         }
 
         .project-chip .del-chip {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             opacity: 0.7;
         }
         .project-chip .del-chip:hover {
             opacity: 1;
-            color: #ff8080;
+            color: #ef4444;
         }
 
         .pomodoro-container {
@@ -426,162 +561,170 @@
         }
     </style>
 </head>
-<body>
+<body class="theme-cozy">
 
-    <div class="wrapper">
-        <!-- Barra Superior -->
-        <div class="top-bar">
-            <div class="nav-tabs" id="navTabsContainer">
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="app-title">✨ kora</div>
+                <button class="settings-btn" onclick="toggleSettings()" title="Ajustes e Temas">
+                    <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c-.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                </button>
+            </div>
+
+            <nav class="nav-tabs" id="navTabsContainer">
                 <button class="nav-tab active" onclick="switchTab('tasks')" data-tab="tasks">Tarefas & Pastas</button>
                 <button class="nav-tab" onclick="switchTab('habits')" data-tab="habits">Hábitos & Leitura</button>
                 <button class="nav-tab" onclick="switchTab('notes')" data-tab="notes">Notas</button>
                 <button class="nav-tab" onclick="switchTab('focus')" data-tab="focus">Foco & Música</button>
                 <button class="nav-tab" onclick="switchTab('links')" data-tab="links">Links Úteis</button>
+            </nav>
+
+            <div class="datetime-widget">
+                <div class="time" id="clockDisplay">00:00:00</div>
+                <div id="dateDisplay">Carregando...</div>
             </div>
 
-            <div class="header-right">
-                <div class="datetime-widget">
-                    <div class="time" id="clockDisplay">00:00:00</div>
-                    <div id="dateDisplay">Carregando...</div>
+            <div class="settings-dropdown" id="settingsDropdown">
+                <div class="section-title">Escolher Estética</div>
+                <div class="theme-buttons">
+                    <button class="theme-btn" onclick="setTheme('cozy')">🌸 Cozy & Soft</button>
+                    <button class="theme-btn" onclick="setTheme('focus')">⚡ Focus & Flow</button>
+                    <button class="theme-btn" onclick="setTheme('classic')">☕ Classic Clean</button>
                 </div>
-                <button class="settings-btn" onclick="toggleSettings()" title="Personalizar Abas">⚙️</button>
+
+                <div class="section-title" style="margin-top: 6px;">Visibilidade das Abas</div>
+                <label><input type="checkbox" id="toggle_tasks" checked onchange="saveTabVisibility()"> Tarefas</label>
+                <label><input type="checkbox" id="toggle_habits" checked onchange="saveTabVisibility()"> Hábitos & Leitura</label>
+                <label><input type="checkbox" id="toggle_notes" checked onchange="saveTabVisibility()"> Notas</label>
+                <label><input type="checkbox" id="toggle_focus" checked onchange="saveTabVisibility()"> Foco & Música</label>
+                <label><input type="checkbox" id="toggle_links" checked onchange="saveTabVisibility()"> Links Úteis</label>
             </div>
-        </div>
+        </aside>
 
-        <!-- Menu Flutuante de Configuração de Abas -->
-        <div class="settings-dropdown" id="settingsDropdown">
-            <span>Visibilidade das Abas</span>
-            <label><input type="checkbox" id="toggle_tasks" checked onchange="saveTabVisibility()"> Tarefas</label>
-            <label><input type="checkbox" id="toggle_habits" checked onchange="saveTabVisibility()"> Hábitos & Leitura</label>
-            <label><input type="checkbox" id="toggle_notes" checked onchange="saveTabVisibility()"> Notas</label>
-            <label><input type="checkbox" id="toggle_focus" checked onchange="saveTabVisibility()"> Foco & Música</label>
-            <label><input type="checkbox" id="toggle_links" checked onchange="saveTabVisibility()"> Links Úteis</label>
-        </div>
+        <main class="main-content">
+            <div id="tasks" class="tab-content active" data-tab="tasks">
+                <div class="card full">
+                    <h3>Central de Tarefas</h3>
+                    
+                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); padding: 14px; border-radius: 16px; margin-bottom: 15px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <input type="text" id="newProjectName" placeholder="Nome da pasta (ex: Monografia)..." style="flex:2; min-width: 150px;">
+                        <select id="newProjectColor" style="flex:1; min-width: 140px;">
+                            <option value="#d4a373">Bege Aconchegante</option>
+                            <option value="#b89799" selected>Rosa Antigo</option>
+                            <option value="#9381ff">Lavanda Suave</option>
+                            <option value="#606c38">Verde Oliva</option>
+                        </select>
+                        <button class="action-btn" onclick="addProject()">Criar Pasta</button>
+                    </div>
 
-        <!-- ABA 1: TAREFAS & PASTAS -->
-        <div id="tasks" class="tab-content active" data-tab="tasks">
-            <div class="card full" style="min-height: 450px;">
-                <h3>Central de Tarefas</h3>
-                
-                <div style="background: rgba(255,255,255,0.4); padding: 12px; border-radius: 14px; margin-bottom: 15px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-                    <input type="text" id="newProjectName" placeholder="Nome da pasta (ex: Monografia)..." style="flex:2; min-width: 150px;">
-                    <select id="newProjectColor" style="flex:1; min-width: 120px;">
-                        <option value="#d4a373">Bege Aconchegante</option>
-                        <option value="#b89799" selected>Rosa Antigo</option>
-                        <option value="#9381ff">Lavanda Suave</option>
-                        <option value="#606c38">Verde Oliva</option>
-                    </select>
-                    <button class="action-btn" onclick="addProject()">Criar Pasta</button>
-                </div>
+                    <div class="project-filters" id="projectFilters">
+                        <div class="project-chip active" onclick="filterProject('all')">Todas</div>
+                    </div>
 
-                <div class="project-filters" id="projectFilters">
-                    <div class="project-chip active" onclick="filterProject('all')">Todas</div>
-                </div>
-
-                <div class="input-group">
-                    <select id="taskProjectSelect" style="max-width: 160px;"></select>
-                    <input type="text" id="taskInput" placeholder="O que precisa ser feito...">
-                    <button class="action-btn" onclick="addTask()">Adicionar</button>
-                </div>
-
-                <ul id="taskList"></ul>
-            </div>
-        </div>
-
-        <!-- ABA 2: HÁBITOS & LEITURA -->
-        <div id="habits" class="tab-content" data-tab="habits">
-            <div class="grid">
-                <div class="card">
-                    <h3>Reading Tracker</h3>
-                    <div class="input-group" style="flex-direction: column; gap: 8px;">
-                        <input type="text" id="bookTitle" placeholder="Título do livro / leitura atual...">
-                        <div style="display: flex; gap: 8px;">
-                            <input type="number" id="bookCurrent" placeholder="Pág. atual" style="width: 50%;">
-                            <input type="number" id="bookTotal" placeholder="Total de páginas" style="width: 50%;">
-                            <button class="action-btn" onclick="saveBook()">Salvar</button>
+                    <div class="task-input-wrapper">
+                        <select id="taskProjectSelect"></select>
+                        <div class="task-row">
+                            <input type="text" id="taskInput" placeholder="O que precisa ser feito...">
+                            <button class="action-btn" onclick="addTask()">Adicionar</button>
                         </div>
                     </div>
-                    <div id="bookProgressDisplay" style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted); background: rgba(255,255,255,0.5); padding: 15px; border-radius: 14px;">
-                        Nenhuma leitura cadastrada.
-                    </div>
-                </div>
 
-                <div class="card">
-                    <h3>Hábitos da Semana</h3>
-                    <div class="input-group">
-                        <input type="text" id="habitNameInput" placeholder="Novo hábito...">
-                        <button class="action-btn" onclick="addHabitRow()">+</button>
-                    </div>
-                    <div id="habitsContainer" style="overflow-x: auto;">
-                        <div class="habit-grid" style="margin-bottom: 8px;">
-                            <div class="habit-header" style="text-align: left;">Hábito</div>
-                            <div class="habit-header">Seg</div>
-                            <div class="habit-header">Ter</div>
-                            <div class="habit-header">Qua</div>
-                            <div class="habit-header">Qui</div>
-                            <div class="habit-header">Sex</div>
-                            <div class="habit-header">Sáb</div>
-                            <div class="habit-header">Dom</div>
-                        </div>
-                        <div id="habitsListRows"></div>
-                    </div>
+                    <ul id="taskList"></ul>
                 </div>
             </div>
-        </div>
 
-        <!-- ABA 3: NOTAS -->
-        <div id="notes" class="tab-content" data-tab="notes">
-            <div class="card full" style="height: 450px;">
-                <h3>Notas & Brain Dump</h3>
-                <textarea id="notesArea" placeholder="Escreva seus pensamentos, ideias ou rascunhos aqui..."></textarea>
-            </div>
-        </div>
-
-        <!-- ABA 4: FOCO & MÚSICA -->
-        <div id="focus" class="tab-content" data-tab="focus">
-            <div class="grid">
-                <div class="card">
-                    <h3>Pomodoro Customizável</h3>
-                    <div class="pomodoro-container">
-                        <div class="timer-display" id="timerDisplay">25:00</div>
-                        <div class="timer-controls">
-                            <button class="action-btn" id="startBtn" onclick="togglePomodoro()">Iniciar</button>
-                            <button class="action-btn" onclick="resetPomodoro()" style="background-color: var(--accent-dark);">Zerar</button>
+            <div id="habits" class="tab-content" data-tab="habits">
+                <div class="grid">
+                    <div class="card">
+                        <h3>Reading Tracker</h3>
+                        <div class="input-group" style="flex-direction: column; gap: 8px;">
+                            <input type="text" id="bookTitle" placeholder="Título do livro / leitura atual...">
+                            <div style="display: flex; gap: 8px;">
+                                <input type="number" id="bookCurrent" placeholder="Pág. atual" style="width: 50%;">
+                                <input type="number" id="bookTotal" placeholder="Total de pág." style="width: 50%;">
+                                <button class="action-btn" onclick="saveBook()">Salvar</button>
+                            </div>
                         </div>
-                        <div class="timer-settings">
-                            Foco: <input type="number" id="workTime" value="25" min="1" max="60" onchange="updateTimerSetting()"> min
+                        <div id="bookProgressDisplay" style="margin-top: 15px; font-size: 0.9rem; color: var(--text-muted); background: var(--card-bg); border: 1px solid var(--border-color); padding: 16px; border-radius: 14px;">
+                            Nenhuma leitura cadastrada.
                         </div>
                     </div>
-                </div>
 
-                <div class="card">
-                    <h3>Soundtrack</h3>
-                    <div style="display: flex; flex-direction: column; gap: 12px; flex: 1; justify-content: center;">
-                        <p style="font-size: 0.85rem; color: var(--text-muted);">Cole o link de incorporação (Embed) do Spotify ou YouTube:</p>
+                    <div class="card">
+                        <h3>Hábitos da Semana</h3>
                         <div class="input-group">
-                            <input type="text" id="playlistInput" placeholder="Ex: https://open.spotify.com/embed/...">
-                            <button class="action-btn" onclick="savePlaylist()">Salvar</button>
+                            <input type="text" id="habitNameInput" placeholder="Novo hábito...">
+                            <button class="action-btn" onclick="addHabitRow()">+</button>
                         </div>
-                        <div class="player-embed" id="playerContainer">
-                            <p style="font-size: 0.85rem; color: var(--text-muted); text-align: center; padding: 20px;">Nenhuma playlist conectada</p>
+                        <div id="habitsContainer" style="overflow-x: auto;">
+                            <div class="habit-grid" style="margin-bottom: 8px;">
+                                <div class="habit-header" style="text-align: left;">Hábito</div>
+                                <div class="habit-header">Seg</div>
+                                <div class="habit-header">Ter</div>
+                                <div class="habit-header">Qua</div>
+                                <div class="habit-header">Qui</div>
+                                <div class="habit-header">Sex</div>
+                                <div class="habit-header">Sáb</div>
+                                <div class="habit-header">Dom</div>
+                            </div>
+                            <div id="habitsListRows"></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- ABA 5: LINKS ÚTEIS -->
-        <div id="links" class="tab-content" data-tab="links">
-            <div class="card full" style="min-height: 400px;">
-                <h3>Atalhos & Links Úteis</h3>
-                <div class="input-group">
-                    <input type="text" id="linkTitleInput" placeholder="Nome do site..." style="flex:1;">
-                    <input type="text" id="linkUrlInput" placeholder="URL (https://...)" style="flex:2;">
-                    <button class="action-btn" onclick="addBookmark()">Adicionar Link</button>
+            <div id="notes" class="tab-content" data-tab="notes">
+                <div class="card full" style="min-height: 480px;">
+                    <h3>Notas & Brain Dump</h3>
+                    <textarea id="notesArea" placeholder="Escreva seus pensamentos, ideias ou rascunhos aqui..."></textarea>
                 </div>
-                <div id="bookmarksContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 15px;"></div>
             </div>
-        </div>
+
+            <div id="focus" class="tab-content" data-tab="focus">
+                <div class="grid">
+                    <div class="card">
+                        <h3>Pomodoro Customizável</h3>
+                        <div class="pomodoro-container">
+                            <div class="timer-display" id="timerDisplay">25:00</div>
+                            <div class="timer-controls">
+                                <button class="action-btn" id="startBtn" onclick="togglePomodoro()">Iniciar</button>
+                                <button class="action-btn" onclick="resetPomodoro()" style="background-color: var(--accent-dark);">Zerar</button>
+                            </div>
+                            <div class="timer-settings">
+                                Foco: <input type="number" id="workTime" value="25" min="1" max="60" onchange="updateTimerSetting()"> min
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Soundtrack</h3>
+                        <div style="display: flex; flex-direction: column; gap: 12px; flex: 1; justify-content: center;">
+                            <p style="font-size: 0.85rem; color: var(--text-muted);">Cole o link de incorporação (Embed) do Spotify ou YouTube:</p>
+                            <div class="input-group">
+                                <input type="text" id="playlistInput" placeholder="Ex: https://open.spotify.com/embed/...">
+                                <button class="action-btn" onclick="savePlaylist()">Salvar</button>
+                            </div>
+                            <div class="player-embed" id="playerContainer">
+                                <p style="font-size: 0.85rem; color: var(--text-muted); text-align: center; padding: 20px;">Nenhuma playlist conectada</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="links" class="tab-content" data-tab="links">
+                <div class="card full" style="min-height: 400px;">
+                    <h3>Atalhos & Links Úteis</h3>
+                    <div class="input-group">
+                        <input type="text" id="linkTitleInput" placeholder="Nome do site..." style="flex:1;">
+                        <input type="text" id="linkUrlInput" placeholder="URL (https://...)" style="flex:2;">
+                        <button class="action-btn" onclick="addBookmark()">Adicionar</button>
+                    </div>
+                    <div id="bookmarksContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 15px;"></div>
+                </div>
+            </div>
+        </main>
     </div>
 
     <audio id="alarmAudio" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto"></audio>
@@ -600,23 +743,36 @@
             document.getElementById('settingsDropdown').classList.toggle('open');
         }
 
-        // Fecha o menu se clicar fora
         window.addEventListener('click', function(e) {
             if (!e.target.closest('.settings-btn') && !e.target.closest('.settings-dropdown')) {
                 document.getElementById('settingsDropdown').classList.remove('open');
             }
         });
 
+        function setTheme(themeName) {
+            document.body.className = `theme-${themeName}`;
+            localStorage.setItem('kora_theme', themeName);
+            document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('kora_theme') || 'cozy';
+            document.body.className = `theme-${savedTheme}`;
+        }
+        loadTheme();
+
         function saveTabVisibility() {
             const tabs = ['tasks', 'habits', 'notes', 'focus', 'links'];
             const visibility = {};
             tabs.forEach(tab => {
-                const isChecked = document.getElementById(`toggle_${tab}`).checked;
+                const checkbox = document.getElementById(`toggle_${tab}`);
+                const isChecked = checkbox ? checkbox.checked : true;
                 visibility[tab] = isChecked;
                 const navBtn = document.querySelector(`.nav-tab[data-tab="${tab}"]`);
                 const contentDiv = document.querySelector(`.tab-content[data-tab="${tab}"]`);
                 
-                if (navBtn) navBtn.style.display = isChecked ? 'inline-block' : 'none';
+                if (navBtn) navBtn.style.display = isChecked ? 'block' : 'none';
                 if (!isChecked && contentDiv && contentDiv.classList.contains('active')) {
                     for (let t of tabs) {
                         if (visibility[t] !== false) {
@@ -626,11 +782,11 @@
                     }
                 }
             });
-            localStorage.setItem('aesthetic_tabs_visibility', JSON.stringify(visibility));
+            localStorage.setItem('kora_tabs_visibility', JSON.stringify(visibility));
         }
 
         function loadTabVisibility() {
-            const saved = JSON.parse(localStorage.getItem('aesthetic_tabs_visibility'));
+            const saved = JSON.parse(localStorage.getItem('kora_tabs_visibility'));
             if (!saved) return;
             Object.keys(saved).forEach(tab => {
                 const checkbox = document.getElementById(`toggle_${tab}`);
@@ -653,7 +809,7 @@
         let currentFilter = 'all';
 
         function getProjects() {
-            return JSON.parse(localStorage.getItem('aesthetic_projects')) || [
+            return JSON.parse(localStorage.getItem('kora_projects')) || [
                 { id: 'p1', name: 'Faculdade', color: '#b89799' },
                 { id: 'p2', name: 'Monografia', color: '#9381ff' },
                 { id: 'p3', name: 'Vida Pessoal', color: '#d4a373' }
@@ -686,7 +842,7 @@
             if (!name) return;
             const projects = getProjects();
             projects.push({ id: 'p_' + Date.now(), name, color });
-            localStorage.setItem('aesthetic_projects', JSON.stringify(projects));
+            localStorage.setItem('kora_projects', JSON.stringify(projects));
             document.getElementById('newProjectName').value = '';
             renderProjects();
         }
@@ -695,11 +851,11 @@
             if (!confirm('Deseja realmente apagar esta pasta e todas as tarefas dela?')) return;
             let projects = getProjects();
             projects = projects.filter(p => p.id !== id);
-            localStorage.setItem('aesthetic_projects', JSON.stringify(projects));
+            localStorage.setItem('kora_projects', JSON.stringify(projects));
             
             let tasks = getTasks();
             tasks = tasks.filter(t => t.projectId !== id);
-            localStorage.setItem('aesthetic_tasks', JSON.stringify(tasks));
+            localStorage.setItem('kora_tasks', JSON.stringify(tasks));
 
             if (currentFilter === id) currentFilter = 'all';
             renderProjects();
@@ -711,7 +867,7 @@
         }
 
         function getTasks() {
-            return JSON.parse(localStorage.getItem('aesthetic_tasks')) || [];
+            return JSON.parse(localStorage.getItem('kora_tasks')) || [];
         }
 
         function renderTasks() {
@@ -746,7 +902,7 @@
             if (!text) return;
             const tasks = getTasks();
             tasks.push({ text, completed: false, projectId: select.value });
-            localStorage.setItem('aesthetic_tasks', JSON.stringify(tasks));
+            localStorage.setItem('kora_tasks', JSON.stringify(tasks));
             input.value = '';
             renderTasks();
         }
@@ -754,14 +910,14 @@
         function toggleTask(index) {
             const tasks = getTasks();
             tasks[index].completed = !tasks[index].completed;
-            localStorage.setItem('aesthetic_tasks', JSON.stringify(tasks));
+            localStorage.setItem('kora_tasks', JSON.stringify(tasks));
             renderTasks();
         }
 
         function removeTask(index) {
             const tasks = getTasks();
             tasks.splice(index, 1);
-            localStorage.setItem('aesthetic_tasks', JSON.stringify(tasks));
+            localStorage.setItem('kora_tasks', JSON.stringify(tasks));
             renderTasks();
         }
 
@@ -773,12 +929,12 @@
             const total = parseInt(document.getElementById('bookTotal').value) || 100;
             if (!title) return;
             const book = { title, current, total };
-            localStorage.setItem('aesthetic_book', JSON.stringify(book));
+            localStorage.setItem('kora_book', JSON.stringify(book));
             renderBook();
         }
 
         function renderBook() {
-            const book = JSON.parse(localStorage.getItem('aesthetic_book'));
+            const book = JSON.parse(localStorage.getItem('kora_book'));
             const display = document.getElementById('bookProgressDisplay');
             if (!book) return;
             const percent = Math.min(100, Math.round((book.current / book.total) * 100));
@@ -792,7 +948,7 @@
                     <span>Progresso: ${book.current} / ${book.total} pág.</span>
                     <span>${percent}%</span>
                 </div>
-                <div style="background: rgba(232,211,213,0.5); border-radius: 10px; height: 8px; width: 100%; overflow: hidden;">
+                <div style="background: var(--accent-soft); border-radius: 10px; height: 8px; width: 100%; overflow: hidden;">
                     <div style="background: var(--text-main); width: ${percent}%; height: 100%; transition: width 0.3s;"></div>
                 </div>
             `;
@@ -800,7 +956,7 @@
         renderBook();
 
         function getHabits() {
-            return JSON.parse(localStorage.getItem('aesthetic_habits_week')) || [];
+            return JSON.parse(localStorage.getItem('kora_habits_week')) || [];
         }
 
         function renderHabits() {
@@ -827,7 +983,7 @@
             if (!name) return;
             const habits = getHabits();
             habits.push({ name, days: [false, false, false, false, false, false, false] });
-            localStorage.setItem('aesthetic_habits_week', JSON.stringify(habits));
+            localStorage.setItem('kora_habits_week', JSON.stringify(habits));
             input.value = '';
             renderHabits();
         }
@@ -835,14 +991,14 @@
         function toggleHabitDay(hIndex, dayIndex) {
             const habits = getHabits();
             habits[hIndex].days[dayIndex] = !habits[hIndex].days[dayIndex];
-            localStorage.setItem('aesthetic_habits_week', JSON.stringify(habits));
+            localStorage.setItem('kora_habits_week', JSON.stringify(habits));
         }
         renderHabits();
 
         const notesArea = document.getElementById('notesArea');
-        notesArea.value = localStorage.getItem('aesthetic_notes') || '';
+        notesArea.value = localStorage.getItem('kora_notes') || '';
         notesArea.addEventListener('input', () => {
-            localStorage.setItem('aesthetic_notes', notesArea.value);
+            localStorage.setItem('kora_notes', notesArea.value);
         });
 
         let timerInterval = null;
@@ -901,7 +1057,7 @@
                 const videoId = url.split('v=')[1]?.split('&')[0];
                 url = `https://www.youtube.com/embed/${videoId}`;
             }
-            localStorage.setItem('aesthetic_playlist', url);
+            localStorage.setItem('kora_playlist', url);
             renderPlaylist(url);
         }
 
@@ -909,14 +1065,14 @@
             document.getElementById('playerContainer').innerHTML = `<iframe src="${url}" width="100%" height="152" frameborder="0" allow="encrypted-media"></iframe>`;
         }
 
-        const savedPlaylist = localStorage.getItem('aesthetic_playlist');
+        const savedPlaylist = localStorage.getItem('kora_playlist');
         if (savedPlaylist) {
             document.getElementById('playlistInput').value = savedPlaylist;
             renderPlaylist(savedPlaylist);
         }
 
         function getBookmarks() {
-            return JSON.parse(localStorage.getItem('aesthetic_bookmarks')) || [];
+            return JSON.parse(localStorage.getItem('kora_bookmarks')) || [];
         }
 
         function renderBookmarks() {
@@ -925,7 +1081,7 @@
             container.innerHTML = '';
             bookmarks.forEach((b, index) => {
                 container.innerHTML += `
-                    <div style="position: relative; background: rgba(255,255,255,0.6); border: 1px solid var(--border-color); padding: 15px; border-radius: 14px; display: flex; flex-direction: column; gap: 4px;">
+                    <div style="position: relative; background: var(--card-bg); border: 1px solid var(--border-color); padding: 15px; border-radius: 14px; display: flex; flex-direction: column; gap: 4px;">
                         <a href="${b.url}" target="_blank" style="text-decoration: none; color: var(--text-main); display: flex; flex-direction: column; gap: 4px;">
                             <span style="font-weight: 600; font-size: 0.9rem;">${b.title}</span>
                             <span style="font-size: 0.75rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${b.url}</span>
@@ -943,7 +1099,7 @@
             if (!url.startsWith('http')) url = 'https://' + url;
             const bookmarks = getBookmarks();
             bookmarks.push({ title, url });
-            localStorage.setItem('aesthetic_bookmarks', JSON.stringify(bookmarks));
+            localStorage.setItem('kora_bookmarks', JSON.stringify(bookmarks));
             document.getElementById('linkTitleInput').value = '';
             document.getElementById('linkUrlInput').value = '';
             renderBookmarks();
@@ -952,7 +1108,7 @@
         function removeBookmark(index) {
             const bookmarks = getBookmarks();
             bookmarks.splice(index, 1);
-            localStorage.setItem('aesthetic_bookmarks', JSON.stringify(bookmarks));
+            localStorage.setItem('kora_bookmarks', JSON.stringify(bookmarks));
             renderBookmarks();
         }
         renderBookmarks();
