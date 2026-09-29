@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>kora — workspace</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -51,6 +51,7 @@
             padding: 0;
             font-family: var(--font-family);
             text-transform: lowercase;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -62,26 +63,26 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding: 16px;
+            padding: 12px;
         }
 
         .app-container {
             width: 100%;
-            max-width: 1050px;
+            max-width: 900px;
             display: grid;
-            grid-template-columns: 240px 1fr;
-            gap: 20px;
+            grid-template-columns: 220px 1fr;
+            gap: 16px;
             align-items: start;
-            padding-bottom: 40px;
+            padding-bottom: 30px;
         }
 
-        /* Se for tela menor ou celular detectado */
-        @media (max-width: 1024px) {
+        @media (max-width: 768px) {
+            body {
+                padding: 4px;
+            }
             .app-container {
                 grid-template-columns: 1fr;
-            }
-            body {
-                padding: 8px;
+                gap: 10px;
             }
         }
 
@@ -89,12 +90,12 @@
             background: var(--card-bg);
             backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 16px;
             box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
             position: relative;
         }
 
@@ -133,23 +134,19 @@
             transition: transform 0.3s ease;
         }
 
-        .settings-btn:hover svg {
-            fill: var(--text-main);
-            transform: rotate(45deg);
-        }
-
         .nav-tabs {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 768px) {
             .nav-tabs {
                 flex-direction: row;
                 overflow-x: auto;
                 padding-bottom: 4px;
-                gap: 8px;
+                gap: 6px;
+                -webkit-overflow-scrolling: touch;
             }
             .nav-tabs::-webkit-scrollbar {
                 display: none;
@@ -160,10 +157,10 @@
             background: none;
             border: none;
             text-align: left;
-            padding: 10px 14px;
-            border-radius: 12px;
+            padding: 9px 12px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
             color: var(--text-muted);
             transition: all 0.2s;
@@ -182,20 +179,20 @@
         }
 
         .datetime-widget {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
             border-top: 1px solid var(--border-color);
-            padding-top: 12px;
+            padding-top: 10px;
         }
 
         .datetime-widget .time {
             font-weight: 600;
             color: var(--text-main);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             margin-bottom: 2px;
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 768px) {
             .datetime-widget {
                 display: none;
             }
@@ -203,19 +200,22 @@
 
         .settings-dropdown {
             position: absolute;
-            top: 60px;
-            right: 20px;
+            top: 55px;
+            right: 16px;
             background: var(--card-bg);
             backdrop-filter: blur(16px);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 16px;
+            padding: 14px;
             display: none;
             flex-direction: column;
             gap: 10px;
             box-shadow: var(--shadow);
-            z-index: 100;
-            min-width: 200px;
+            z-index: 1000;
+            min-width: 190px;
+            max-height: 80vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .settings-dropdown.open {
@@ -223,7 +223,7 @@
         }
 
         .settings-dropdown .section-title {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
             color: var(--text-main);
             text-transform: uppercase;
@@ -237,30 +237,25 @@
             align-items: center;
             gap: 8px;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
-        }
-
-        .settings-dropdown label:hover {
-            color: var(--text-main);
         }
 
         .theme-buttons {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
         }
 
         .theme-btn {
             background: none;
             border: 1px solid var(--border-color);
-            padding: 8px 12px;
-            border-radius: 10px;
+            padding: 7px 10px;
+            border-radius: 8px;
             cursor: pointer;
             text-align: left;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-main);
-            transition: all 0.2s;
         }
 
         .theme-btn:hover, .theme-btn.active {
@@ -271,14 +266,14 @@
         .main-content {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
             width: 100%;
         }
 
         .tab-content {
             display: none;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
         }
 
         .tab-content.active {
@@ -288,7 +283,7 @@
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 16px;
         }
 
         @media (max-width: 768px) {
@@ -300,13 +295,13 @@
         .card {
             background-color: var(--card-bg);
             backdrop-filter: blur(12px);
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 18px;
+            padding: 16px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            min-height: 340px;
+            min-height: 280px;
         }
 
         .card.full {
@@ -320,16 +315,16 @@
         }
 
         .card h3 {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: var(--text-main);
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .input-group {
             display: flex;
             gap: 8px;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             flex-wrap: wrap;
         }
 
@@ -337,51 +332,40 @@
             width: 100%;
             padding: 10px 12px;
             border: 1px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 10px;
             outline: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             background-color: var(--card-bg);
             color: var(--text-main);
-            transition: all 0.2s ease;
             text-transform: lowercase;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--accent-dark);
         }
 
         textarea {
             resize: none;
             flex: 1;
             height: 100%;
-            line-height: 1.5;
-            min-height: 220px;
+            min-height: 200px;
         }
 
         button.action-btn {
             background-color: var(--text-main);
             color: var(--bg-color);
             border: none;
-            padding: 0 16px;
-            border-radius: 12px;
+            padding: 0 14px;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.85rem;
-            transition: opacity 0.2s;
-            height: 42px;
+            font-size: 0.8rem;
+            height: 38px;
             white-space: nowrap;
             text-transform: lowercase;
-        }
-
-        button.action-btn:hover {
-            opacity: 0.85;
         }
 
         .task-input-wrapper {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .task-row {
@@ -389,7 +373,7 @@
             gap: 8px;
         }
 
-        @media (min-width: 500px) {
+        @media (min-width: 480px) {
             .task-input-wrapper {
                 flex-direction: row;
             }
@@ -397,7 +381,7 @@
                 flex: 1;
             }
             #taskProjectSelect {
-                width: 150px;
+                width: 140px;
                 flex-shrink: 0;
             }
         }
@@ -406,7 +390,7 @@
             list-style: none;
             flex: 1;
             overflow-y: auto;
-            max-height: 280px;
+            max-height: 250px;
             padding-right: 2px;
         }
 
@@ -414,10 +398,10 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 12px;
+            padding: 9px 11px;
             background-color: var(--card-bg);
-            border-radius: 12px;
-            margin-bottom: 8px;
+            border-radius: 10px;
+            margin-bottom: 6px;
             border: 1px solid var(--border-color);
         }
 
@@ -434,7 +418,7 @@
             cursor: pointer;
             flex: 1;
             word-break: break-word;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
         }
 
         input[type="checkbox"] {
@@ -449,20 +433,14 @@
             border: none;
             color: var(--text-muted);
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.95rem;
             padding: 2px 6px;
-            opacity: 0.6;
-        }
-
-        .delete-btn:hover {
-            opacity: 1;
-            color: #ef4444;
         }
 
         .badge {
-            font-size: 0.65rem;
-            padding: 3px 6px;
-            border-radius: 6px;
+            font-size: 0.6rem;
+            padding: 2px 6px;
+            border-radius: 4px;
             font-weight: 500;
             margin-right: 4px;
             color: #fff;
@@ -472,9 +450,10 @@
         .project-filters {
             display: flex;
             gap: 6px;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             overflow-x: auto;
             padding-bottom: 4px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .project-filters::-webkit-scrollbar {
@@ -484,9 +463,9 @@
         .project-chip {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            padding: 6px 12px;
-            border-radius: 10px;
-            font-size: 0.8rem;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 0.78rem;
             cursor: pointer;
             color: var(--text-muted);
             white-space: nowrap;
@@ -503,27 +482,18 @@
             font-weight: 600;
         }
 
-        .project-chip .del-chip {
-            font-size: 0.75rem;
-            opacity: 0.7;
-        }
-        .project-chip .del-chip:hover {
-            opacity: 1;
-            color: #ef4444;
-        }
-
         .pomodoro-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             flex: 1;
-            gap: 16px;
+            gap: 14px;
             text-align: center;
         }
 
         .timer-display {
-            font-size: 3rem;
+            font-size: 2.8rem;
             font-weight: 300;
             letter-spacing: -2px;
             color: var(--text-main);
@@ -531,38 +501,19 @@
 
         .timer-controls {
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
 
         .timer-settings {
             display: flex;
             gap: 8px;
             align-items: center;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
         }
 
         .timer-settings input {
-            width: 55px;
-            text-align: center;
-        }
-
-        .habit-grid {
-            display: grid;
-            grid-template-columns: 2fr repeat(7, 1fr);
-            gap: 4px;
-            align-items: center;
-            font-size: 0.8rem;
-        }
-
-        .habit-header {
-            font-weight: 600;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.7rem;
-        }
-
-        .habit-checkbox {
+            width: 50px;
             text-align: center;
         }
     </style>
@@ -579,11 +530,11 @@
             </div>
 
             <nav class="nav-tabs" id="navTabsContainer">
-                <button class="nav-tab active" onclick="switchTab('tasks', event)" data-tab="tasks">tarefas & pastas</button>
-                <button class="nav-tab" onclick="switchTab('habits', event)" data-tab="habits">hábitos & leitura</button>
+                <button class="nav-tab active" onclick="switchTab('tasks', event)" data-tab="tasks">tarefas</button>
+                <button class="nav-tab" onclick="switchTab('reading', event)" data-tab="reading">leitura</button>
                 <button class="nav-tab" onclick="switchTab('notes', event)" data-tab="notes">notas</button>
-                <button class="nav-tab" onclick="switchTab('focus', event)" data-tab="focus">foco & música</button>
-                <button class="nav-tab" onclick="switchTab('links', event)" data-tab="links">links úteis</button>
+                <button class="nav-tab" onclick="switchTab('focus', event)" data-tab="focus">foco</button>
+                <button class="nav-tab" onclick="switchTab('links', event)" data-tab="links">links</button>
             </nav>
 
             <div class="datetime-widget">
@@ -592,19 +543,19 @@
             </div>
 
             <div class="settings-dropdown" id="settingsDropdown">
-                <div class="section-title">escolher estética</div>
+                <div class="section-title">estética</div>
                 <div class="theme-buttons">
                     <button class="theme-btn" onclick="setTheme('cozy')">cozy & soft</button>
                     <button class="theme-btn" onclick="setTheme('focus')">focus & flow</button>
                     <button class="theme-btn" onclick="setTheme('classic')">classic clean</button>
                 </div>
 
-                <div class="section-title" style="margin-top: 10px;">visibilidade das abas</div>
+                <div class="section-title" style="margin-top: 8px;">abas</div>
                 <label><input type="checkbox" id="toggle_tasks" checked onchange="saveTabVisibility()"> tarefas</label>
-                <label><input type="checkbox" id="toggle_habits" checked onchange="saveTabVisibility()"> hábitos & leitura</label>
+                <label><input type="checkbox" id="toggle_reading" checked onchange="saveTabVisibility()"> leitura</label>
                 <label><input type="checkbox" id="toggle_notes" checked onchange="saveTabVisibility()"> notas</label>
-                <label><input type="checkbox" id="toggle_focus" checked onchange="saveTabVisibility()"> foco & música</label>
-                <label><input type="checkbox" id="toggle_links" checked onchange="saveTabVisibility()"> links úteis</label>
+                <label><input type="checkbox" id="toggle_focus" checked onchange="saveTabVisibility()"> foco</label>
+                <label><input type="checkbox" id="toggle_links" checked onchange="saveTabVisibility()"> links</label>
             </div>
         </aside>
 
@@ -613,15 +564,15 @@
                 <div class="card full">
                     <h3>central de tarefas</h3>
                     
-                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); padding: 12px; border-radius: 14px; margin-bottom: 14px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-                        <input type="text" id="newProjectName" placeholder="nome da pasta..." style="flex:2; min-width: 140px;">
-                        <select id="newProjectColor" style="flex:1; min-width: 130px;">
-                            <option value="#d4a373">bege aconchegante</option>
-                            <option value="#b89799" selected>rosa antigo</option>
-                            <option value="#9381ff">lavanda suave</option>
-                            <option value="#606c38">verde oliva</option>
+                    <div style="background: var(--card-bg); border: 1px solid var(--border-color); padding: 10px; border-radius: 12px; margin-bottom: 12px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                        <input type="text" id="newProjectName" placeholder="nome da pasta..." style="flex:2; min-width: 130px;">
+                        <select id="newProjectColor" style="flex:1; min-width: 120px;">
+                            <option value="#d4a373">bege</option>
+                            <option value="#b89799" selected>rosa</option>
+                            <option value="#9381ff">lavanda</option>
+                            <option value="#606c38">verde</option>
                         </select>
-                        <button class="action-btn" onclick="addProject()">criar pasta</button>
+                        <button class="action-btn" onclick="addProject()">criar</button>
                     </div>
 
                     <div class="project-filters" id="projectFilters">
@@ -631,8 +582,8 @@
                     <div class="task-input-wrapper">
                         <select id="taskProjectSelect"></select>
                         <div class="task-row">
-                            <input type="text" id="taskInput" placeholder="o que precisa ser feito...">
-                            <button class="action-btn" onclick="addTask()">adicionar</button>
+                            <input type="text" id="taskInput" placeholder="o que fazer...">
+                            <button class="action-btn" onclick="addTask()">+</button>
                         </div>
                     </div>
 
@@ -640,48 +591,25 @@
                 </div>
             </div>
 
-            <div id="habits" class="tab-content" data-tab="habits">
-                <div class="grid">
-                    <div class="card">
-                        <h3>reading tracker</h3>
-                        <div class="input-group" style="flex-direction: column; gap: 8px;">
-                            <input type="text" id="bookTitle" placeholder="título do livro...">
-                            <div style="display: flex; gap: 8px;">
-                                <input type="number" id="bookCurrent" placeholder="pág. atual" style="width: 50%;">
-                                <input type="number" id="bookTotal" placeholder="total" style="width: 50%;">
-                                <button class="action-btn" onclick="saveBook()">salvar</button>
-                            </div>
-                        </div>
-                        <div id="bookProgressDisplay" style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted); background: var(--card-bg); border: 1px solid var(--border-color); padding: 14px; border-radius: 12px;">
-                            nenhuma leitura cadastrada.
+            <div id="reading" class="tab-content" data-tab="reading">
+                <div class="card full">
+                    <h3>reading tracker</h3>
+                    <div class="input-group" style="flex-direction: column; gap: 8px;">
+                        <input type="text" id="bookTitle" placeholder="título do livro atual...">
+                        <div style="display: flex; gap: 8px;">
+                            <input type="number" id="bookCurrent" placeholder="pág. atual" style="width: 40%;">
+                            <input type="number" id="bookTotal" placeholder="total" style="width: 40%;">
+                            <button class="action-btn" onclick="saveBook()" style="width: 20%;">salvar</button>
                         </div>
                     </div>
-
-                    <div class="card">
-                        <h3>hábitos da semana</h3>
-                        <div class="input-group">
-                            <input type="text" id="habitNameInput" placeholder="novo hábito...">
-                            <button class="action-btn" onclick="addHabitRow()">+</button>
-                        </div>
-                        <div id="habitsContainer" style="overflow-x: auto;">
-                            <div class="habit-grid" style="margin-bottom: 6px;">
-                                <div class="habit-header" style="text-align: left;">hábito</div>
-                                <div class="habit-header">seg</div>
-                                <div class="habit-header">ter</div>
-                                <div class="habit-header">qua</div>
-                                <div class="habit-header">qui</div>
-                                <div class="habit-header">sex</div>
-                                <div class="habit-header">sáb</div>
-                                <div class="habit-header">dom</div>
-                            </div>
-                            <div id="habitsListRows"></div>
-                        </div>
+                    <div id="bookProgressDisplay" style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted); background: var(--card-bg); border: 1px solid var(--border-color); padding: 14px; border-radius: 12px;">
+                        nenhuma leitura cadastrada.
                     </div>
                 </div>
             </div>
 
             <div id="notes" class="tab-content" data-tab="notes">
-                <div class="card full" style="min-height: 450px;">
+                <div class="card full" style="min-height: 400px;">
                     <h3>notas & brain dump</h3>
                     <textarea id="notesArea" placeholder="escreva seus pensamentos..."></textarea>
                 </div>
@@ -698,21 +626,21 @@
                                 <button class="action-btn" onclick="resetPomodoro()" style="background-color: var(--accent-dark);">zerar</button>
                             </div>
                             <div class="timer-settings">
-                                foco: <input type="number" id="workTime" value="25" min="1" max="60" onchange="updateTimerSetting()"> min
+                                min: <input type="number" id="workTime" value="25" min="1" max="60" onchange="updateTimerSetting()">
                             </div>
                         </div>
                     </div>
 
                     <div class="card">
                         <h3>soundtrack</h3>
-                        <div style="display: flex; flex-direction: column; gap: 10px; flex: 1; justify-content: center;">
-                            <p style="font-size: 0.8rem; color: var(--text-muted);">cole o link embed do spotify/youtube:</p>
+                        <div style="display: flex; flex-direction: column; gap: 8px; flex: 1; justify-content: center;">
+                            <p style="font-size: 0.75rem; color: var(--text-muted);">link embed spotify/youtube:</p>
                             <div class="input-group">
                                 <input type="text" id="playlistInput" placeholder="https://...">
-                                <button class="action-btn" onclick="savePlaylist()">salvar</button>
+                                <button class="action-btn" onclick="savePlaylist()">ok</button>
                             </div>
                             <div class="player-embed" id="playerContainer">
-                                <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center; padding: 15px;">nenhuma playlist</p>
+                                <p style="font-size: 0.75rem; color: var(--text-muted); text-align: center; padding: 10px;">sem playlist</p>
                             </div>
                         </div>
                     </div>
@@ -720,14 +648,14 @@
             </div>
 
             <div id="links" class="tab-content" data-tab="links">
-                <div class="card full" style="min-height: 380px;">
+                <div class="card full" style="min-height: 350px;">
                     <h3>links úteis</h3>
                     <div class="input-group">
                         <input type="text" id="linkTitleInput" placeholder="nome..." style="flex:1;">
                         <input type="text" id="linkUrlInput" placeholder="url..." style="flex:2;">
-                        <button class="action-btn" onclick="addBookmark()">adicionar</button>
+                        <button class="action-btn" onclick="addBookmark()">add</button>
                     </div>
-                    <div id="bookmarksContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-top: 12px;"></div>
+                    <div id="bookmarksContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-top: 10px;"></div>
                 </div>
             </div>
         </main>
@@ -739,16 +667,11 @@
         function updateDateTime() {
             const now = new Date();
             document.getElementById('clockDisplay').textContent = now.toLocaleTimeString('pt-BR');
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const options = { weekday: 'short', month: 'short', day: 'numeric' };
             document.getElementById('dateDisplay').textContent = now.toLocaleDateString('pt-BR', options);
         }
         setInterval(updateDateTime, 1000);
         updateDateTime();
-
-        // Detecção automática se é dispositivo móvel para ajustar classes se necessário
-        if (/Mobi|Android|iPhone/i.test(navigator.userAgent)) {
-            document.body.classList.add('is-mobile');
-        }
 
         function toggleSettings() {
             document.getElementById('settingsDropdown').classList.toggle('open');
@@ -761,19 +684,18 @@
         });
 
         function setTheme(themeName) {
-            document.body.className = document.body.classList.contains('is-mobile') ? `theme-${themeName} is-mobile` : `theme-${themeName}`;
+            document.body.className = `theme-${themeName}`;
             localStorage.setItem('kora_theme', themeName);
         }
 
         function loadTheme() {
             const savedTheme = localStorage.getItem('kora_theme') || 'cozy';
-            const mobileClass = document.body.classList.contains('is-mobile') ? 'is-mobile' : '';
-            document.body.className = `theme-${savedTheme} ${mobileClass}`;
+            document.body.className = `theme-${savedTheme}`;
         }
         loadTheme();
 
         function saveTabVisibility() {
-            const tabs = ['tasks', 'habits', 'notes', 'focus', 'links'];
+            const tabs = ['tasks', 'reading', 'notes', 'focus', 'links'];
             const visibility = {};
             tabs.forEach(tab => {
                 const checkbox = document.getElementById(`toggle_${tab}`);
@@ -842,7 +764,7 @@
                     <div class="project-chip ${currentFilter === p.id ? 'active' : ''}" onclick="filterProject('${p.id}')">
                         <span style="width: 8px; height: 8px; border-radius: 50%; background: ${p.color}; display: inline-block;"></span>
                         ${p.name}
-                        <span class="del-chip" onclick="event.stopPropagation(); removeProject('${p.id}')" title="apagar pasta">×</span>
+                        <span class="del-chip" onclick="event.stopPropagation(); removeProject('${p.id}')" title="apagar">×</span>
                     </div>`;
                 select.innerHTML += `<option value="${p.id}">${p.name}</option>`;
             });
@@ -861,7 +783,7 @@
         }
 
         function removeProject(id) {
-            if (!confirm('deseja realmente apagar esta pasta e todas as tarefas dela?')) return;
+            if (!confirm('deseja apagar esta pasta?')) return;
             let projects = getProjects();
             projects = projects.filter(p => p.id !== id);
             localStorage.setItem('kora_projects', JSON.stringify(projects));
@@ -968,46 +890,6 @@
         }
         renderBook();
 
-        function getHabits() {
-            return JSON.parse(localStorage.getItem('kora_habits_week')) || [];
-        }
-
-        function renderHabits() {
-            const habits = getHabits();
-            const container = document.getElementById('habitsListRows');
-            container.innerHTML = '';
-
-            habits.forEach((habit, hIndex) => {
-                let rowHtml = `<div class="habit-grid" style="align-items: center; margin-bottom: 6px;">
-                    <div style="font-weight: 500; font-size: 0.8rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${habit.name}</div>`;
-                
-                for (let d = 0; d < 7; d++) {
-                    const checked = habit.days[d] ? 'checked' : '';
-                    rowHtml += `<div class="habit-checkbox"><input type="checkbox" ${checked} onchange="toggleHabitDay(${hIndex}, ${d})"></div>`;
-                }
-                rowHtml += `</div>`;
-                container.innerHTML += rowHtml;
-            });
-        }
-
-        function addHabitRow() {
-            const input = document.getElementById('habitNameInput');
-            const name = input.value.trim().toLowerCase();
-            if (!name) return;
-            const habits = getHabits();
-            habits.push({ name, days: [false, false, false, false, false, false, false] });
-            localStorage.setItem('kora_habits_week', JSON.stringify(habits));
-            input.value = '';
-            renderHabits();
-        }
-
-        function toggleHabitDay(hIndex, dayIndex) {
-            const habits = getHabits();
-            habits[hIndex].days[dayIndex] = !habits[hIndex].days[dayIndex];
-            localStorage.setItem('kora_habits_week', JSON.stringify(habits));
-        }
-        renderHabits();
-
         const notesArea = document.getElementById('notesArea');
         notesArea.value = localStorage.getItem('kora_notes') || '';
         notesArea.addEventListener('input', () => {
@@ -1042,7 +924,7 @@
                         isRunning = false;
                         btn.textContent = 'iniciar';
                         document.getElementById('alarmAudio').play();
-                        alert('ciclo de foco concluído!');
+                        alert('ciclo concluído!');
                     }
                 }, 1000);
             }
@@ -1075,7 +957,7 @@
         }
 
         function renderPlaylist(url) {
-            document.getElementById('playerContainer').innerHTML = `<iframe src="${url}" width="100%" height="130" frameborder="0" allow="encrypted-media"></iframe>`;
+            document.getElementById('playerContainer').innerHTML = `<iframe src="${url}" width="100%" height="110" frameborder="0" allow="encrypted-media"></iframe>`;
         }
 
         const savedPlaylist = localStorage.getItem('kora_playlist');
@@ -1094,12 +976,12 @@
             container.innerHTML = '';
             bookmarks.forEach((b, index) => {
                 container.innerHTML += `
-                    <div style="position: relative; background: var(--card-bg); border: 1px solid var(--border-color); padding: 12px; border-radius: 12px; display: flex; flex-direction: column; gap: 4px;">
+                    <div style="position: relative; background: var(--card-bg); border: 1px solid var(--border-color); padding: 10px; border-radius: 10px; display: flex; flex-direction: column; gap: 4px;">
                         <a href="${b.url}" target="_blank" style="text-decoration: none; color: var(--text-main); display: flex; flex-direction: column; gap: 4px;">
-                            <span style="font-weight: 600; font-size: 0.85rem;">${b.title}</span>
-                            <span style="font-size: 0.7rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${b.url}</span>
+                            <span style="font-weight: 600; font-size: 0.8rem;">${b.title}</span>
+                            <span style="font-size: 0.65rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${b.url}</span>
                         </a>
-                        <button onclick="removeBookmark(${index})" style="position: absolute; top: 8px; right: 8px; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.75rem;" title="apagar link">×</button>
+                        <button onclick="removeBookmark(${index})" style="position: absolute; top: 6px; right: 6px; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.7rem;" title="apagar">×</button>
                     </div>
                 `;
             });
