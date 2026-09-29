@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>kora — workspace</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --font-scale: 1rem;
         }
 
+        /* Todos os temas usam exclusivamente a tipografia limpa e elegante do rosa */
         body.theme-cozy {
             --bg-color: #f7f3f2;
             --card-bg: rgba(255, 255, 255, 0.92);
@@ -20,7 +21,6 @@
             --border-color: rgba(232, 211, 213, 0.6);
             --shadow: 0 8px 32px 0 rgba(184, 151, 153, 0.08);
             --pattern-bg: radial-gradient(#e8d3d5 0.75px, transparent 0.75px);
-            --font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
         body.theme-focus {
@@ -33,7 +33,6 @@
             --border-color: rgba(51, 65, 85, 0.8);
             --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
             --pattern-bg: radial-gradient(#334155 0.75px, transparent 0.75px);
-            --font-family: 'Inter', sans-serif;
         }
 
         body.theme-classic {
@@ -46,14 +45,13 @@
             --border-color: rgba(220, 215, 208, 0.8);
             --shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.04);
             --pattern-bg: none;
-            --font-family: 'Lora', serif;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: var(--font-family);
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: var(--font-scale);
             -webkit-tap-highlight-color: transparent;
         }
@@ -74,7 +72,7 @@
             padding: 24px;
         }
 
-        /* Tela de Entrada: Mindfulness / Neutra */
+        /* Tela Inicial */
         .welcome-screen {
             position: fixed;
             top: 0;
@@ -529,7 +527,6 @@
 </head>
 <body class="theme-cozy">
 
-    <!-- Tela Inicial de Entrada -->
     <div class="welcome-screen" id="welcomeScreen">
         <div class="welcome-card-content">
             <div class="welcome-title">kora</div>
@@ -539,7 +536,6 @@
     </div>
 
     <div class="app-container">
-        <!-- Menu Lateral Amplo com Seletor de Abas e Fonte -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <div class="app-title">kora</div>
@@ -578,7 +574,6 @@
             </div>
         </aside>
 
-        <!-- Conteúdo Principal -->
         <main class="main-content">
             <div id="tasks" class="tab-content active" data-tab="tasks">
                 <div class="card full">
@@ -612,21 +607,26 @@
                 </div>
             </div>
 
+            <!-- LEITURA COM MÚLTIPLOS LIVROS E HISTÓRICO -->
             <div id="reading" class="tab-content" data-tab="reading">
                 <div class="card full">
                     <h3>reading tracker</h3>
-                    <div class="section-subtitle">acompanhe o progresso das suas leituras e livros atuais.</div>
-                    <div style="display: flex; flex-direction: column; gap: 12px;">
-                        <input type="text" id="bookTitle" placeholder="título do livro / leitura atual...">
+                    <div class="section-subtitle">acompanhe o progresso de várias leituras e consulte seu histórico.</div>
+                    
+                    <div class="task-creator-box">
+                        <input type="text" id="bookTitleInput" placeholder="título do livro / leitura...">
                         <div style="display: flex; gap: 10px;">
-                            <input type="number" id="bookCurrent" placeholder="página atual" style="flex: 1;">
-                            <input type="number" id="bookTotal" placeholder="total de páginas" style="flex: 1;">
-                            <button class="action-btn" onclick="saveBook()">salvar progresso</button>
+                            <input type="number" id="bookCurrentInput" placeholder="pág. atual" style="flex: 1;">
+                            <input type="number" id="bookTotalInput" placeholder="total de páginas" style="flex: 1;">
+                            <button class="action-btn" onclick="addBook()">adicionar livro</button>
                         </div>
                     </div>
-                    <div id="bookProgressDisplay" style="margin-top: 10px; font-size: 0.9rem; color: var(--text-muted); background: rgba(255,255,255,0.4); border: 1px solid var(--border-color); padding: 18px; border-radius: 16px;">
-                        nenhuma leitura cadastrada.
-                    </div>
+
+                    <div style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-top: 5px;">leituras em andamento</div>
+                    <div id="booksListContainer" style="display: flex; flex-direction: column; gap: 12px;"></div>
+
+                    <div style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-top: 15px;">histórico de concluídos</div>
+                    <div id="historyListContainer" style="display: flex; flex-direction: column; gap: 8px;"></div>
                 </div>
             </div>
 
@@ -899,37 +899,100 @@
 
         renderProjects();
 
-        function saveBook() {
-            const title = document.getElementById('bookTitle').value.trim();
-            const current = parseInt(document.getElementById('bookCurrent').value) || 0;
-            const total = parseInt(document.getElementById('bookTotal').value) || 100;
+        // Gerenciamento de Múltiplas Leituras e Histórico
+        function getBooks() {
+            return JSON.parse(localStorage.getItem('kora_books')) || [];
+        }
+        function getHistory() {
+            return JSON.parse(localStorage.getItem('kora_book_history')) || [];
+        }
+
+        function addBook() {
+            const title = document.getElementById('bookTitleInput').value.trim();
+            const current = parseInt(document.getElementById('bookCurrentInput').value) || 0;
+            const total = parseInt(document.getElementById('bookTotalInput').value) || 100;
             if (!title) return;
-            const book = { title, current, total };
-            localStorage.setItem('kora_book', JSON.stringify(book));
-            renderBook();
+
+            const books = getBooks();
+            books.push({ id: 'b_' + Date.now(), title, current, total });
+            localStorage.setItem('kora_books', JSON.stringify(books));
+            
+            document.getElementById('bookTitleInput').value = '';
+            document.getElementById('bookCurrentInput').value = '';
+            document.getElementById('bookTotalInput').value = '';
+            renderBooks();
         }
 
-        function renderBook() {
-            const book = JSON.parse(localStorage.getItem('kora_book'));
-            const display = document.getElementById('bookProgressDisplay');
+        function updateBookProgress(id, newCurrent) {
+            const books = getBooks();
+            const book = books.find(b => b.id === id);
             if (!book) return;
-            const percent = Math.min(100, Math.round((book.current / book.total) * 100));
-            document.getElementById('bookTitle').value = book.title;
-            document.getElementById('bookCurrent').value = book.current;
-            document.getElementById('bookTotal').value = book.total;
+            book.current = parseInt(newCurrent) || 0;
 
-            display.innerHTML = `
-                <div style="font-weight: 600; color: var(--text-main); margin-bottom: 6px;">${book.title}</div>
-                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 6px;">
-                    <span>progresso: ${book.current} / ${book.total} pág.</span>
-                    <span>${percent}%</span>
-                </div>
-                <div style="background: var(--accent-soft); border-radius: 10px; height: 8px; width: 100%; overflow: hidden;">
-                    <div style="background: var(--text-main); width: ${percent}%; height: 100%; transition: width 0.3s;"></div>
-                </div>
-            `;
+            if (book.current >= book.total) {
+                // Move para o histórico se completou
+                books.splice(books.indexOf(book), 1);
+                const history = getHistory();
+                history.unshift({ title: book.title, total: book.total, date: new Date().toLocaleDateString('pt-BR') });
+                localStorage.setItem('kora_book_history', JSON.stringify(history));
+            }
+
+            localStorage.setItem('kora_books', JSON.stringify(books));
+            renderBooks();
         }
-        renderBook();
+
+        function removeBook(id) {
+            let books = getBooks();
+            books = books.filter(b => b.id !== id);
+            localStorage.setItem('kora_books', JSON.stringify(books));
+            renderBooks();
+        }
+
+        function renderBooks() {
+            const books = getBooks();
+            const history = getHistory();
+            const container = document.getElementById('booksListContainer');
+            const historyContainer = document.getElementById('historyListContainer');
+            
+            container.innerHTML = '';
+            if (books.length === 0) {
+                container.innerHTML = `<div style="font-size: 0.85rem; color: var(--text-muted); padding: 10px 0;">nenhum livro em andamento no momento.</div>`;
+            } else {
+                books.forEach(b => {
+                    const percent = Math.min(100, Math.round((b.current / b.total) * 100));
+                    container.innerHTML += `
+                        <div style="background: rgba(255,255,255,0.4); border: 1px solid var(--border-color); padding: 14px; border-radius: 16px; display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-weight: 600; color: var(--text-main); font-size: 0.95rem;">${b.title}</span>
+                                <button onclick="removeBook('${b.id}')" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:0.9rem;" title="remover">×</button>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--text-muted);">
+                                <span>pág. atual: <input type="number" value="${b.current}" onchange="updateBookProgress('${b.id}', this.value)" style="width: 60px; padding: 4px; display: inline-block; text-align: center;"> / ${b.total}</span>
+                                <span>${percent}%</span>
+                            </div>
+                            <div style="background: var(--accent-soft); border-radius: 10px; height: 6px; width: 100%; overflow: hidden;">
+                                <div style="background: var(--text-main); width: ${percent}%; height: 100%; transition: width 0.3s;"></div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            historyContainer.innerHTML = '';
+            if (history.length === 0) {
+                historyContainer.innerHTML = `<div style="font-size: 0.85rem; color: var(--text-muted); padding: 4px 0;">nenhum livro concluído ainda.</div>`;
+            } else {
+                history.forEach(h => {
+                    historyContainer.innerHTML += `
+                        <div style="background: rgba(255,255,255,0.2); border: 1px solid var(--border-color); padding: 10px 14px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
+                            <span>${h.title} (${h.total} pág.)</span>
+                            <span style="color: var(--text-muted); font-size: 0.75rem;">concluído em ${h.date}</span>
+                        </div>
+                    `;
+                });
+            }
+        }
+        renderBooks();
 
         const notesArea = document.getElementById('notesArea');
         notesArea.value = localStorage.getItem('kora_notes') || '';
