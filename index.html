@@ -8,7 +8,7 @@
     <style>
         body.theme-cozy {
             --bg-color: #f7f3f2;
-            --card-bg: rgba(255, 255, 255, 0.9);
+            --card-bg: rgba(255, 255, 255, 0.95);
             --text-main: #4a3b3c;
             --text-muted: #8c7678;
             --accent-soft: #e8d3d5;
@@ -21,7 +21,7 @@
 
         body.theme-focus {
             --bg-color: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.85);
+            --card-bg: rgba(30, 41, 59, 0.9);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --accent-soft: #334155;
@@ -34,7 +34,7 @@
 
         body.theme-classic {
             --bg-color: #fcfbf9;
-            --card-bg: rgba(255, 255, 255, 0.95);
+            --card-bg: rgba(255, 255, 255, 0.98);
             --text-main: #2c2c2c;
             --text-muted: #767676;
             --accent-soft: #eae5df;
@@ -75,13 +75,13 @@
             padding-bottom: 40px;
         }
 
-        @media (max-width: 900px) {
+        /* Se for tela menor ou celular detectado */
+        @media (max-width: 1024px) {
             .app-container {
                 grid-template-columns: 1fr;
             }
             body {
-                align-items: stretch;
-                padding: 10px;
+                padding: 8px;
             }
         }
 
@@ -94,7 +94,7 @@
             box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
             position: relative;
         }
 
@@ -144,12 +144,12 @@
             gap: 6px;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 1024px) {
             .nav-tabs {
                 flex-direction: row;
                 overflow-x: auto;
-                padding-bottom: 6px;
-                -webkit-overflow-scrolling: touch;
+                padding-bottom: 4px;
+                gap: 8px;
             }
             .nav-tabs::-webkit-scrollbar {
                 display: none;
@@ -185,7 +185,7 @@
             font-size: 0.8rem;
             color: var(--text-muted);
             border-top: 1px solid var(--border-color);
-            padding-top: 14px;
+            padding-top: 12px;
         }
 
         .datetime-widget .time {
@@ -195,7 +195,7 @@
             margin-bottom: 2px;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 1024px) {
             .datetime-widget {
                 display: none;
             }
@@ -209,13 +209,13 @@
             backdrop-filter: blur(16px);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 18px;
+            padding: 16px;
             display: none;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             box-shadow: var(--shadow);
             z-index: 100;
-            min-width: 210px;
+            min-width: 200px;
         }
 
         .settings-dropdown.open {
@@ -291,7 +291,7 @@
             gap: 20px;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .grid {
                 grid-template-columns: 1fr;
             }
@@ -300,20 +300,20 @@
         .card {
             background-color: var(--card-bg);
             backdrop-filter: blur(12px);
-            border-radius: 24px;
+            border-radius: 20px;
             padding: 20px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            min-height: 350px;
+            min-height: 340px;
         }
 
         .card.full {
             grid-column: span 2;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .card.full {
                 grid-column: span 1;
             }
@@ -406,17 +406,8 @@
             list-style: none;
             flex: 1;
             overflow-y: auto;
-            max-height: 300px;
+            max-height: 280px;
             padding-right: 2px;
-        }
-
-        ul::-webkit-scrollbar {
-            width: 3px;
-        }
-
-        ul::-webkit-scrollbar-thumb {
-            background-color: var(--accent-soft);
-            border-radius: 10px;
         }
 
         li {
@@ -461,7 +452,6 @@
             font-size: 1rem;
             padding: 2px 6px;
             opacity: 0.6;
-            transition: opacity 0.2s;
         }
 
         .delete-btn:hover {
@@ -485,7 +475,6 @@
             margin-bottom: 14px;
             overflow-x: auto;
             padding-bottom: 4px;
-            -webkit-overflow-scrolling: touch;
         }
 
         .project-filters::-webkit-scrollbar {
@@ -590,11 +579,11 @@
             </div>
 
             <nav class="nav-tabs" id="navTabsContainer">
-                <button class="nav-tab active" onclick="switchTab('tasks')" data-tab="tasks">tarefas & pastas</button>
-                <button class="nav-tab" onclick="switchTab('habits')" data-tab="habits">hábitos & leitura</button>
-                <button class="nav-tab" onclick="switchTab('notes')" data-tab="notes">notas</button>
-                <button class="nav-tab" onclick="switchTab('focus')" data-tab="focus">foco & música</button>
-                <button class="nav-tab" onclick="switchTab('links')" data-tab="links">links úteis</button>
+                <button class="nav-tab active" onclick="switchTab('tasks', event)" data-tab="tasks">tarefas & pastas</button>
+                <button class="nav-tab" onclick="switchTab('habits', event)" data-tab="habits">hábitos & leitura</button>
+                <button class="nav-tab" onclick="switchTab('notes', event)" data-tab="notes">notas</button>
+                <button class="nav-tab" onclick="switchTab('focus', event)" data-tab="focus">foco & música</button>
+                <button class="nav-tab" onclick="switchTab('links', event)" data-tab="links">links úteis</button>
             </nav>
 
             <div class="datetime-widget">
@@ -756,6 +745,11 @@
         setInterval(updateDateTime, 1000);
         updateDateTime();
 
+        // Detecção automática se é dispositivo móvel para ajustar classes se necessário
+        if (/Mobi|Android|iPhone/i.test(navigator.userAgent)) {
+            document.body.classList.add('is-mobile');
+        }
+
         function toggleSettings() {
             document.getElementById('settingsDropdown').classList.toggle('open');
         }
@@ -767,13 +761,14 @@
         });
 
         function setTheme(themeName) {
-            document.body.className = `theme-${themeName}`;
+            document.body.className = document.body.classList.contains('is-mobile') ? `theme-${themeName} is-mobile` : `theme-${themeName}`;
             localStorage.setItem('kora_theme', themeName);
         }
 
         function loadTheme() {
             const savedTheme = localStorage.getItem('kora_theme') || 'cozy';
-            document.body.className = `theme-${savedTheme}`;
+            const mobileClass = document.body.classList.contains('is-mobile') ? 'is-mobile' : '';
+            document.body.className = `theme-${savedTheme} ${mobileClass}`;
         }
         loadTheme();
 
@@ -810,11 +805,14 @@
             saveTabVisibility();
         }
 
-        function switchTab(tabId) {
+        function switchTab(tabId, event) {
+            if (event) event.preventDefault();
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+            
             const targetContent = document.getElementById(tabId);
             const targetTab = document.querySelector(`.nav-tab[data-tab="${tabId}"]`);
+            
             if (targetContent) targetContent.classList.add('active');
             if (targetTab) targetTab.classList.add('active');
         }
@@ -1115,7 +1113,7 @@
             const bookmarks = getBookmarks();
             bookmarks.push({ title, url });
             localStorage.setItem('kora_bookmarks', JSON.stringify(bookmarks));
-            document.getElementById('linkTitleInput'].value = '';
+            document.getElementById('linkTitleInput').value = '';
             document.getElementById('linkUrlInput').value = '';
             renderBookmarks();
         }
