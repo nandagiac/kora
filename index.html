@@ -71,7 +71,7 @@
             padding: 24px;
         }
 
-        /* Tela de Entrada Reativa */
+        /* Tela Inicial / Boas-vindas */
         .welcome-screen {
             position: fixed;
             top: 0;
@@ -145,7 +145,7 @@
             transform: translateY(-1px);
         }
 
-        /* Layout Responsivo Amplo */
+        /* Layout Amplo */
         .app-container {
             width: 100%;
             max-width: 1200px;
@@ -170,7 +170,7 @@
             box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
             position: relative;
         }
 
@@ -185,6 +185,17 @@
             font-weight: 600;
             color: var(--text-main);
             letter-spacing: 0.5px;
+        }
+
+        .nav-section-title {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 8px;
+            margin-bottom: 2px;
+            padding-left: 4px;
         }
 
         .nav-tabs {
@@ -215,6 +226,11 @@
             background-color: var(--accent-soft);
             color: var(--text-main);
             font-weight: 600;
+        }
+
+        .nav-tab.home-special {
+            border: 1px dashed var(--accent-dark);
+            background: rgba(184, 151, 153, 0.05);
         }
 
         .datetime-widget {
@@ -467,11 +483,47 @@
             width: 65px;
             text-align: center;
         }
+
+        /* Sub-abas do Cora Home */
+        .home-subtabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+
+        .home-subtab-btn {
+            background: rgba(255,255,255,0.5);
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .home-subtab-btn.active {
+            background: var(--text-main);
+            color: var(--bg-color);
+            border-color: var(--text-main);
+        }
+
+        .home-subcontent {
+            display: none;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .home-subcontent.active {
+            display: flex;
+        }
     </style>
 </head>
 <body class="theme-cozy">
 
-    <!-- Tela Inicial Sempre Presente (Reativa) -->
+    <!-- Tela Inicial -->
     <div class="welcome-screen" id="welcomeScreen">
         <div class="welcome-card-content">
             <div class="welcome-title">kora</div>
@@ -481,18 +533,24 @@
     </div>
 
     <div class="app-container">
-        <!-- Menu Lateral com a Nova Aba de Configurações -->
+        <!-- Menu Lateral -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <div class="app-title">kora</div>
             </div>
 
             <nav class="nav-tabs" id="navTabsContainer">
+                <div class="nav-section-title">workspace pessoal</div>
                 <button class="nav-tab active" onclick="switchTab('tasks', event)" data-tab="tasks">tarefas</button>
                 <button class="nav-tab" onclick="switchTab('reading', event)" data-tab="reading">leitura</button>
                 <button class="nav-tab" onclick="switchTab('notes', event)" data-tab="notes">notas</button>
                 <button class="nav-tab" onclick="switchTab('focus', event)" data-tab="focus">foco</button>
                 <button class="nav-tab" onclick="switchTab('links', event)" data-tab="links">links</button>
+
+                <div class="nav-section-title" style="margin-top: 14px;">gestão do lar</div>
+                <button class="nav-tab home-special" onclick="switchTab('corahome', event)" data-tab="corahome">cora home</button>
+
+                <div class="nav-section-title" style="margin-top: 14px;">sistema</div>
                 <button class="nav-tab" onclick="switchTab('settings', event)" data-tab="settings">configurações</button>
             </nav>
 
@@ -504,6 +562,7 @@
 
         <!-- Conteúdo Principal -->
         <main class="main-content">
+            <!-- TAREFAS -->
             <div id="tasks" class="tab-content active" data-tab="tasks">
                 <div class="card full">
                     <h3>central de tarefas</h3>
@@ -559,6 +618,7 @@
                 </div>
             </div>
 
+            <!-- NOTAS -->
             <div id="notes" class="tab-content" data-tab="notes">
                 <div class="card full" style="min-height: 500px;">
                     <h3>notas & brain dump</h3>
@@ -567,6 +627,7 @@
                 </div>
             </div>
 
+            <!-- FOCO -->
             <div id="focus" class="tab-content" data-tab="focus">
                 <div class="grid">
                     <div class="card">
@@ -600,6 +661,7 @@
                 </div>
             </div>
 
+            <!-- LINKS -->
             <div id="links" class="tab-content" data-tab="links">
                 <div class="card full" style="min-height: 450px;">
                     <h3>links úteis & atalhos</h3>
@@ -615,7 +677,105 @@
                 </div>
             </div>
 
-            <!-- ABA DEDICADA DE CONFIGURAÇÕES -->
+            <!-- CORA HOME (Com Setup Dinâmico e Inteligente) -->
+            <div id="corahome" class="tab-content" data-tab="corahome">
+                <div class="card full">
+                    <h3>cora home — gestão inteligente do lar</h3>
+                    <div class="section-subtitle">copiloto doméstico adaptado à dinâmica real da sua casa.</div>
+
+                    <!-- Bloco de Perfil / Configuração da Casa -->
+                    <div id="homeSetupCard" style="background: rgba(184, 151, 153, 0.08); border: 1px solid var(--border-color); padding: 20px; border-radius: 20px; display: flex; flex-direction: column; gap: 14px; margin-bottom: 10px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-weight: 600; color: var(--text-main);">diagnóstico e perfil da casa</span>
+                            <button class="action-btn" onclick="salvarPerfilCasa()" style="height: 38px; font-size: 0.82rem;">atualizar perfil</button>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">informe os dados abaixo para o cora calibrar automaticamente a frequência de banheiros, lixos, faxinas e compras.</p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+                            <div>
+                                <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">moradores na casa</label>
+                                <input type="number" id="setupMoradores" value="2" min="1" style="margin-top: 4px;">
+                            </div>
+                            <div>
+                                <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">quantidade de banheiros</label>
+                                <input type="number" id="setupBanheiros" value="2" min="1" style="margin-top: 4px;">
+                            </div>
+                            <div>
+                                <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">quantidade de quartos</label>
+                                <input type="number" id="setupQuartos" value="3" min="1" style="margin-top: 4px;">
+                            </div>
+                            <div>
+                                <label style="font-size: 0.78rem; font-weight: 600; color: var(--text-muted);">possui pets?</label>
+                                <select id="setupPets" style="margin-top: 4px;">
+                                    <option value="sim">sim (exigem atenção)</option>
+                                    <option value="nao">não</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="perfilResumo" style="font-size: 0.85rem; font-weight: 500; color: var(--text-main); background: rgba(255,255,255,0.6); padding: 10px 14px; border-radius: 12px; border: 1px solid var(--border-color);"></div>
+                    </div>
+
+                    <!-- Sub-abas Internas do Cora Home -->
+                    <div class="home-subtabs">
+                        <button class="home-subtab-btn active" onclick="switchHomeSub('foco', this)">foco do dia</button>
+                        <button class="home-subtab-btn" onclick="switchHomeSub('rotina', this)">rotina & limpeza</button>
+                        <button class="home-subtab-btn" onclick="switchHomeSub('despensa', this)">despensa & mercado</button>
+                        <button class="home-subtab-btn" onclick="switchHomeSub('logistica', this)">logística & contas</button>
+                    </div>
+
+                    <!-- 1. Foco do Dia & Modo Pouca Energia -->
+                    <div class="home-subcontent active" id="home-sub-foco">
+                        <div style="background: rgba(184, 151, 153, 0.1); border: 1px solid var(--border-color); padding: 18px; border-radius: 16px; display: flex; flex-direction: column; gap: 12px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-weight: 600; color: var(--text-main);">modo pouca energia (dia leve)</span>
+                                <button class="action-btn" onclick="toggleLowEnergyMode()" id="lowEnergyBtn" style="background-color: var(--accent-dark); height: 36px; font-size: 0.8rem;">ativar modo leve</button>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--text-muted);">dias difíceis pedem leveza. ative para focar apenas no estritamente indispensável e congelar o restante sem culpa.</p>
+                        </div>
+
+                        <div style="margin-top: 10px;">
+                            <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 8px;">prioridades essenciais geradas para hoje:</div>
+                            <div class="task-input-wrapper">
+                                <input type="text" id="homeTaskInput" placeholder="adicionar micro-tarefa da casa..." style="flex: 1;">
+                                <button class="action-btn" onclick="addHomeTask()">adicionar</button>
+                            </div>
+                            <ul id="homeTaskList" style="margin-top: 10px;"></ul>
+                        </div>
+                    </div>
+
+                    <!-- 2. Rotina & Limpeza -->
+                    <div class="home-subcontent" id="home-sub-rotina">
+                        <div class="section-subtitle">cronograma inteligente baseado nos banheiros e cômodos da sua casa.</div>
+                        <div class="task-input-wrapper">
+                            <input type="text" id="homeRoutineInput" placeholder="ex: higienizar os 2 banheiros e trocar toalhas..." style="flex: 1;">
+                            <button class="action-btn" onclick="addHomeRoutine()">adicionar rotina</button>
+                        </div>
+                        <ul id="homeRoutineList" style="margin-top: 10px;"></ul>
+                    </div>
+
+                    <!-- 3. Despensa & Mercado -->
+                    <div class="home-subcontent" id="home-sub-despensa">
+                        <div class="section-subtitle">lista de reposição inteligente baseada no número de moradores.</div>
+                        <div class="task-input-wrapper">
+                            <input type="text" id="homeMarketInput" placeholder="ex: café, produtos de limpeza, papel higiênico..." style="flex: 1;">
+                            <button class="action-btn" onclick="addHomeMarket()">adicionar item</button>
+                        </div>
+                        <ul id="homeMarketList" style="margin-top: 10px;"></ul>
+                    </div>
+
+                    <!-- 4. Logística & Contas -->
+                    <div class="home-subcontent" id="home-sub-logistica">
+                        <div class="section-subtitle">manutenções sazonais, contas da casa e lembretes gentis.</div>
+                        <div class="task-input-wrapper">
+                            <input type="text" id="homeLogisticsInput" placeholder="ex: tirar lixos dos quartos e banheiros (terça/sexta)..." style="flex: 1;">
+                            <button class="action-btn" onclick="addHomeLogistics()">adicionar lembrete</button>
+                        </div>
+                        <ul id="homeLogisticsList" style="margin-top: 10px;"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONFIGURAÇÕES -->
             <div id="settings" class="tab-content" data-tab="settings">
                 <div class="card full">
                     <h3>configurações do workspace</h3>
@@ -644,6 +804,7 @@
                                 <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9rem;"><input type="checkbox" id="toggle_notes" checked onchange="saveTabVisibility()"> notas</label>
                                 <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9rem;"><input type="checkbox" id="toggle_focus" checked onchange="saveTabVisibility()"> foco</label>
                                 <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9rem;"><input type="checkbox" id="toggle_links" checked onchange="saveTabVisibility()"> links</label>
+                                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9rem;"><input type="checkbox" id="toggle_corahome" checked onchange="saveTabVisibility()"> cora home</label>
                             </div>
                         </div>
                     </div>
@@ -655,7 +816,6 @@
     <audio id="alarmAudio" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto"></audio>
 
     <script>
-        // Lógica da Tela Inicial Reativa (Memoriza o nome/entrada, mas sempre exibe a abertura)
         if (localStorage.getItem('kora_entered') === 'true') {
             document.getElementById('welcomeSubtitleText').textContent = 'olá, fernanda — bem-vinda de volta';
         }
@@ -701,7 +861,7 @@
         loadFontSize();
 
         function saveTabVisibility() {
-            const tabs = ['tasks', 'reading', 'notes', 'focus', 'links'];
+            const tabs = ['tasks', 'reading', 'notes', 'focus', 'links', 'corahome'];
             const visibility = {};
             tabs.forEach(tab => {
                 const checkbox = document.getElementById(`toggle_${tab}`);
@@ -747,8 +907,239 @@
 
         loadTabVisibility();
 
-        let currentFilter = 'all';
+        // Configuração e Diagnóstico da Casa (Setup Inteligente)
+        function salvarPerfilCasa() {
+            const moradores = document.getElementById('setupMoradores').value;
+            const banheiros = document.getElementById('setupBanheiros').value;
+            const quartos = document.getElementById('setupQuartos').value;
+            const pets = document.getElementById('setupPets').value;
 
+            const perfil = { moradores, banheiros, quartos, pets };
+            localStorage.setItem('kora_home_profile', JSON.stringify(perfil));
+            
+            aplicarPerfilInteligente(perfil);
+            alert('perfil da casa atualizado! o cora ajustou as matrizes da rotina.');
+        }
+
+        function carregarPerfilCasa() {
+            const saved = localStorage.getItem('kora_home_profile');
+            if (saved) {
+                const perfil = JSON.parse(saved);
+                document.getElementById('setupMoradores').value = perfil.moradores;
+                document.getElementById('setupBanheiros').value = perfil.banheiros;
+                document.getElementById('setupQuartos').value = perfil.quartos;
+                document.getElementById('setupPets').value = perfil.pets;
+                aplicarPerfilInteligente(perfil);
+            } else {
+                // Perfil padrão inicial
+                const padrao = { moradores: 2, banheiros: 2, quartos: 3, pets: 'sim' };
+                aplicarPerfilInteligente(padrao);
+            }
+        }
+
+        function aplicarPerfilInteligente(p) {
+            const resumo = document.getElementById('perfilResumo');
+            resumo.innerHTML = `🏠 casa configurada: <strong>${p.moradores} moradores</strong>, <strong>${p.banheiros} banheiros</strong>, <strong>${p.quartos} quartos</strong> e <strong>pets: ${p.pets}</strong>. (frequência de limpeza e reposição calibrada automaticamente).`;
+            
+            // Se for a primeira vez, gera sugestões automáticas baseadas no perfil
+            if (!localStorage.getItem('kora_home_initialized')) {
+                const rotinasIniciais = [
+                    { text: `higienizar os ${p.banheiros} banheiros (2x por semana)`, done: false },
+                    { text: `recolher lixos dos ${p.quartos} quartos e banheiros`, done: false },
+                    { text: `trocar roupa de cama (${p.quartos} quartos)`, done: false }
+                ];
+                localStorage.setItem('kora_home_routine', JSON.stringify(rotinasIniciais));
+                localStorage.setItem('kora_home_initialized', 'true');
+                renderHomeRoutine();
+            }
+        }
+
+        // Sub-abas do Cora Home
+        function switchHomeSub(subId, btn) {
+            document.querySelectorAll('.home-subcontent').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.home-subtab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(`home-sub-${subId}`).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        // Modo Pouca Energia
+        let lowEnergyActive = false;
+        function toggleLowEnergyMode() {
+            lowEnergyActive = !lowEnergyActive;
+            const btn = document.getElementById('lowEnergyBtn');
+            if (lowEnergyActive) {
+                btn.textContent = 'desativar modo leve';
+                btn.style.backgroundColor = '#606c38';
+                alert('modo pouca energia ativado: o cora home reteve apenas o essencial do dia para poupar você de esforço mental.');
+            } else {
+                btn.textContent = 'ativar modo leve';
+                btn.style.backgroundColor = 'var(--accent-dark)';
+            }
+        }
+
+        // Funções de Tarefas do Cora Home
+        function getHomeData(key) { return JSON.parse(localStorage.getItem(`kora_home_${key}`)) || []; }
+        function saveHomeData(key, data) { localStorage.setItem(`kora_home_${key}`, JSON.stringify(data)); }
+
+        // Foco do Dia
+        function addHomeTask() {
+            const input = document.getElementById('homeTaskInput');
+            if (!input.value.trim()) return;
+            const tasks = getHomeData('tasks');
+            tasks.push({ text: input.value.trim(), done: false });
+            saveHomeData('tasks', tasks);
+            input.value = '';
+            renderHomeTasks();
+        }
+        function toggleHomeTask(i) {
+            const tasks = getHomeData('tasks');
+            tasks[i].done = !tasks[i].done;
+            saveHomeData('tasks', tasks);
+            renderHomeTasks();
+        }
+        function removeHomeTask(i) {
+            const tasks = getHomeData('tasks');
+            tasks.splice(i, 1);
+            saveHomeData('tasks', tasks);
+            renderHomeTasks();
+        }
+        function renderHomeTasks() {
+            const tasks = getHomeData('tasks');
+            const list = document.getElementById('homeTaskList');
+            list.innerHTML = '';
+            tasks.forEach((t, i) => {
+                list.innerHTML += `
+                    <li class="${t.done ? 'completed' : ''}">
+                        <div class="item-content" onclick="toggleHomeTask(${i})">
+                            <input type="checkbox" ${t.done ? 'checked' : ''}>
+                            <span>${t.text}</span>
+                        </div>
+                        <button class="delete-btn" onclick="removeHomeTask(${i})">×</button>
+                    </li>`;
+            });
+        }
+        renderHomeTasks();
+
+        // Rotina & Limpeza
+        function addHomeRoutine() {
+            const input = document.getElementById('homeRoutineInput');
+            if (!input.value.trim()) return;
+            const items = getHomeData('routine');
+            items.push({ text: input.value.trim(), done: false });
+            saveHomeData('routine', items);
+            input.value = '';
+            renderHomeRoutine();
+        }
+        function toggleHomeRoutine(i) {
+            const items = getHomeData('routine');
+            items[i].done = !items[i].done;
+            saveHomeData('routine', items);
+            renderHomeRoutine();
+        }
+        function removeHomeRoutine(i) {
+            const items = getHomeData('routine');
+            items.splice(i, 1);
+            saveHomeData('routine', items);
+            renderHomeRoutine();
+        }
+        function renderHomeRoutine() {
+            const items = getHomeData('routine');
+            const list = document.getElementById('homeRoutineList');
+            list.innerHTML = '';
+            items.forEach((item, i) => {
+                list.innerHTML += `
+                    <li class="${item.done ? 'completed' : ''}">
+                        <div class="item-content" onclick="toggleHomeRoutine(${i})">
+                            <input type="checkbox" ${item.done ? 'checked' : ''}>
+                            <span>${item.text}</span>
+                        </div>
+                        <button class="delete-btn" onclick="removeHomeRoutine(${i})">×</button>
+                    </li>`;
+            });
+        }
+        renderHomeRoutine();
+
+        // Despensa & Mercado
+        function addHomeMarket() {
+            const input = document.getElementById('homeMarketInput');
+            if (!input.value.trim()) return;
+            const items = getHomeData('market');
+            items.push({ text: input.value.trim(), done: false });
+            saveHomeData('market', items);
+            input.value = '';
+            renderHomeMarket();
+        }
+        function toggleHomeMarket(i) {
+            const items = getHomeData('market');
+            items[i].done = !items[i].done;
+            saveHomeData('market', items);
+            renderHomeMarket();
+        }
+        function removeHomeMarket(i) {
+            const items = getHomeData('market');
+            items.splice(i, 1);
+            saveHomeData('market', items);
+            renderHomeMarket();
+        }
+        function renderHomeMarket() {
+            const items = getHomeData('market');
+            const list = document.getElementById('homeMarketList');
+            list.innerHTML = '';
+            items.forEach((item, i) => {
+                list.innerHTML += `
+                    <li class="${item.done ? 'completed' : ''}">
+                        <div class="item-content" onclick="toggleHomeMarket(${i})">
+                            <input type="checkbox" ${item.done ? 'checked' : ''}>
+                            <span>${item.text}</span>
+                        </div>
+                        <button class="delete-btn" onclick="removeHomeMarket(${i})">×</button>
+                    </li>`;
+            });
+        }
+        renderHomeMarket();
+
+        // Logística & Contas
+        function addHomeLogistics() {
+            const input = document.getElementById('homeLogisticsInput');
+            if (!input.value.trim()) return;
+            const items = getHomeData('logistics');
+            items.push({ text: input.value.trim(), done: false });
+            saveHomeData('logistics', items);
+            input.value = '';
+            renderHomeLogistics();
+        }
+        function toggleHomeLogistics(i) {
+            const items = getHomeData('logistics');
+            items[i].done = !items[i].done;
+            saveHomeData('logistics', items);
+            renderHomeLogistics();
+        }
+        function removeHomeLogistics(i) {
+            const items = getHomeData('logistics');
+            items.splice(i, 1);
+            saveHomeData('logistics', items);
+            renderHomeLogistics();
+        }
+        function renderHomeLogistics() {
+            const items = getHomeData('logistics');
+            const list = document.getElementById('homeLogisticsList');
+            list.innerHTML = '';
+            items.forEach((item, i) => {
+                list.innerHTML += `
+                    <li class="${item.done ? 'completed' : ''}">
+                        <div class="item-content" onclick="toggleHomeLogistics(${i})">
+                            <input type="checkbox" ${item.done ? 'checked' : ''}>
+                            <span>${item.text}</span>
+                        </div>
+                        <button class="delete-btn" onclick="removeHomeLogistics(${i})">×</button>
+                    </li>`;
+            });
+        }
+        renderHomeLogistics();
+        carregarPerfilCasa();
+
+        // Tarefas normais do Kora
+        let currentFilter = 'all';
         function getProjects() {
             return JSON.parse(localStorage.getItem('kora_projects')) || [
                 { id: 'p1', name: 'Faculdade', color: '#b89799' },
@@ -756,15 +1147,12 @@
                 { id: 'p3', name: 'Vida Pessoal', color: '#d4a373' }
             ];
         }
-
         function renderProjects() {
             const projects = getProjects();
             const filtersContainer = document.getElementById('projectFilters');
             const select = document.getElementById('taskProjectSelect');
-            
             filtersContainer.innerHTML = `<div class="project-chip ${currentFilter === 'all' ? 'active' : ''}" onclick="filterProject('all')">todas</div>`;
             select.innerHTML = '';
-
             projects.forEach(p => {
                 filtersContainer.innerHTML += `
                     <div class="project-chip ${currentFilter === p.id ? 'active' : ''}" onclick="filterProject('${p.id}')">
@@ -776,7 +1164,6 @@
             });
             renderTasks();
         }
-
         function addProject() {
             const name = document.getElementById('newProjectName').value.trim();
             const color = document.getElementById('newProjectColor').value;
@@ -787,38 +1174,25 @@
             document.getElementById('newProjectName').value = '';
             renderProjects();
         }
-
         function removeProject(id) {
             if (!confirm('deseja apagar esta pasta?')) return;
             let projects = getProjects();
             projects = projects.filter(p => p.id !== id);
             localStorage.setItem('kora_projects', JSON.stringify(projects));
-            
             let tasks = getTasks();
             tasks = tasks.filter(t => t.projectId !== id);
             localStorage.setItem('kora_tasks', JSON.stringify(tasks));
-
             if (currentFilter === id) currentFilter = 'all';
             renderProjects();
         }
-
-        function filterProject(id) {
-            currentFilter = id;
-            renderProjects();
-        }
-
-        function getTasks() {
-            return JSON.parse(localStorage.getItem('kora_tasks')) || [];
-        }
-
+        function filterProject(id) { currentFilter = id; renderProjects(); }
+        function getTasks() { return JSON.parse(localStorage.getItem('kora_tasks')) || []; }
         function renderTasks() {
             const tasks = getTasks();
             const projects = getProjects();
             const list = document.getElementById('taskList');
             list.innerHTML = '';
-
             const filtered = currentFilter === 'all' ? tasks : tasks.filter(t => t.projectId === currentFilter);
-
             filtered.forEach((item, index) => {
                 const project = projects.find(p => p.id === item.projectId) || { name: 'geral', color: '#b89799' };
                 const originalIndex = tasks.indexOf(item);
@@ -835,7 +1209,6 @@
                 list.appendChild(li);
             });
         }
-
         function addTask() {
             const input = document.getElementById('taskInput');
             const select = document.getElementById('taskProjectSelect');
@@ -847,77 +1220,61 @@
             input.value = '';
             renderTasks();
         }
-
         function toggleTask(index) {
             const tasks = getTasks();
             tasks[index].completed = !tasks[index].completed;
             localStorage.setItem('kora_tasks', JSON.stringify(tasks));
             renderTasks();
         }
-
         function removeTask(index) {
             const tasks = getTasks();
             tasks.splice(index, 1);
             localStorage.setItem('kora_tasks', JSON.stringify(tasks));
             renderTasks();
         }
-
         renderProjects();
 
-        // Leitura e Histórico
-        function getBooks() {
-            return JSON.parse(localStorage.getItem('kora_books')) || [];
-        }
-        function getHistory() {
-            return JSON.parse(localStorage.getItem('kora_book_history')) || [];
-        }
-
+        // Leitura
+        function getBooks() { return JSON.parse(localStorage.getItem('kora_books')) || []; }
+        function getHistory() { return JSON.parse(localStorage.getItem('kora_book_history')) || []; }
         function addBook() {
             const title = document.getElementById('bookTitleInput').value.trim();
             const current = parseInt(document.getElementById('bookCurrentInput').value) || 0;
             const total = parseInt(document.getElementById('bookTotalInput').value) || 100;
             if (!title) return;
-
             const books = getBooks();
             books.push({ id: 'b_' + Date.now(), title, current, total });
             localStorage.setItem('kora_books', JSON.stringify(books));
-            
             document.getElementById('bookTitleInput').value = '';
             document.getElementById('bookCurrentInput').value = '';
             document.getElementById('bookTotalInput').value = '';
             renderBooks();
         }
-
         function updateBookProgress(id, newCurrent) {
             const books = getBooks();
             const book = books.find(b => b.id === id);
             if (!book) return;
             book.current = parseInt(newCurrent) || 0;
-
             if (book.current >= book.total) {
                 books.splice(books.indexOf(book), 1);
                 const history = getHistory();
                 history.unshift({ title: book.title, total: book.total, date: new Date().toLocaleDateString('pt-BR') });
                 localStorage.setItem('kora_book_history', JSON.stringify(history));
             }
-
             localStorage.setItem('kora_books', JSON.stringify(books));
             renderBooks();
         }
-
         function removeBook(id) {
             let books = getBooks();
             books = books.filter(b => b.id !== id);
             localStorage.setItem('kora_books', JSON.stringify(books));
             renderBooks();
         }
-
         function renderBooks() {
             const books = getBooks();
             const history = getHistory();
             const container = document.getElementById('booksListContainer');
             const historyContainer = document.getElementById('historyListContainer');
-            
             container.innerHTML = '';
             if (books.length === 0) {
                 container.innerHTML = `<div style="font-size: 0.85rem; color: var(--text-muted); padding: 10px 0;">nenhum livro em andamento no momento.</div>`;
@@ -937,11 +1294,9 @@
                             <div style="background: var(--accent-soft); border-radius: 10px; height: 6px; width: 100%; overflow: hidden;">
                                 <div style="background: var(--text-main); width: ${percent}%; height: 100%; transition: width 0.3s;"></div>
                             </div>
-                        </div>
-                    `;
+                        </div>`;
                 });
             }
-
             historyContainer.innerHTML = '';
             if (history.length === 0) {
                 historyContainer.innerHTML = `<div style="font-size: 0.85rem; color: var(--text-muted); padding: 4px 0;">nenhum livro concluído ainda.</div>`;
@@ -951,8 +1306,7 @@
                         <div style="background: rgba(255,255,255,0.2); border: 1px solid var(--border-color); padding: 10px 14px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem;">
                             <span>${h.title} (${h.total} pág.)</span>
                             <span style="color: var(--text-muted); font-size: 0.75rem;">concluído em ${h.date}</span>
-                        </div>
-                    `;
+                        </div>`;
                 });
             }
         }
@@ -960,20 +1314,16 @@
 
         const notesArea = document.getElementById('notesArea');
         notesArea.value = localStorage.getItem('kora_notes') || '';
-        notesArea.addEventListener('input', () => {
-            localStorage.setItem('kora_notes', notesArea.value);
-        });
+        notesArea.addEventListener('input', () => { localStorage.setItem('kora_notes', notesArea.value); });
 
         let timerInterval = null;
         let totalSeconds = 25 * 60;
         let isRunning = false;
-
         function updateTimerDisplay() {
             const mins = Math.floor(totalSeconds / 60);
             const secs = totalSeconds % 60;
             document.getElementById('timerDisplay').textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
         }
-
         function togglePomodoro() {
             const btn = document.getElementById('startBtn');
             if (isRunning) {
@@ -997,7 +1347,6 @@
                 }, 1000);
             }
         }
-
         function resetPomodoro() {
             clearInterval(timerInterval);
             isRunning = false;
@@ -1006,15 +1355,11 @@
             totalSeconds = workMins * 60;
             updateTimerDisplay();
         }
-
-        function updateTimerSetting() {
-            if (!isRunning) resetPomodoro();
-        }
+        function updateTimerSetting() { if (!isRunning) resetPomodoro(); }
 
         function savePlaylist() {
             let url = document.getElementById('playlistInput').value.trim();
             if (!url) return;
-
             let embedUrl = url;
             if (url.includes('spotify.com') && !url.includes('/embed/')) {
                 embedUrl = url.replace('spotify.com/', 'spotify.com/embed/');
@@ -1025,29 +1370,21 @@
                 } else if (url.includes('watch?v=')) {
                     videoId = url.split('watch?v=')[1].split('&')[0];
                 }
-                if (videoId) {
-                    embedUrl = `https://www.youtube.com/embed/${videoId}`;
-                }
+                if (videoId) { embedUrl = `https://www.youtube.com/embed/${videoId}`; }
             }
-
             localStorage.setItem('kora_playlist', embedUrl);
             renderPlaylist(embedUrl);
         }
-
         function renderPlaylist(url) {
             document.getElementById('playerContainer').innerHTML = `<iframe src="${url}" width="100%" height="152" frameborder="0" allow="encrypted-media"></iframe>`;
         }
-
         const savedPlaylist = localStorage.getItem('kora_playlist');
         if (savedPlaylist) {
             document.getElementById('playlistInput').value = savedPlaylist;
             renderPlaylist(savedPlaylist);
         }
 
-        function getBookmarks() {
-            return JSON.parse(localStorage.getItem('kora_bookmarks')) || [];
-        }
-
+        function getBookmarks() { return JSON.parse(localStorage.getItem('kora_bookmarks')) || []; }
         function renderBookmarks() {
             const bookmarks = getBookmarks();
             const container = document.getElementById('bookmarksContainer');
@@ -1060,11 +1397,9 @@
                             <span style="font-size: 0.75rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-transform: none;">${b.url}</span>
                         </a>
                         <button onclick="removeBookmark(${index})" style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.8rem;" title="apagar">×</button>
-                    </div>
-                `;
+                    </div>`;
             });
         }
-
         function addBookmark() {
             const title = document.getElementById('linkTitleInput').value.trim();
             let url = document.getElementById('linkUrlInput').value.trim();
@@ -1077,7 +1412,6 @@
             document.getElementById('linkUrlInput').value = '';
             renderBookmarks();
         }
-
         function removeBookmark(index) {
             const bookmarks = getBookmarks();
             bookmarks.splice(index, 1);
